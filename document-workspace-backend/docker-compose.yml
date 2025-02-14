@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  document-workspace:
+    image: mysql:8.0
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: document_workspace
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+  onlyoffice:
+    image: onlyoffice/documentserver:latest
+    container_name: onlyoffice_docs
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      - JWT_ENABLED=true
+      - JWT_SECRET=secret_key
+      - JWT_HEADER=Authorization
+    volumes:
+      - onlyoffice_data:/var/www/onlyoffice/Data
+      - onlyoffice_logs:/var/log/onlyoffice
+volumes:
+  onlyoffice_data:
+  onlyoffice_logs:
+
+
