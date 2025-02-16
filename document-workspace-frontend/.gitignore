@@ -40,6 +40,7 @@ node
 testem.log
 /typings
 .editorconfig
+src/environments/environment.development.ts
 
 # System files
 .DS_Store
