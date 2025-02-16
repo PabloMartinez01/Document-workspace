@@ -13,17 +13,15 @@ public class SecurityConfiguration {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("*"); // Permitir cualquier origen
-        corsConfiguration.addAllowedMethod("*"); // Permitir cualquier método HTTP
-        corsConfiguration.addAllowedHeader("*"); // Permitir cualquier encabezado
-        corsConfiguration.setAllowCredentials(true); // Permitir el uso de credenciales
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.setAllowCredentials(true);
 
-        // Configurar las rutas que aceptarán las configuraciones CORS
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
 
         return new CorsFilter(source);
-
     }
 
 }
