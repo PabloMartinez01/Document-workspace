@@ -13,15 +13,14 @@ services:
     ports:
       - "3306:3306"
   onlyoffice:
-    image: onlyoffice/documentserver:latest
+    image: onlyoffice/documentserver:8.1.3
     container_name: onlyoffice_docs
     restart: always
     ports:
       - "8081:80"
     environment:
-      - JWT_ENABLED=true
+      - JWT_ENABLED=false
       - JWT_SECRET=secret_key
-      - JWT_HEADER=Authorization
     volumes:
       - onlyoffice_data:/var/www/onlyoffice/Data
       - onlyoffice_logs:/var/log/onlyoffice
