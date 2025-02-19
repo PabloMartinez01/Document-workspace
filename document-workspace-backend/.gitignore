@@ -7,6 +7,7 @@ target/
 !**/src/test/**/target/
 mvnw.cmd
 mvnw
+src/main/resources/application-local.properties
 
 ### STS ###
 .apt_generated

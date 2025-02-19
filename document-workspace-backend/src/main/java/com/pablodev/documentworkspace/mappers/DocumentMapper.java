@@ -1,9 +1,12 @@
 package com.pablodev.documentworkspace.mappers;
 
+import com.pablodev.documentworkspace.dto.DocumentInfo;
 import com.pablodev.documentworkspace.dto.DocumentRequest;
-import com.pablodev.documentworkspace.dto.DocumentResponse;
+import com.pablodev.documentworkspace.dto.DocumentContent;
 import com.pablodev.documentworkspace.model.Document;
 import org.springframework.stereotype.Component;
+
+import javax.print.Doc;
 
 @Component
 public class DocumentMapper {
@@ -17,13 +20,19 @@ public class DocumentMapper {
                 .build();
     }
 
-    public DocumentResponse toDocumentResponse(Document document) {
-        return DocumentResponse.builder()
-                .id(document.getId())
+    public DocumentContent toDocumentContent(Document document) {
+        return DocumentContent.builder()
                 .filename(document.getFilename())
-                .extension(document.getExtension())
-                .length(document.getLength())
                 .content(document.getContent())
+                .build();
+    }
+
+    public DocumentInfo toDocumentInfo(Document document) {
+        return DocumentInfo.builder()
+                .id(document.getId())
+                .extension(document.getExtension())
+                .filename(document.getFilename())
+                .length(document.getLength())
                 .build();
     }
 
