@@ -1,19 +1,29 @@
 package com.pablodev.documentworkspace.managers.url;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @Component
 public class DefaultUrlManager implements UrlManager {
 
-    //TODO move to properties
+    @Value("${files.document-service}")
+    private String documentServiceUrl;
 
     @Override
     public String getDocumentUrl(Long documentId) {
-        return "http://localhost:8080/document/" + documentId;
+       return UriComponentsBuilder.fromUri(URI.create(documentServiceUrl))
+                .path("/document/{id}")
+                .buildAndExpand(documentId)
+                .toUriString();
     }
 
     @Override
     public String getDocumentCallback() {
-        return "http://localhost:8080/document/callback";
+        return UriComponentsBuilder.fromUri(URI.create(documentServiceUrl))
+                .path("/callback")
+                .toUriString();
     }
 }
