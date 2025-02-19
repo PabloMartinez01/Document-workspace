@@ -37,6 +37,7 @@ public class DefaultDocumentService implements DocumentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public DocumentInfo findDocumentInfo(Long id) {
         Document document = documentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Document with id: " + id + " not found"));
@@ -44,6 +45,7 @@ public class DefaultDocumentService implements DocumentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DocumentInfo> findAllDocumentInfo() {
         return StreamSupport.stream(documentRepository.findAll().spliterator(), false)
                 .map(documentMapper::toDocumentInfo)
