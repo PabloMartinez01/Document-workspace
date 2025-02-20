@@ -1,0 +1,56 @@
+<div class="relative overflow-x-auto p-5">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <tr>
+      <th scope="col" class="px-6 py-3">
+        Id
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Filename
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Extension
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Length
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Actions
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let document of documents" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+      <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        {{document.id}}
+      </th>
+      <td class="px-6 py-4">
+        {{document.filename}}
+      </td>
+      <td class="px-6 py-4">
+        {{document.extension}}
+      </td>
+      <td class="px-6 py-4">
+        {{document.length}}
+      </td>
+      <td class="px-6 py-4 flex gap-3">
+        <a [routerLink]="['/documents', document.id]" target="_blank"
+          class="bg-gray-800 text-white px-7 py-2 rounded border-[1px] border-solid border-gray-900 transition-all ease
+          duration-200 hover:bg-black hover:cursor-pointer">
+          <i class="fa fa-edit"></i>
+          Edit
+        </a>
+        <a (click)="deleteDocument(document.id)"
+          class="bg-white text-red-500 px-7 py-2 rounded border-[1px] border-solid border-red-500 transition-all ease
+          duration-200 hover:bg-red-500 hover:text-white hover:cursor-pointer">
+          <i class="fa fa-remove"></i>
+          Delete
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+

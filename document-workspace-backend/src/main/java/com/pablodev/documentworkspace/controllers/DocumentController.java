@@ -60,8 +60,14 @@ public class DocumentController {
         return ResponseEntity.ok(documentsInfo);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteDocument(@PathVariable Long id) {
+        documentService.deleteDocument(id);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/callback")
-    public ResponseEntity<Map<String, Object>> callbackDocument(@RequestBody Callback callback) {
+    public ResponseEntity<Map<String, Object>> callbackDocument(@RequestBody Callback body) {
 
         //TODO
         Map<String, Object> response = new HashMap<>();

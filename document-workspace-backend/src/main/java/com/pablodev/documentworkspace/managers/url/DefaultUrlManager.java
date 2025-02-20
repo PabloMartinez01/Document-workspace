@@ -23,7 +23,7 @@ public class DefaultUrlManager implements UrlManager {
     @Override
     public String getDocumentCallback() {
         return UriComponentsBuilder.fromUri(URI.create(documentServiceUrl))
-                .path("/callback")
+                .path("/document/callback")
                 .toUriString();
     }
 }

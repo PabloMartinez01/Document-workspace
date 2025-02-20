@@ -15,7 +15,8 @@ public class DefaultDocumentManager implements DocumentManager  {
         try {
             byte[] hashBytes = MessageDigest.getInstance("SHA-256")
                     .digest(String.valueOf(documentId).getBytes(StandardCharsets.UTF_8));
-            return Base64.getEncoder()
+            return Base64.getUrlEncoder()
+                    .withoutPadding()
                     .encodeToString(hashBytes)
                     .replace("[^0-9-.a-zA-Z_=]", "_");
         } catch (NoSuchAlgorithmException e) {
