@@ -34,19 +34,25 @@
       <td class="px-6 py-4">
         {{document.length}}
       </td>
-      <td class="px-6 py-4 flex gap-3">
-        <a [routerLink]="['/documents', document.id]" target="_blank"
-          class="bg-gray-800 text-white px-7 py-2 rounded border-[1px] border-solid border-gray-900 transition-all ease
-          duration-200 hover:bg-black hover:cursor-pointer">
-          <i class="fa fa-edit"></i>
-          Edit
-        </a>
-        <a (click)="deleteDocument(document.id)"
-          class="bg-white text-red-500 px-7 py-2 rounded border-[1px] border-solid border-red-500 transition-all ease
-          duration-200 hover:bg-red-500 hover:text-white hover:cursor-pointer">
-          <i class="fa fa-remove"></i>
-          Delete
-        </a>
+      <td class="px-6 py-4">
+
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu" class="customize">
+          <a [routerLink]="['/documents', document.id]" target="_blank">
+            <button mat-menu-item>
+              <i class="fa fa-edit me-2 text-gray-700"></i>
+              <span class="text-gray-700">Open</span>
+            </button>
+          </a>
+
+          <button mat-menu-item (click)="deleteDocument(document.id)">
+            <i class="fa fa-remove me-2 text-red-500"></i>
+            <span class="text-red-500">Delete document</span>
+          </button>
+        </mat-menu>
       </td>
     </tr>
     </tbody>

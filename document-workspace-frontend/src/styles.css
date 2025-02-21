@@ -4,9 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --mat-menu-container-color: white;
+}
+
 html, body {
   padding: 0;
   margin: 0;
   height: 100vh;
   width: 100vw;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

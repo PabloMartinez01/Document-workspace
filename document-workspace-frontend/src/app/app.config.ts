@@ -4,12 +4,14 @@ import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
 import {DocumentEditorModule} from '@onlyoffice/document-editor-angular';
 import {provideHttpClient} from '@angular/common/http';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    DocumentEditorModule
+    DocumentEditorModule,
+    provideAnimationsAsync()
   ]
 };
