@@ -3,17 +3,25 @@ import {DocumentService} from '../../services/document.service';
 import {DocumentInfo} from '../../model/document-info';
 import {NgForOf} from '@angular/common';
 import {RouterLink} from '@angular/router';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-list-documents',
   standalone: true,
   imports: [
     NgForOf,
-    RouterLink
+    RouterLink,
+    MatMenuModule,
+    MatIconButton,
+    MatIcon
   ],
   templateUrl: './list-documents.component.html'
 })
 export class ListDocumentsComponent implements OnInit {
+
+
 
   documents: DocumentInfo[] = [];
 
