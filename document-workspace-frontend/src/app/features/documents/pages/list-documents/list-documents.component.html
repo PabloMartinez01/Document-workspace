@@ -1,6 +1,7 @@
-<div class="relative overflow-x-auto p-5">
+
+<div class="relative overflow-x-auto px-20 py-5">
   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
     <tr>
       <th scope="col" class="px-6 py-3">
         Id
@@ -41,12 +42,15 @@
         </button>
 
         <mat-menu #menu="matMenu" class="customize">
-          <a [routerLink]="['/documents', document.id]" target="_blank">
-            <button mat-menu-item>
-              <i class="fa fa-edit me-2 text-gray-700"></i>
-              <span class="text-gray-700">Open</span>
-            </button>
-          </a>
+
+          @if (isSupported(document.extension)) {
+            <a [routerLink]="['/documents', document.id]" target="_blank">
+              <button mat-menu-item>
+                <i class="fa fa-edit me-2 text-gray-700"></i>
+                <span class="text-gray-700">{{ isEditable(document.extension) ? 'Edit' : 'View' }}</span>
+              </button>
+            </a>
+          }
 
           <button mat-menu-item (click)="deleteDocument(document.id)">
             <i class="fa fa-remove me-2 text-red-500"></i>
@@ -58,5 +62,15 @@
     </tbody>
   </table>
 </div>
+<div class="px-20 py-5">
+  <app-upload-dropzone
+    (uploadFileEmitter)="uploadDocument($event)"
+  />
+</div>
+
+
+
+
+
 
 

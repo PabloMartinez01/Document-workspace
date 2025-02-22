@@ -5,7 +5,7 @@ import {ViewDocumentComponent} from './pages/view-document/view-document.compone
 
 const routes: Routes = [
   { path: '', component: ListDocumentsComponent },
-  { path: ':id', component: ViewDocumentComponent }
+  { path: ':id', component: ViewDocumentComponent },
 ];
 
 @NgModule({

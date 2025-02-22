@@ -23,9 +23,10 @@ public class DefaultDocumentService implements DocumentService {
     private final DocumentMapper documentMapper;
 
     @Override
-    public Long saveDocument(DocumentRequest documentRequest) {
+    public DocumentInfo saveDocument(DocumentRequest documentRequest) {
         Document document = documentMapper.toDocumentEntity(documentRequest);
-        return documentRepository.save(document).getId();
+        Document savedDocument = documentRepository.save(document);
+        return documentMapper.toDocumentInfo(savedDocument);
     }
 
     @Override
