@@ -26,7 +26,7 @@ public class DocumentController {
     private final DocumentService documentService;
 
     @PostMapping
-    public ResponseEntity<Long> createDocument(@RequestParam MultipartFile file) throws IOException {
+    public ResponseEntity<DocumentInfo> createDocument(@RequestParam MultipartFile file) throws IOException {
         String extension = Objects.requireNonNull(file.getOriginalFilename())
                 .substring(file.getOriginalFilename().lastIndexOf(".") + 1);
 
@@ -37,9 +37,9 @@ public class DocumentController {
                 .content(file.getBytes())
                 .build();
 
-        Long id = documentService.saveDocument(documentRequest);
+        DocumentInfo documentInfo = documentService.saveDocument(documentRequest);
 
-        return ResponseEntity.ok(id);
+        return ResponseEntity.ok(documentInfo);
     }
 
     @GetMapping( "/{id}")

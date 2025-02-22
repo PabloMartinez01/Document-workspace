@@ -1,0 +1,23 @@
+<div>
+  <ngx-dropzone [multiple]="false" (change)="onSelect($event)">
+    <ngx-dropzone-label>Drag your file here or click to select it</ngx-dropzone-label>
+    <ngx-dropzone-preview *ngIf="file" [file]="file" (removed)="onRemove()">
+      <ngx-dropzone-label>{{ file.name }}</ngx-dropzone-label>
+    </ngx-dropzone-preview>
+  </ngx-dropzone>
+
+  <div class="flex justify-end gap-2 mt-3">
+    <button
+      class="px-5 py-2 text-red-500 border-[1px] border-red-500 rounded bg-white hover:text-white hover:bg-red-500
+        transition-all ease duration-200 cursor-pointer disabled:cursor-not-allowed disabled:hover:bg-white
+        disabled:hover:text-red-500"
+      (click)="onRemove()" [disabled]="!file">Delete document</button>
+
+    <button
+      class="px-5 py-2 text-white bg-gray-800 rounded hover:bg-black transition-all ease duration-200 border-[1px]
+        border-black cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed
+        disabled:hover:bg-gray-400 disabled:border-gray-400"
+      (click)="onUploadFile()" [disabled]="!file">Upload</button>
+  </div>
+</div>
+

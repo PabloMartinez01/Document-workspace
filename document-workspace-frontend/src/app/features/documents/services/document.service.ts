@@ -18,4 +18,9 @@ export class DocumentService {
   deleteDocument(id: number): Observable<any> {
     return this.http.delete(environment.documentService + "/document/" + id)
   }
+
+  uploadDocument(formData: FormData): Observable<DocumentInfo> {
+    return this.http.post<DocumentInfo>(environment.documentService  + '/document', formData);
+  }
+
 }
