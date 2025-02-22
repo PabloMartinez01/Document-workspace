@@ -1,0 +1,25 @@
+{
+  "editableFormats": [
+    ".docx",
+    ".xlsx",
+    ".pptx",
+    ".docm",
+    ".xlsm",
+    ".pptm",
+    ".dotx",
+    ".xltx",
+    ".potx",
+    ".doc",
+    ".xls",
+    ".ppt",
+    ".dot",
+    ".xlt",
+    ".pot",
+    ".odt",
+    ".ods",
+    ".odp"
+  ],
+  "viewableFormats": [
+    "pdf"
+  ]
+}
