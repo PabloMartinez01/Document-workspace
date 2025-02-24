@@ -1,6 +1,6 @@
 
 <div class="relative overflow-x-auto px-20 py-5">
-  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 shadow">
     <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
     <tr>
       <th scope="col" class="px-6 py-3">
@@ -44,10 +44,18 @@
         <mat-menu #menu="matMenu" class="customize">
 
           @if (isSupported(document.extension)) {
+            @if (isEditable(document.extension)) {
+              <a [routerLink]="['/documents', document.id]" target="_blank">
+                <button mat-menu-item>
+                  <i class="fa fa-edit me-2 text-gray-500"></i>
+                  <span class="text-gray-700">Edit</span>
+                </button>
+              </a>
+            }
             <a [routerLink]="['/documents', document.id]" target="_blank">
               <button mat-menu-item>
-                <i class="fa fa-edit me-2 text-gray-700"></i>
-                <span class="text-gray-700">{{ isEditable(document.extension) ? 'Edit' : 'View' }}</span>
+                <i class="fa fa-eye me-2 text-gray-500"></i>
+                <span class="text-gray-700">View</span>
               </button>
             </a>
           }
