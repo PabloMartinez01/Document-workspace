@@ -8,6 +8,7 @@ import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {UploadDropzoneComponent} from '../../components/upload-dropzone/upload-dropzone.component';
 import {ExtensionService} from '../../services/extension.service';
+import {AlertService} from '../../services/alert.service';
 
 @Component({
   selector: 'app-list-documents',
@@ -29,18 +30,15 @@ export class ListDocumentsComponent implements OnInit {
 
   constructor(
     private extensionService: ExtensionService,
-    private documentService: DocumentService) {
+    private documentService: DocumentService,
+    private alertService: AlertService ) {
 
   }
 
   ngOnInit(): void {
     this.documentService.getDocuments().subscribe({
-      next: documents => {
-        this.documents = documents;
-      },
-      error: err => {
-        console.log(err)
-      }
+      next: documents => this.documents = documents,
+      error: err => console.log(err)
     })
   }
 
@@ -65,24 +63,24 @@ export class ListDocumentsComponent implements OnInit {
     this.documentService.uploadDocument(formData).subscribe({
       next: (documentInfo) => {
         this.documents = [...this.documents, documentInfo]
+        this.alertService.showSuccessAlert('File uploaded', 'The file has been uploaded successfully').then();
       },
-      error: err => console.log(err)
+      error: () => this.alertService.showErrorAlert('Upload error', 'The file was not uploaded successfully').then()
     });
-
-
-
   }
 
+
   deleteDocument(documentId: number): void {
-    console.log(documentId)
-    this.documentService.deleteDocument(documentId).subscribe({
-      next: () => {
-        this.documents = this.documents.filter(doc => doc.id !== documentId);
-      },
-      error: err => {
-        console.log(err)
-      }
+    this.alertService.showConfirmationAlert(() => {
+      this.documentService.deleteDocument(documentId).subscribe({
+        next: () => {
+          this.documents = this.documents.filter(doc => doc.id !== documentId);
+          this.alertService.showSuccessAlert('Deleted!', 'The file has been deleted successfully').then();
+        },
+        error: () => this.alertService.showErrorAlert('Error', 'The file was not deleted successfully').then()
+      });
     })
+
   }
 
 
