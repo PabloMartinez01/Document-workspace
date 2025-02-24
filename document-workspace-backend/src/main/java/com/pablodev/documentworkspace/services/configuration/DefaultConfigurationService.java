@@ -3,7 +3,7 @@ package com.pablodev.documentworkspace.services.configuration;
 import com.onlyoffice.model.documenteditor.Config;
 import com.onlyoffice.model.documenteditor.config.Document;
 import com.onlyoffice.model.documenteditor.config.EditorConfig;
-import com.onlyoffice.model.documenteditor.config.document.DocumentType;
+import com.onlyoffice.model.documenteditor.config.editorconfig.Mode;
 import com.pablodev.documentworkspace.dto.DocumentInfo;
 import com.pablodev.documentworkspace.managers.document.DocumentManager;
 import com.pablodev.documentworkspace.managers.url.UrlManager;
@@ -26,6 +26,10 @@ public class DefaultConfigurationService implements ConfigurationService {
 
         DocumentInfo documentInfo = documentService.findDocumentInfo(documentId);
 
+        boolean isEditable = documentManager.isEditable(documentInfo.getFilename());
+        boolean isViewable = documentManager.isViewable(documentInfo.getFilename());
+        Mode mode = isEditable ? Mode.EDIT : (isViewable ? Mode.VIEW : null);
+
         Config config = Config.builder()
                 .document(Document.builder()
                         .key(documentManager.getDocumentKey(documentId))
@@ -34,8 +38,9 @@ public class DefaultConfigurationService implements ConfigurationService {
                         .url(urlManager.getDocumentUrl(documentId))
                         .build()
                 )
-                .documentType(DocumentType.WORD)
+                .documentType(documentManager.getDocumentType(documentInfo.getFilename()))
                 .editorConfig(EditorConfig.builder()
+                        .mode(mode)
                         .callbackUrl(urlManager.getDocumentCallback())
                         .build()
                 )
