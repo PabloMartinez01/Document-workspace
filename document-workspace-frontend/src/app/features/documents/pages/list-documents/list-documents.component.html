@@ -45,14 +45,14 @@
 
           @if (isSupported(document.extension)) {
             @if (isEditable(document.extension)) {
-              <a [routerLink]="['/documents', document.id]" target="_blank">
+              <a [routerLink]="['/documents', document.id]" [queryParams]="{action : Action.EDIT}" target="_blank">
                 <button mat-menu-item>
                   <i class="fa fa-edit me-2 text-gray-500"></i>
                   <span class="text-gray-700">Edit</span>
                 </button>
               </a>
             }
-            <a [routerLink]="['/documents', document.id]" target="_blank">
+            <a [routerLink]="['/documents', document.id]" [queryParams]="{action : Action.VIEW}" target="_blank">
               <button mat-menu-item>
                 <i class="fa fa-eye me-2 text-gray-500"></i>
                 <span class="text-gray-700">View</span>
