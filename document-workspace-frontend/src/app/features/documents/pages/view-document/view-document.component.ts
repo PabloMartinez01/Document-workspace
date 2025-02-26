@@ -3,6 +3,7 @@ import {ConfigurationService} from '../../services/configuration.service';
 import {DocumentEditorModule, IConfig} from '@onlyoffice/document-editor-angular';
 import {ActivatedRoute} from '@angular/router';
 import {environment} from '../../../../../environments/environment';
+import {Action} from '../../model/action.enum';
 
 @Component({
   selector: 'app-view-document',
@@ -16,7 +17,6 @@ export class ViewDocumentComponent implements OnInit {
 
   configuration: IConfig = {};
   id: number = -1;
-  private secret: string = "secret_key";
   documentServer: string = `${environment.documentServer}/`
 
   constructor(
@@ -30,11 +30,12 @@ export class ViewDocumentComponent implements OnInit {
   ngOnInit(): void {
 
     const idParam = this.activatedRoute.snapshot.paramMap.get('id');
-    if (!idParam || isNaN(Number(idParam))) {
-      return;
-    }
+    if (!idParam || isNaN(Number(idParam))) return;
     this.id = parseInt(idParam);
-    this.configurationService.getConfiguration(this.id).subscribe({
+
+    const action: Action = this.activatedRoute.snapshot.queryParams['action'] || Action.VIEW;
+
+    this.configurationService.getConfiguration(this.id, action).subscribe({
       next: configuration => {
         console.log(configuration)
         this.configuration = configuration
@@ -43,7 +44,6 @@ export class ViewDocumentComponent implements OnInit {
         console.log(err)
       }
     })
-
   }
 
 

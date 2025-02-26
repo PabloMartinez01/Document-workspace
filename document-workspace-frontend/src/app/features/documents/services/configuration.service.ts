@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {IConfig} from '@onlyoffice/document-editor-angular';
 import {environment} from '../../../../environments/environment';
@@ -13,8 +13,9 @@ export class ConfigurationService {
 
   }
 
-  getConfiguration(id: number): Observable<IConfig> {
-    return this.http.get<IConfig>(environment.documentService + "/configuration/" + id)
+  getConfiguration(id: number, action: string): Observable<IConfig> {
+    const params = new HttpParams().set('action', action);
+    return this.http.get<IConfig>(`${environment.documentService}/configuration/${id}`, { params });
   }
 
 }

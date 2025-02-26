@@ -9,6 +9,7 @@ import {MatIcon} from '@angular/material/icon';
 import {UploadDropzoneComponent} from '../../components/upload-dropzone/upload-dropzone.component';
 import {ExtensionService} from '../../services/extension.service';
 import {AlertService} from '../../services/alert.service';
+import {Action} from '../../model/action.enum'
 
 @Component({
   selector: 'app-list-documents',
@@ -84,5 +85,5 @@ export class ListDocumentsComponent implements OnInit {
   }
 
 
-
+  protected readonly Action = Action;
 }
