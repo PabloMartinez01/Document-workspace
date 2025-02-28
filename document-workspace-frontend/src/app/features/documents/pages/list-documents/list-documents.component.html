@@ -16,6 +16,9 @@
         Length
       </th>
       <th scope="col" class="px-6 py-3">
+        Status
+      </th>
+      <th scope="col" class="px-6 py-3">
         Actions
       </th>
     </tr>
@@ -34,6 +37,13 @@
       </td>
       <td class="px-6 py-4">
         {{document.length}}
+      </td>
+      <td class="px-6 py-4">
+        @if (document.open) {
+          <i class="fa fa-lock text-red-500 "></i>
+        } @else {
+          <i class="fa fa-lock-open text-green-500"></i>
+        }
       </td>
       <td class="px-6 py-4">
 
@@ -60,7 +70,7 @@
             </a>
           }
 
-          <button mat-menu-item (click)="deleteDocument(document.id)">
+          <button mat-menu-item (click)="deleteDocument(document.id)" [disabled]="document.open">
             <i class="fa fa-remove me-2 text-red-500"></i>
             <span class="text-red-500">Delete document</span>
           </button>

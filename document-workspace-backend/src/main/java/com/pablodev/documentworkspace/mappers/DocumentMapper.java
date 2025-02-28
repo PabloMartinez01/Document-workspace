@@ -1,12 +1,10 @@
 package com.pablodev.documentworkspace.mappers;
 
+import com.pablodev.documentworkspace.dto.DocumentContent;
 import com.pablodev.documentworkspace.dto.DocumentInfo;
 import com.pablodev.documentworkspace.dto.DocumentRequest;
-import com.pablodev.documentworkspace.dto.DocumentContent;
 import com.pablodev.documentworkspace.model.Document;
 import org.springframework.stereotype.Component;
-
-import javax.print.Doc;
 
 @Component
 public class DocumentMapper {
@@ -33,6 +31,7 @@ public class DocumentMapper {
                 .extension(document.getExtension())
                 .filename(document.getFilename())
                 .length(document.getLength())
+                .open(document.isOpen())
                 .build();
     }
 
