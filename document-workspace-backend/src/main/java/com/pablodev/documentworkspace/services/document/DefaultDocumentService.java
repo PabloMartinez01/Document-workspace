@@ -54,9 +54,18 @@ public class DefaultDocumentService implements DocumentService {
     }
 
     @Override
+    public void updateDocumentOpenStatus(Long id, boolean open) {
+        documentRepository.updateDocumentOpenStatus(open, id);
+    }
+
+    @Override
     public void deleteDocument(Long id) {
         Document document = documentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Document with id: " + id + " not found"));
+
+        if (document.isOpen())
+            throw new RuntimeException("The document can not be deleted because it is open");
+
         documentRepository.delete(document);
     }
 

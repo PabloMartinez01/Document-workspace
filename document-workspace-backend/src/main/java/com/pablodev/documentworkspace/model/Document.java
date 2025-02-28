@@ -1,9 +1,7 @@
 package com.pablodev.documentworkspace.model;
 
-import com.onlyoffice.model.documenteditor.config.document.DocumentType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "documents")
@@ -26,6 +24,9 @@ public class Document {
 
     @Column(nullable = false)
     private Long length;
+
+    @Column(nullable = false)
+    private boolean open = false;
 
     @Lob
     private byte[] content;

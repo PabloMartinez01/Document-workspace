@@ -17,4 +17,6 @@ public class DocumentInfo {
 
     private Long length;
 
+    private boolean open;
+
 }
