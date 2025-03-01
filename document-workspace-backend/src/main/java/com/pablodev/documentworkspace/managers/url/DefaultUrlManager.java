@@ -21,9 +21,10 @@ public class DefaultUrlManager implements UrlManager {
     }
 
     @Override
-    public String getDocumentCallback() {
+    public String getDocumentCallback(Long documentId) {
         return UriComponentsBuilder.fromUri(URI.create(documentServiceUrl))
-                .path("/document/callback")
+                .path("/document/callback/{id}")
+                .buildAndExpand(documentId)
                 .toUriString();
     }
 }
