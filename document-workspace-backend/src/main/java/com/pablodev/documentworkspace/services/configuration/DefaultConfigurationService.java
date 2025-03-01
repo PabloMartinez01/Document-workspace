@@ -47,7 +47,7 @@ public class DefaultConfigurationService implements ConfigurationService {
                 .documentType(documentManager.getDocumentType(documentInfo.getFilename()))
                 .editorConfig(EditorConfig.builder()
                         .mode(mode)
-                        .callbackUrl(urlManager.getDocumentCallback())
+                        .callbackUrl(urlManager.getDocumentCallback(documentId))
                         .build()
                 )
                 .build();

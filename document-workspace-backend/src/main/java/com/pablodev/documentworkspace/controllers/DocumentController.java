@@ -4,6 +4,7 @@ import com.onlyoffice.model.documenteditor.Callback;
 import com.pablodev.documentworkspace.dto.DocumentContent;
 import com.pablodev.documentworkspace.dto.DocumentInfo;
 import com.pablodev.documentworkspace.dto.DocumentRequest;
+import com.pablodev.documentworkspace.services.callback.CallbackService;
 import com.pablodev.documentworkspace.services.document.DocumentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ContentDisposition;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -24,6 +25,7 @@ import java.util.Objects;
 public class DocumentController {
 
     private final DocumentService documentService;
+    private final CallbackService callbackService;
 
     @PostMapping
     public ResponseEntity<DocumentInfo> createDocument(@RequestParam MultipartFile file) throws IOException {
@@ -66,13 +68,15 @@ public class DocumentController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/callback")
-    public ResponseEntity<Map<String, Object>> callbackDocument(@RequestBody Callback body) {
-
-        //TODO
-        Map<String, Object> response = new HashMap<>();
-        response.put("error", 0);
-        return ResponseEntity.ok(response);
+    @PostMapping("/callback/{id}")
+    public ResponseEntity<Map<String, Object>> callbackDocument(@RequestBody Callback body, @PathVariable Long id) {
+        try {
+            callbackService.processCallback(body, id);
+            return ResponseEntity.ok(Collections.singletonMap("error", 0));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(Collections.singletonMap("error", 1));
+        }
     }
 
 
