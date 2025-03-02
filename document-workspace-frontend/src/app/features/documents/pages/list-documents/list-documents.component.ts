@@ -10,6 +10,7 @@ import {UploadDropzoneComponent} from '../../components/upload-dropzone/upload-d
 import {ExtensionService} from '../../services/extension.service';
 import {AlertService} from '../../services/alert.service';
 import {Action} from '../../model/action.enum'
+import {WebSocketService} from '../../services/web-socket.service';
 
 @Component({
   selector: 'app-list-documents',
@@ -32,15 +33,34 @@ export class ListDocumentsComponent implements OnInit {
   constructor(
     private extensionService: ExtensionService,
     private documentService: DocumentService,
-    private alertService: AlertService ) {
+    private alertService: AlertService,
+    private webSocketService: WebSocketService
+  ) {
 
   }
 
   ngOnInit(): void {
     this.documentService.getDocuments().subscribe({
-      next: documents => this.documents = documents,
+      next: documents => {
+        this.documents = documents;
+        this.webSocketService.getDocumentLockStatusTopic().subscribe(documentLockStatus => {
+          this.documents.forEach(document => {
+            if (document.id == documentLockStatus.id){
+              document.open = documentLockStatus.locked;
+            }
+          })
+        })
+      },
       error: err => console.log(err)
     })
+
+  }
+
+  private updateDocumentStatus(lockStatus: { id: number; locked: boolean }) {
+    const doc = this.documents.find(d => d.id === lockStatus.id);
+    if (doc) {
+      doc.open = lockStatus.locked;
+    }
   }
 
   isEditable(extension: string): boolean {

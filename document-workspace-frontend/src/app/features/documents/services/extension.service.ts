@@ -16,7 +16,6 @@ export class ExtensionService {
   constructor(private http: HttpClient) {
     this.http.get<ExtensionConfiguration>(this.extensionsUrl).subscribe({
       next: extensions => {
-        console.log(extensions)
         this.extensionConfiguration = {
           editableFormats: extensions.editableFormats.map(ext => ext.toLowerCase()),
           viewableFormats: extensions.viewableFormats.map(ext => ext.toLowerCase()),

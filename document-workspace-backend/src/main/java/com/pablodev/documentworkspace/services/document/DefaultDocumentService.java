@@ -8,6 +8,7 @@ import com.pablodev.documentworkspace.model.Document;
 import com.pablodev.documentworkspace.repositories.DocumentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,9 @@ public class DefaultDocumentService implements DocumentService {
 
     private final DocumentRepository documentRepository;
     private final DocumentMapper documentMapper;
+    private final SimpMessagingTemplate messagingTemplate;
+
+    public record DocumentLockStatus(Long id, boolean locked) {};
 
     @Override
     public DocumentInfo saveDocument(DocumentRequest documentRequest) {
@@ -56,6 +60,7 @@ public class DefaultDocumentService implements DocumentService {
     @Override
     public void updateDocumentOpenStatus(Long id, boolean open) {
         documentRepository.updateDocumentOpenStatus(open, id);
+        messagingTemplate.convertAndSend("/topic/document/", new DocumentLockStatus(id, open));
     }
 
     @Override
