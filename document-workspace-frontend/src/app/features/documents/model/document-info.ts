@@ -4,4 +4,5 @@ export interface DocumentInfo {
   extension: string;
   length: number;
   locked: boolean;
+  version: number;
 }

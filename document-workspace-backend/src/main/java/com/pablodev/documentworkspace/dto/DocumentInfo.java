@@ -17,6 +17,8 @@ public class DocumentInfo {
 
     private Long length;
 
-    private boolean open;
+    private boolean locked;
+
+    private Long version;
 
 }

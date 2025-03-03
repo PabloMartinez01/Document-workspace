@@ -64,6 +64,23 @@ public class DefaultDocumentService implements DocumentService {
     }
 
     @Override
+    public void updateDocumentContent(Long id, byte[] content, boolean lock) {
+        Document document = documentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Document with id: " + id + " not found"));
+
+        document.setContent(content);
+        document.setLocked(lock);
+        document.setLength((long) content.length);
+
+        if (!lock) {
+            document.setVersion(document.getVersion() + 1);
+        }
+
+        documentRepository.save(document);
+        messagingTemplate.convertAndSend("/topic/document/", new DocumentLockStatus(id, lock));
+    }
+
+    @Override
     public void deleteDocument(Long id) {
         Document document = documentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Document with id: " + id + " not found"));

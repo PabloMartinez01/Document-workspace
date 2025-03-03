@@ -6,7 +6,9 @@ import com.onlyoffice.model.documenteditor.callback.action.Type;
 import com.pablodev.documentworkspace.services.document.DocumentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 @Log4j2
 @Component
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class DefaultCallbackManager implements CallbackManager {
 
     private final DocumentService documentService;
+    private final RestTemplate restTemplate;
 
     @Override
     public void processEditing(Callback callback, Long documentId) {
@@ -26,12 +29,17 @@ public class DefaultCallbackManager implements CallbackManager {
 
     @Override
     public void processSave(Callback callback, Long documentId) {
+        log.info("Saving document");
+        byte[] bytes = downloadDocument(callback.getUrl());
+        documentService.updateDocumentContent(documentId, bytes, false);
         log.info("Document saved");
-        documentService.updateDocumentLock(documentId, false);
     }
 
     @Override
     public void processForceSave(Callback callback, Long documentId) {
+        log.info("Force saving document");
+        byte[] bytes = downloadDocument(callback.getUrl());
+        documentService.updateDocumentContent(documentId, bytes, true);
         log.info("Document force saved");
     }
 
@@ -40,4 +48,10 @@ public class DefaultCallbackManager implements CallbackManager {
         log.info("Document closed");
         documentService.updateDocumentLock(documentId, false);
     }
+
+    private byte[] downloadDocument(String documentUrl) {
+        ResponseEntity<byte[]> response = restTemplate.getForEntity(documentUrl, byte[].class);
+        return response.getBody();
+    }
+
 }

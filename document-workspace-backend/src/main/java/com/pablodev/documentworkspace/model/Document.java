@@ -28,6 +28,9 @@ public class Document {
     @Column(nullable = false)
     private boolean locked = false;
 
+    @Column(nullable = false)
+    private Long version = 0L;
+
     @Lob
     private byte[] content;
 
