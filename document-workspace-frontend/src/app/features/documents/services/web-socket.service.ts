@@ -16,16 +16,18 @@ export class WebSocketService {
     this.client = new Client();
     this.client.configure({
       brokerURL: `${environment.documentService}/ws`,
-      onConnect: () => console.log('WebSocket connected'),
+      onConnect: () => {
+        console.log('WebSocket connected')
+        this.client.subscribe('/topic/document/', (message: Message) => {
+          this.documentLockSubject.next(JSON.parse(message.body) as DocumentLockStatus);
+        })
+      },
       onDisconnect:() => console.log('WebSocket disconnected')
     })
     this.client.activate();
   }
 
   getDocumentLockStatusTopic(): Observable<DocumentLockStatus> {
-    this.client.subscribe('/topic/document/', (message: Message) => {
-      this.documentLockSubject.next(JSON.parse(message.body) as DocumentLockStatus);
-    })
     return this.documentLockSubject.asObservable();
   }
 
