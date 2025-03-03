@@ -11,6 +11,6 @@ public interface DocumentService {
     DocumentContent findDocumentContent(Long id);
     DocumentInfo findDocumentInfo(Long id);
     List<DocumentInfo> findAllDocumentInfo();
-    void updateDocumentOpenStatus(Long id, boolean open);
+    void updateDocumentLock(Long id, boolean locked);
     void deleteDocument(Long id);
 }

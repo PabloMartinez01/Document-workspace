@@ -39,7 +39,7 @@
         {{document.length}}
       </td>
       <td class="px-6 py-4">
-        @if (document.open) {
+        @if (document.locked) {
           <i class="fa fa-lock text-red-500 "></i>
         } @else {
           <i class="fa fa-lock-open text-green-500"></i>
@@ -70,7 +70,7 @@
             </a>
           }
 
-          <button mat-menu-item (click)="deleteDocument(document.id)" [disabled]="document.open">
+          <button mat-menu-item (click)="deleteDocument(document.id)" [disabled]="document.locked">
             <i class="fa fa-remove me-2 text-red-500"></i>
             <span class="text-red-500">Delete document</span>
           </button>

@@ -58,9 +58,9 @@ public class DefaultDocumentService implements DocumentService {
     }
 
     @Override
-    public void updateDocumentOpenStatus(Long id, boolean open) {
-        documentRepository.updateDocumentOpenStatus(open, id);
-        messagingTemplate.convertAndSend("/topic/document/", new DocumentLockStatus(id, open));
+    public void updateDocumentLock(Long id, boolean locked) {
+        documentRepository.updateDocumentLock(locked, id);
+        messagingTemplate.convertAndSend("/topic/document/", new DocumentLockStatus(id, locked));
     }
 
     @Override
@@ -68,7 +68,7 @@ public class DefaultDocumentService implements DocumentService {
         Document document = documentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Document with id: " + id + " not found"));
 
-        if (document.isOpen())
+        if (document.isLocked())
             throw new RuntimeException("The document can not be deleted because it is open");
 
         documentRepository.delete(document);

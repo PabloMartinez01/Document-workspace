@@ -46,7 +46,7 @@ export class ListDocumentsComponent implements OnInit {
         this.webSocketService.getDocumentLockStatusTopic().subscribe(documentLockStatus => {
           this.documents.forEach(document => {
             if (document.id == documentLockStatus.id){
-              document.open = documentLockStatus.locked;
+              document.locked = documentLockStatus.locked;
             }
           })
         })
@@ -59,7 +59,7 @@ export class ListDocumentsComponent implements OnInit {
   private updateDocumentStatus(lockStatus: { id: number; locked: boolean }) {
     const doc = this.documents.find(d => d.id === lockStatus.id);
     if (doc) {
-      doc.open = lockStatus.locked;
+      doc.locked = lockStatus.locked;
     }
   }
 

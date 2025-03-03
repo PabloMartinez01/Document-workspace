@@ -26,7 +26,7 @@ public class Document {
     private Long length;
 
     @Column(nullable = false)
-    private boolean open = false;
+    private boolean locked = false;
 
     @Lob
     private byte[] content;
