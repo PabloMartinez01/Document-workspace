@@ -31,7 +31,8 @@ public class DocumentMapper {
                 .extension(document.getExtension())
                 .filename(document.getFilename())
                 .length(document.getLength())
-                .open(document.isLocked())
+                .locked(document.isLocked())
+                .version(document.getVersion())
                 .build();
     }
 

@@ -3,6 +3,7 @@ package com.pablodev.documentworkspace.services.configuration;
 import com.onlyoffice.model.documenteditor.Config;
 import com.onlyoffice.model.documenteditor.config.Document;
 import com.onlyoffice.model.documenteditor.config.EditorConfig;
+import com.onlyoffice.model.documenteditor.config.editorconfig.Customization;
 import com.onlyoffice.model.documenteditor.config.editorconfig.Mode;
 import com.pablodev.documentworkspace.dto.Action;
 import com.pablodev.documentworkspace.dto.DocumentInfo;
@@ -38,7 +39,7 @@ public class DefaultConfigurationService implements ConfigurationService {
 
         Config config = Config.builder()
                 .document(Document.builder()
-                        .key(documentManager.getDocumentKey(documentId))
+                        .key(documentManager.getDocumentKey(documentId, documentInfo.getVersion()))
                         .fileType(documentInfo.getExtension())
                         .title(documentInfo.getFilename())
                         .url(urlManager.getDocumentUrl(documentId))
@@ -48,6 +49,9 @@ public class DefaultConfigurationService implements ConfigurationService {
                 .editorConfig(EditorConfig.builder()
                         .mode(mode)
                         .callbackUrl(urlManager.getDocumentCallback(documentId))
+                        .customization(Customization.builder()
+                                .forcesave(true)
+                                .build())
                         .build()
                 )
                 .build();

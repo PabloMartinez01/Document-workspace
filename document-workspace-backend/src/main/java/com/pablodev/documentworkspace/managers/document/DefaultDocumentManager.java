@@ -43,10 +43,13 @@ public class DefaultDocumentManager implements DocumentManager  {
     }
 
     @Override
-    public String getDocumentKey(Long documentId) {
+    public String getDocumentKey(Long documentId, Long documentVersion) {
         try {
             byte[] hashBytes = MessageDigest.getInstance("SHA-256")
-                    .digest(String.valueOf(documentId).getBytes(StandardCharsets.UTF_8));
+                    .digest(String.valueOf(documentId)
+                            .concat("_")
+                            .concat(String.valueOf(documentVersion))
+                            .getBytes(StandardCharsets.UTF_8));
             return Base64.getUrlEncoder()
                     .withoutPadding()
                     .encodeToString(hashBytes)
