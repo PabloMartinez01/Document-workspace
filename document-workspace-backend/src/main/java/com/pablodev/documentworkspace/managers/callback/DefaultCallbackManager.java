@@ -20,14 +20,14 @@ public class DefaultCallbackManager implements CallbackManager {
         log.info("Document open");
         Action action = callback.getActions().get(0);
         if (action.getType().equals(Type.CONNECTED)) {
-            documentService.updateDocumentOpenStatus(documentId, true);
+            documentService.updateDocumentLock(documentId, true);
         }
     }
 
     @Override
     public void processSave(Callback callback, Long documentId) {
         log.info("Document saved");
-        documentService.updateDocumentOpenStatus(documentId, false);
+        documentService.updateDocumentLock(documentId, false);
     }
 
     @Override
@@ -38,6 +38,6 @@ public class DefaultCallbackManager implements CallbackManager {
     @Override
     public void processClose(Callback callback, Long documentId) {
         log.info("Document closed");
-        documentService.updateDocumentOpenStatus(documentId, false);
+        documentService.updateDocumentLock(documentId, false);
     }
 }

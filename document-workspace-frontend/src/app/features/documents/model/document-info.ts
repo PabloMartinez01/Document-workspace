@@ -3,5 +3,5 @@ export interface DocumentInfo {
   filename: string;
   extension: string;
   length: number;
-  open: boolean;
+  locked: boolean;
 }
