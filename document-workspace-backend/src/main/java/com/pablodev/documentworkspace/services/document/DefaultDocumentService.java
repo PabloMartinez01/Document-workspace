@@ -3,6 +3,7 @@ package com.pablodev.documentworkspace.services.document;
 import com.pablodev.documentworkspace.dto.DocumentContent;
 import com.pablodev.documentworkspace.dto.DocumentInfo;
 import com.pablodev.documentworkspace.dto.DocumentRequest;
+import com.pablodev.documentworkspace.events.DocumentLockEvent;
 import com.pablodev.documentworkspace.mappers.DocumentMapper;
 import com.pablodev.documentworkspace.model.Document;
 import com.pablodev.documentworkspace.repositories.DocumentRepository;
@@ -24,7 +25,6 @@ public class DefaultDocumentService implements DocumentService {
     private final DocumentMapper documentMapper;
     private final SimpMessagingTemplate messagingTemplate;
 
-    public record DocumentLockStatus(Long id, boolean locked) {};
 
     @Override
     public DocumentInfo saveDocument(DocumentRequest documentRequest) {
@@ -60,7 +60,7 @@ public class DefaultDocumentService implements DocumentService {
     @Override
     public void updateDocumentLock(Long id, boolean locked) {
         documentRepository.updateDocumentLock(locked, id);
-        messagingTemplate.convertAndSend("/topic/document/", new DocumentLockStatus(id, locked));
+        messagingTemplate.convertAndSend("/topic/document/", new DocumentLockEvent(id, locked));
     }
 
     @Override
@@ -77,7 +77,7 @@ public class DefaultDocumentService implements DocumentService {
         }
 
         documentRepository.save(document);
-        messagingTemplate.convertAndSend("/topic/document/", new DocumentLockStatus(id, lock));
+        messagingTemplate.convertAndSend("/topic/document/", new DocumentLockEvent(id, lock));
     }
 
     @Override
