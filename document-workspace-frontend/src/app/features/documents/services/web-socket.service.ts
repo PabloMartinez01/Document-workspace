@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Client, Message} from '@stomp/stompjs';
 import {Observable, Subject} from 'rxjs';
-import {DocumentLockStatus} from '../model/document-lock-status';
+import {DocumentLockEvent} from '../model/document-lock-event';
 import {environment} from '../../../../environments/environment';
 
 @Injectable({
@@ -10,7 +10,7 @@ import {environment} from '../../../../environments/environment';
 export class WebSocketService {
 
   private client: Client;
-  private documentLockSubject: Subject<DocumentLockStatus> = new Subject();
+  private documentLockSubject: Subject<DocumentLockEvent> = new Subject();
 
   constructor() {
     this.client = new Client();
@@ -18,20 +18,20 @@ export class WebSocketService {
       brokerURL: `${environment.documentService}/ws`,
       onConnect: () => {
         console.log('WebSocket connected')
-        this.subscribeToDocumentLockStatusTopic();
+        this.subscribeToDocumentLockTopic();
       },
       onDisconnect:() => console.log('WebSocket disconnected')
     })
     this.client.activate();
   }
 
-  private subscribeToDocumentLockStatusTopic(): void {
+  private subscribeToDocumentLockTopic(): void {
     this.client.subscribe('/topic/document/', (message: Message) => {
-      this.documentLockSubject.next(JSON.parse(message.body) as DocumentLockStatus);
+      this.documentLockSubject.next(JSON.parse(message.body) as DocumentLockEvent);
     })
   }
 
-  getDocumentLockStatusTopic(): Observable<DocumentLockStatus> {
+  getDocumentLockTopic(): Observable<DocumentLockEvent> {
     return this.documentLockSubject.asObservable();
   }
 

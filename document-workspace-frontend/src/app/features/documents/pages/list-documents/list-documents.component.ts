@@ -43,10 +43,10 @@ export class ListDocumentsComponent implements OnInit {
     this.documentService.getDocuments().subscribe({
       next: documents => {
         this.documents = documents;
-        this.webSocketService.getDocumentLockStatusTopic().subscribe(documentLockStatus => {
+        this.webSocketService.getDocumentLockTopic().subscribe(documentLockEvent => {
           this.documents.forEach(document => {
-            if (document.id == documentLockStatus.id){
-              document.locked = documentLockStatus.locked;
+            if (document.id == documentLockEvent.id){
+              document.locked = documentLockEvent.lock;
             }
           })
         })
@@ -54,13 +54,6 @@ export class ListDocumentsComponent implements OnInit {
       error: err => console.log(err)
     })
 
-  }
-
-  private updateDocumentStatus(lockStatus: { id: number; locked: boolean }) {
-    const doc = this.documents.find(d => d.id === lockStatus.id);
-    if (doc) {
-      doc.locked = lockStatus.locked;
-    }
   }
 
   isEditable(extension: string): boolean {
