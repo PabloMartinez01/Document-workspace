@@ -1,15 +1,15 @@
-package com.pablodev.documentworkspace.dto;
+package com.pablodev.documentworkspace.dto.folder;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
-public class ItemResponse {
+@Builder
+public class FolderInfo {
     private Long id;
-    private String filename;
+    private String name;
 }

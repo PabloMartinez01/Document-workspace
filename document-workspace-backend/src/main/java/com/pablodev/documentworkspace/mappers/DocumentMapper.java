@@ -1,8 +1,8 @@
 package com.pablodev.documentworkspace.mappers;
 
-import com.pablodev.documentworkspace.dto.DocumentContent;
-import com.pablodev.documentworkspace.dto.DocumentInfo;
-import com.pablodev.documentworkspace.dto.DocumentRequest;
+import com.pablodev.documentworkspace.dto.document.DocumentContent;
+import com.pablodev.documentworkspace.dto.document.DocumentInfo;
+import com.pablodev.documentworkspace.dto.document.DocumentRequest;
 import com.pablodev.documentworkspace.model.Document;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +15,7 @@ public class DocumentMapper {
                 .extension(documentRequest.getExtension())
                 .content(documentRequest.getContent())
                 .length(documentRequest.getLength())
+                .version(0L)
                 .build();
     }
 

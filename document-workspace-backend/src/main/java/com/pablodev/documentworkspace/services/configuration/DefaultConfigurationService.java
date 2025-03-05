@@ -6,7 +6,7 @@ import com.onlyoffice.model.documenteditor.config.EditorConfig;
 import com.onlyoffice.model.documenteditor.config.editorconfig.Customization;
 import com.onlyoffice.model.documenteditor.config.editorconfig.Mode;
 import com.pablodev.documentworkspace.dto.Action;
-import com.pablodev.documentworkspace.dto.DocumentInfo;
+import com.pablodev.documentworkspace.dto.document.DocumentInfo;
 import com.pablodev.documentworkspace.managers.document.DocumentManager;
 import com.pablodev.documentworkspace.managers.url.UrlManager;
 import com.pablodev.documentworkspace.services.document.DocumentService;

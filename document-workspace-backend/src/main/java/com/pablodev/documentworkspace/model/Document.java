@@ -1,14 +1,7 @@
 package com.pablodev.documentworkspace.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "documents")
@@ -16,8 +9,15 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
-public class Document extends Item {
+@Builder
+public class Document {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String filename;
 
     @Column(nullable = false)
     private String extension;
@@ -33,5 +33,8 @@ public class Document extends Item {
 
     @Lob
     private byte[] content;
+
+    @ManyToOne
+    private Folder folder;
 
 }

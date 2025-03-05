@@ -1,8 +1,8 @@
 package com.pablodev.documentworkspace.services.document;
 
-import com.pablodev.documentworkspace.dto.DocumentContent;
-import com.pablodev.documentworkspace.dto.DocumentInfo;
-import com.pablodev.documentworkspace.dto.DocumentRequest;
+import com.pablodev.documentworkspace.dto.document.DocumentContent;
+import com.pablodev.documentworkspace.dto.document.DocumentInfo;
+import com.pablodev.documentworkspace.dto.document.DocumentRequest;
 
 import java.util.List;
 

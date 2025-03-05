@@ -1,9 +1,9 @@
 package com.pablodev.documentworkspace.controllers;
 
 import com.onlyoffice.model.documenteditor.Callback;
-import com.pablodev.documentworkspace.dto.DocumentContent;
-import com.pablodev.documentworkspace.dto.DocumentInfo;
-import com.pablodev.documentworkspace.dto.DocumentRequest;
+import com.pablodev.documentworkspace.dto.document.DocumentContent;
+import com.pablodev.documentworkspace.dto.document.DocumentInfo;
+import com.pablodev.documentworkspace.dto.document.DocumentRequest;
 import com.pablodev.documentworkspace.services.callback.CallbackService;
 import com.pablodev.documentworkspace.services.document.DocumentService;
 import lombok.RequiredArgsConstructor;
