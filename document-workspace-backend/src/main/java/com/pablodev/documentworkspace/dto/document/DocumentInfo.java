@@ -1,4 +1,4 @@
-package com.pablodev.documentworkspace.dto;
+package com.pablodev.documentworkspace.dto.document;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
