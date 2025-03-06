@@ -2,20 +2,31 @@ package com.pablodev.documentworkspace.mappers;
 
 import com.pablodev.documentworkspace.dto.document.DocumentContent;
 import com.pablodev.documentworkspace.dto.document.DocumentInfo;
-import com.pablodev.documentworkspace.dto.document.DocumentRequest;
 import com.pablodev.documentworkspace.model.Document;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Component
 public class DocumentMapper {
 
-    public Document toDocumentEntity(DocumentRequest documentRequest) {
+    private FolderMapper folderMapper;
+
+    public DocumentMapper(@Lazy FolderMapper folderMapper) {
+        this.folderMapper = folderMapper;
+    }
+
+    public Document toDocumentEntity(MultipartFile multipartFile) throws IOException {
         return Document.builder()
-                .filename(documentRequest.getFilename())
-                .extension(documentRequest.getExtension())
-                .content(documentRequest.getContent())
-                .length(documentRequest.getLength())
+                .filename(multipartFile.getOriginalFilename())
+                .extension(multipartFile.getOriginalFilename()
+                        .substring(multipartFile.getOriginalFilename().lastIndexOf(".") + 1))
+                .length(multipartFile.getSize())
                 .version(0L)
+                .locked(false)
+                .content(multipartFile.getBytes())
                 .build();
     }
 
@@ -34,6 +45,7 @@ public class DocumentMapper {
                 .length(document.getLength())
                 .locked(document.isLocked())
                 .version(document.getVersion())
+                .folder(folderMapper.toFolderInfo(document.getFolder()))
                 .build();
     }
 

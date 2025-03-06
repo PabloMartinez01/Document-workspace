@@ -1,5 +1,6 @@
 package com.pablodev.documentworkspace.dto.document;
 
+import com.pablodev.documentworkspace.dto.folder.FolderInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,5 +21,7 @@ public class DocumentInfo {
     private boolean locked;
 
     private Long version;
+
+    private FolderInfo folder;
 
 }

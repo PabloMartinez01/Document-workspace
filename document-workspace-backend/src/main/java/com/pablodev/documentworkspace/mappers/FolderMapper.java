@@ -4,16 +4,19 @@ import com.pablodev.documentworkspace.dto.folder.FolderInfo;
 import com.pablodev.documentworkspace.dto.folder.FolderRequest;
 import com.pablodev.documentworkspace.dto.folder.FolderResponse;
 import com.pablodev.documentworkspace.model.Folder;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
 @Component
-@RequiredArgsConstructor
 public class FolderMapper {
 
-    private final DocumentMapper documentMapper;
+    private DocumentMapper documentMapper;
+
+    public FolderMapper(@Lazy DocumentMapper documentMapper) {
+        this.documentMapper = documentMapper;
+    }
 
     public Folder toFolderEntity(FolderRequest folderRequest) {
         return Folder.builder()
