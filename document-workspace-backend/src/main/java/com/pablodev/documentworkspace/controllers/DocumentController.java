@@ -7,18 +7,18 @@ import com.pablodev.documentworkspace.dto.document.DocumentRequest;
 import com.pablodev.documentworkspace.services.callback.CallbackService;
 import com.pablodev.documentworkspace.services.document.DocumentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
+@Log4j2
 @RestController
 @RequestMapping("/document")
 @RequiredArgsConstructor
@@ -28,19 +28,8 @@ public class DocumentController {
     private final CallbackService callbackService;
 
     @PostMapping
-    public ResponseEntity<DocumentInfo> createDocument(@RequestParam MultipartFile file) throws IOException {
-        String extension = Objects.requireNonNull(file.getOriginalFilename())
-                .substring(file.getOriginalFilename().lastIndexOf(".") + 1);
-
-        DocumentRequest documentRequest = DocumentRequest.builder()
-                .filename(file.getOriginalFilename())
-                .length(file.getSize())
-                .extension(extension)
-                .content(file.getBytes())
-                .build();
-
+    public ResponseEntity<DocumentInfo> createDocument(DocumentRequest documentRequest) throws IOException {
         DocumentInfo documentInfo = documentService.saveDocument(documentRequest);
-
         return ResponseEntity.ok(documentInfo);
     }
 
@@ -74,8 +63,7 @@ public class DocumentController {
             callbackService.processCallback(body, id);
             return ResponseEntity.ok(Collections.singletonMap("error", 0));
         } catch (Exception e) {
-            return ResponseEntity.internalServerError()
-                    .body(Collections.singletonMap("error", 1));
+            return ResponseEntity.internalServerError().body(Collections.singletonMap("error", 1));
         }
     }
 
