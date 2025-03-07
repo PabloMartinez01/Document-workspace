@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Client, Message} from '@stomp/stompjs';
 import {Observable, Subject} from 'rxjs';
 import {DocumentLockEvent} from '../model/document-lock-event';
-import {environment} from '../../../../environments/environment';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

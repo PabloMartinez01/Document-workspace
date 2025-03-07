@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ViewFolderComponent} from '../folder/view-folder/view-folder.component';
+import {ViewFolderComponent} from './view-folder/view-folder.component';
+
 
 const routes: Routes = [
   { path: ':id', component: ViewFolderComponent },
@@ -10,4 +11,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DocumentsRoutingModule { }
+export class FolderRoutingModule { }

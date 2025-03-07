@@ -34,7 +34,7 @@ public class DocumentController {
     }
 
     @GetMapping( "/{id}")
-    public ResponseEntity<byte[]> findDocument(@PathVariable long id) {
+    public ResponseEntity<byte[]> findDocument(@PathVariable Long id) {
         DocumentContent documentContent = documentService.findDocumentContent(id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentDisposition(
