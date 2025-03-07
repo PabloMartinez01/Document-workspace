@@ -7,7 +7,8 @@ import com.pablodev.documentworkspace.model.Folder;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Optional;
 
 @Component
 public class FolderMapper {
@@ -21,19 +22,18 @@ public class FolderMapper {
     public Folder toFolderEntity(FolderRequest folderRequest) {
         return Folder.builder()
                 .name(folderRequest.getName())
-                .documents(new ArrayList<>())
-                .subFolders(new ArrayList<>())
+                .documents(Collections.emptyList())
+                .subFolders(Collections.emptyList())
                 .build();
     }
 
     public FolderInfo toFolderInfo(Folder folder) {
-
-        if (folder == null) return null;
-
-        return FolderInfo.builder()
-                .id(folder.getId())
-                .name(folder.getName())
-                .build();
+        return Optional.ofNullable(folder)
+                .map(f -> FolderInfo.builder()
+                        .id(f.getId())
+                        .name(f.getName())
+                        .build())
+                .orElse(null);
     }
 
     public FolderResponse toFolderResponse(Folder folder) {

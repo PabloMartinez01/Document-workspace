@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {DocumentService} from '../../services/document.service';
-import {DocumentInfo} from '../../model/document-info';
+import {DocumentService} from '../../../../core/services/document.service';
+import {DocumentInfo} from '../../../../core/model/document-info';
 import {NgForOf, NgIf} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {UploadDropzoneComponent} from '../../components/upload-dropzone/upload-dropzone.component';
-import {ExtensionService} from '../../services/extension.service';
-import {AlertService} from '../../services/alert.service';
-import {Action} from '../../model/action.enum'
-import {WebSocketService} from '../../services/web-socket.service';
+import {ExtensionService} from '../../../../core/services/extension.service';
+import {AlertService} from '../../../../core/services/alert.service';
+import {Action} from '../../../../core/model/action.enum'
+import {WebSocketService} from '../../../../core/services/web-socket.service';
 
 @Component({
   selector: 'app-list-documents',

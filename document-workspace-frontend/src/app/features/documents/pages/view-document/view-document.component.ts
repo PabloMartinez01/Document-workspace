@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ConfigurationService} from '../../services/configuration.service';
+import {ConfigurationService} from '../../../../core/services/configuration.service';
 import {DocumentEditorModule, IConfig} from '@onlyoffice/document-editor-angular';
 import {ActivatedRoute} from '@angular/router';
 import {environment} from '../../../../../environments/environment';
-import {Action} from '../../model/action.enum';
+import {Action} from '../../../../core/model/action.enum';
 
 @Component({
   selector: 'app-view-document',
