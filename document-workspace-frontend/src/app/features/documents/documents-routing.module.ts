@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ViewFolderComponent} from '../folder/view-folder/view-folder.component';
+import {ViewDocumentComponent} from './pages/view-document/view-document.component';
 
 const routes: Routes = [
-  { path: ':id', component: ViewFolderComponent },
+  { path: ':id', component: ViewDocumentComponent },
 ];
 
 @NgModule({

@@ -7,11 +7,11 @@ import Swal from 'sweetalert2';
 export class AlertService {
 
   public showSuccessAlert(title: string, text: string) {
-    return Swal.fire(title, text, 'success');
+    Swal.fire(title, text, 'success').then();
   }
 
   public showErrorAlert(title: string, text: string) {
-    return Swal.fire(title, text, 'error');
+    Swal.fire(title, text, 'error').then();
   }
 
   public showConfirmationAlert(onSuccess: () => void) {

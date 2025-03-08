@@ -1,89 +1,100 @@
-<ul class="w-full px-20 py-5">
-  <li *ngFor="let subfolder of folder?.folders"
-      [routerLink]="['/folder', subfolder.id]"
-    class="bg-white text-sm border dark:bg-gray-800 dark:border-gray-700 border-gray-200 px-6 py-4 font-medium text-gray-900
+<div *ngIf="this.folder" class="w-full px-20 py-5">
+
+  <ul class="w-full">
+    <li *ngFor="let subfolder of folder?.folders"
+        [routerLink]="['/folder', subfolder.id]"
+        class="bg-white text-sm border dark:bg-gray-800 dark:border-gray-700 border-gray-200 px-6 py-4 font-medium text-gray-900
      whitespace-nowrap dark:text-white cursor-pointer">
-    <i class="fas fa-folder text-blue-700"></i>
-    <span class="ms-3">{{subfolder.name}}</span>
-  </li>
-</ul>
+      <i class="fas fa-folder text-blue-700"></i>
+      <span class="ms-3">{{subfolder.name}}</span>
+    </li>
+  </ul>
 
-<div class="relative overflow-x-auto px-20 py-2">
-  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 shadow">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-    <tr>
-      <th scope="col" class="px-6 py-3">Id</th>
-      <th scope="col" class="px-6 py-3">Filename</th>
-      <th scope="col" class="px-6 py-3">Extension</th>
-      <th scope="col" class="px-6 py-3">Length</th>
-      <th scope="col" class="px-6 py-3">Status</th>
-      <th scope="col" class="px-6 py-3">Version</th>
-      <th scope="col" class="px-6 py-3">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
+  <div class="relative overflow-x-auto py-2">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 shadow">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">Id</th>
+        <th scope="col" class="px-6 py-3">Filename</th>
+        <th scope="col" class="px-6 py-3">Extension</th>
+        <th scope="col" class="px-6 py-3">Length</th>
+        <th scope="col" class="px-6 py-3">Status</th>
+        <th scope="col" class="px-6 py-3">Version</th>
+        <th scope="col" class="px-6 py-3">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
 
-    <tr *ngFor="let document of folder?.documents" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-      <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-        {{document.id}}
-      </th>
-      <td class="px-6 py-4">
-        {{document.filename}}
-      </td>
-      <td class="px-6 py-4">
-        {{document.extension}}
-      </td>
-      <td class="px-6 py-4">
-        {{document.length}}
-      </td>
-      <td class="px-6 py-4">
-        @if (document.locked) {
-          <i class="fa fa-lock text-red-500 "></i>
-        } @else {
-          <i class="fa fa-lock-open text-green-500"></i>
-        }
-      </td>
-      <td class="px-6 py-4">
-        {{document.version}}
-      </td>
-      <td class="px-6 py-4">
+      <tr *ngFor="let document of folder?.documents" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          {{document.id}}
+        </th>
+        <td class="px-6 py-4">
+          {{document.filename}}
+        </td>
+        <td class="px-6 py-4">
+          {{document.extension}}
+        </td>
+        <td class="px-6 py-4">
+          {{document.length}}
+        </td>
+        <td class="px-6 py-4">
+          @if (document.locked) {
+            <i class="fa fa-lock text-red-500 "></i>
+          } @else {
+            <i class="fa fa-lock-open text-green-500"></i>
+          }
+        </td>
+        <td class="px-6 py-4">
+          {{document.version}}
+        </td>
+        <td class="px-6 py-4">
 
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
 
-        <mat-menu #menu="matMenu" class="customize">
+          <mat-menu #menu="matMenu" class="customize">
 
-          @if (isSupported(document.extension)) {
-            @if (isEditable(document.extension)) {
-              <a [routerLink]="['/documents', document.id]" [queryParams]="{action : Action.EDIT}" target="_blank">
+            @if (isSupported(document.extension)) {
+              @if (isEditable(document.extension)) {
+                <a [routerLink]="['/documents', document.id]" [queryParams]="{action : Action.EDIT}" target="_blank">
+                  <button mat-menu-item>
+                    <i class="fa fa-edit me-2 text-gray-500"></i>
+                    <span class="text-gray-700">Edit</span>
+                  </button>
+                </a>
+              }
+              <a [routerLink]="['/documents', document.id]" [queryParams]="{action : Action.VIEW}" target="_blank">
                 <button mat-menu-item>
-                  <i class="fa fa-edit me-2 text-gray-500"></i>
-                  <span class="text-gray-700">Edit</span>
+                  <i class="fa fa-eye me-2 text-gray-500"></i>
+                  <span class="text-gray-700">View</span>
                 </button>
               </a>
             }
-            <a [routerLink]="['/documents', document.id]" [queryParams]="{action : Action.VIEW}" target="_blank">
-              <button mat-menu-item>
-                <i class="fa fa-eye me-2 text-gray-500"></i>
-                <span class="text-gray-700">View</span>
-              </button>
-            </a>
-          }
 
-          <button mat-menu-item (click)="deleteDocument(document.id)" [disabled]="document.locked">
-            <i class="fa fa-remove me-2 text-red-500"></i>
-            <span class="text-red-500">Delete document</span>
-          </button>
-        </mat-menu>
-      </td>
-    </tr>
+            <button mat-menu-item (click)="deleteDocument(document.id)" [disabled]="document.locked">
+              <i class="fa fa-remove me-2 text-red-500"></i>
+              <span class="text-red-500">Delete document</span>
+            </button>
+          </mat-menu>
+        </td>
+      </tr>
 
 
 
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="py-5">
+    <app-upload-dropzone
+      (uploadFileEmitter)="uploadDocument($event)"
+    />
+  </div>
 </div>
+
+
 
 
 
