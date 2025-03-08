@@ -36,13 +36,8 @@ export class ViewDocumentComponent implements OnInit {
     const action: Action = this.activatedRoute.snapshot.queryParams['action'] || Action.VIEW;
 
     this.configurationService.getConfiguration(this.id, action).subscribe({
-      next: configuration => {
-        console.log(configuration)
-        this.configuration = configuration
-      },
-      error: err => {
-        console.log(err)
-      }
+      next: configuration => this.configuration = configuration,
+      error: err => console.log(err)
     })
   }
 
