@@ -1,8 +1,18 @@
 <div *ngIf="this.folder" class="w-full px-20 py-5">
 
-  <div class="w-full bg-white text-sm border-t border-x border-gray-200 px-6 py-4 shadow">
-    <h1 class="mb-1 text-3xl font-bold leading-none tracking-tight text-gray-900">{{this.folder.name}}</h1>
-    <p class="text-lg font-normal text-gray-500">{{this.folder.documents.length + this.folder.folders.length + " items"}}</p>
+  <div class="w-full bg-white text-sm border-t border-x border-gray-200 px-6 py-4 shadow flex gap-10 items-center">
+
+    @if (this.folder.parentFolder && this.folder.parentFolder.id) {
+      <i [routerLink]="['/folder', this.folder.parentFolder.id]"
+         class="fas fa-arrow-left fa-2xl text-gray-800 cursor-pointer px-3 py-6 rounded border border-gray-100 shadow
+         hover:bg-gray-200 transition-all ease duration-300"></i>
+    }
+
+
+    <div>
+      <h1 class="mb-1 text-3xl font-bold leading-none tracking-tight text-gray-900">{{this.folder.name}}</h1>
+      <p class="text-lg font-normal text-gray-500">{{this.folder.documents.length + this.folder.folders.length + " items"}}</p>
+    </div>
   </div>
 
   <ul class="w-full mt-2 shadow-sm">
