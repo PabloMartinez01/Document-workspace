@@ -6,5 +6,5 @@ export interface Folder {
     name: string;
     documents: DocumentInfo[];
     folders: FolderInfo[];
-    parentFolder: FolderInfo[];
+    parentFolder: FolderInfo;
 }
