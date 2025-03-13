@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {FolderService} from '../../../core/services/folder.service';
-import {Folder} from '../../../core/model/folder';
+import {FolderService} from '../../../../core/services/folder.service';
+import {Folder} from '../../../../core/model/folder';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {NgForOf, NgIf} from '@angular/common';
-import {UploadDropzoneComponent} from '../../documents/components/upload-dropzone/upload-dropzone.component';
-import {ExtensionService} from '../../../core/services/extension.service';
-import {AlertService} from '../../../core/services/alert.service';
-import {DocumentService} from '../../../core/services/document.service';
-import {Action} from '../../../core/model/action.enum';
-import {Messages} from '../../../core/model/messages';
+import {UploadDropzoneComponent} from '../../components/upload-dropzone/upload-dropzone.component';
+import {ExtensionService} from '../../../../core/services/extension.service';
+import {AlertService} from '../../../../core/services/alert.service';
+import {DocumentService} from '../../../../core/services/document.service';
+import {Action} from '../../../../core/model/action.enum';
+import {Messages} from '../../../../core/model/messages';
 
 @Component({
   selector: 'app-view-folder',

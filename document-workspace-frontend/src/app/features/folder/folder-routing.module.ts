@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ViewFolderComponent} from './view-folder/view-folder.component';
+import {ViewFolderComponent} from './pages/view-folder/view-folder.component';
 
 
 const routes: Routes = [
