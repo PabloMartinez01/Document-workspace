@@ -25,13 +25,14 @@
     <mat-menu #createMenu="matMenu" >
       <div (click)="$event.stopPropagation()" class="flex flex-col justify-center gap-2 py-2 px-4 w-64">
         <input #inputFolder
-          type="text"
-          class="border border-gray-200 px-3 py-2 rounded shadow font-light outline-gray-600"
-          placeholder="Folder name">
+            required
+            type="text"
+            class="border border-gray-200 px-3 py-2 rounded shadow font-light outline-gray-600 "
+            placeholder="Folder name">
 
-        <button (click)="createFolder()"
-          class="px-5 py-2 text-white bg-gray-800 rounded hover:bg-black transition-all
-          ease duration-200 border-[1px] border-black cursor-pointer">Create folder</button>
+        <button (click)="createFolder()" [disabled]="!this.inputFolder.value"
+          class="px-5 py-2 text-white bg-gray-700 rounded hover:bg-black transition-all disabled:bg-gray-500 disabled:border-gray-500
+          disabled:cursor-not-allowed ease duration-200 border-[1px] border-black cursor-pointer">Create folder</button>
 
       </div>
     </mat-menu>
@@ -41,7 +42,7 @@
   <ul class="w-full mt-2 shadow-sm">
     <li *ngFor="let subfolder of folder?.folders"
         [routerLink]="['/folder', subfolder.id]"
-        class="bg-white text-sm border border-gray-200 px-6 py-4 text-gray-500 whitespace-nowrap dark:text-white cursor-pointer">
+        class="bg-white text-sm border border-gray-200 px-6 py-5 text-gray-500 whitespace-nowrap dark:text-white cursor-pointer">
       <i class="fas fa-folder text-blue-700"></i>
       <span class="ms-3">{{subfolder.name}}</span>
     </li>

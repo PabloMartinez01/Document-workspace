@@ -33,7 +33,7 @@ import {FolderInfo} from '../../../../core/model/folder-info';
 })
 export class ViewFolderComponent implements OnInit {
 
-    @ViewChild('inputFolder') inputFolder: ElementRef | undefined;
+    @ViewChild('inputFolder') inputFolder: ElementRef<HTMLInputElement>  | undefined;
     folder?: Folder;
 
     constructor(
@@ -110,6 +110,9 @@ export class ViewFolderComponent implements OnInit {
   createFolder() {
       if (!this.inputFolder || !this.folder) return;
       const folderName: string = this.inputFolder.nativeElement.value;
+
+      if (!folderName) return;
+      this.inputFolder.nativeElement.value = '';
 
       this.folderService.createFolder({name: folderName, parentFolderId: this.folder.id}).subscribe({
         next: (folderInfo: FolderInfo) => {
