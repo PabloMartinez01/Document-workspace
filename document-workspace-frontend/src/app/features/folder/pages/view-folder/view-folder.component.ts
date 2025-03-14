@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FolderService} from '../../../../core/services/folder.service';
 import {Folder} from '../../../../core/model/folder';
 import {ActivatedRoute, RouterLink} from '@angular/router';
@@ -12,6 +12,7 @@ import {AlertService} from '../../../../core/services/alert.service';
 import {DocumentService} from '../../../../core/services/document.service';
 import {Action} from '../../../../core/model/action.enum';
 import {Messages} from '../../../../core/model/messages';
+import {FolderInfo} from '../../../../core/model/folder-info';
 
 @Component({
   selector: 'app-view-folder',
@@ -32,6 +33,7 @@ import {Messages} from '../../../../core/model/messages';
 })
 export class ViewFolderComponent implements OnInit {
 
+    @ViewChild('inputFolder') inputFolder: ElementRef | undefined;
     folder?: Folder;
 
     constructor(
@@ -103,6 +105,22 @@ export class ViewFolderComponent implements OnInit {
       },
       error: () => this.alertService.showErrorAlert(Messages.uploadError.title, Messages.uploadError.body)
     });
+  }
+
+  createFolder() {
+      if (!this.inputFolder || !this.folder) return;
+      const folderName: string = this.inputFolder.nativeElement.value;
+
+      this.folderService.createFolder({name: folderName, parentFolderId: this.folder.id}).subscribe({
+        next: (folderInfo: FolderInfo) => {
+          if (!this.folder) return;
+          this.folder.folders = [...this.folder.folders, folderInfo];
+          this.alertService.showSuccessAlert(Messages.createFolderSuccess.title, Messages.createFolderSuccess.body);
+        },
+        error: () => this.alertService.showErrorAlert(Messages.createFolderError.title, Messages.createFolderError.body)
+      })
+
+
   }
 
   protected readonly Action = Action;

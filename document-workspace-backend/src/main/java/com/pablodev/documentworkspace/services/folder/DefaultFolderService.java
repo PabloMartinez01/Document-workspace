@@ -1,5 +1,6 @@
 package com.pablodev.documentworkspace.services.folder;
 
+import com.pablodev.documentworkspace.dto.folder.FolderInfo;
 import com.pablodev.documentworkspace.dto.folder.FolderRequest;
 import com.pablodev.documentworkspace.dto.folder.FolderResponse;
 import com.pablodev.documentworkspace.mappers.FolderMapper;
@@ -35,13 +36,13 @@ public class DefaultFolderService implements FolderService {
     }
 
     @Override
-    public FolderResponse saveFolder(FolderRequest folderRequest) {
+    public FolderInfo saveFolder(FolderRequest folderRequest) {
         Folder folder = folderMapper.toFolderEntity(folderRequest);
         Folder parentFolder = folderRepository.findById(folderRequest.getParentFolderId())
                 .orElseThrow(() -> new EntityNotFoundException("Parent folder not found"));
         folder.setParentFolder(parentFolder);
         Folder savedFolder = folderRepository.save(folder);
-        return folderMapper.toFolderResponse(savedFolder);
+        return folderMapper.toFolderInfo(savedFolder);
     }
 
     @Override
