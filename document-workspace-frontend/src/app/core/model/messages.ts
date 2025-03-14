@@ -19,5 +19,13 @@ export const Messages = {
     title: 'Folder not found',
     body: 'The folder you are looking for does not exist or there was an error retrieving it.',
   },
+  createFolderSuccess: {
+    title: 'Folder created',
+    body: 'The folder has been created successfully'
+  },
+  createFolderError: {
+    title: 'Create error',
+    body: 'The folder was not created successfully',
+  }
 
 };

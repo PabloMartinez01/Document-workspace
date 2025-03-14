@@ -18,16 +18,21 @@
   <div class="flex justify-end">
 
       <button mat-icon-button [matMenuTriggerFor]="createMenu"
-          class="fas fa-add !bg-white !rounded hover:!bg-black px-3 py-5 !border border-gray-200 mt-2 fa-xl text-gray-600
+          class="fas fa-add !bg-white !rounded hover:!bg-black px-3 py-5 !border border-gray-200 mt-2 text-gray-600
           shadow transition-all ease duration-200 hover:text-white cursor-pointer">
       </button>
 
     <mat-menu #createMenu="matMenu" >
       <div (click)="$event.stopPropagation()" class="flex flex-col justify-center gap-2 py-2 px-4 w-64">
-        <input type="text" class="border border-gray-200 px-3 py-2 rounded shadow font-light outline-gray-600"
-               placeholder="Folder name">
-        <button class="px-5 py-2 text-white bg-gray-800 rounded hover:bg-black transition-all ease duration-200 border-[1px]
-                             border-black cursor-pointer">Create folder</button>
+        <input #inputFolder
+          type="text"
+          class="border border-gray-200 px-3 py-2 rounded shadow font-light outline-gray-600"
+          placeholder="Folder name">
+
+        <button (click)="createFolder()"
+          class="px-5 py-2 text-white bg-gray-800 rounded hover:bg-black transition-all
+          ease duration-200 border-[1px] border-black cursor-pointer">Create folder</button>
+
       </div>
     </mat-menu>
   </div>

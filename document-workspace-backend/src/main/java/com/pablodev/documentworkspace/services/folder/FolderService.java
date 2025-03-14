@@ -1,9 +1,10 @@
 package com.pablodev.documentworkspace.services.folder;
 
+import com.pablodev.documentworkspace.dto.folder.FolderInfo;
 import com.pablodev.documentworkspace.dto.folder.FolderRequest;
 import com.pablodev.documentworkspace.dto.folder.FolderResponse;
 
 public interface FolderService {
-    FolderResponse saveFolder(FolderRequest folderRequest);
+    FolderInfo saveFolder(FolderRequest folderRequest);
     FolderResponse findFolderById(Long id);
 }
