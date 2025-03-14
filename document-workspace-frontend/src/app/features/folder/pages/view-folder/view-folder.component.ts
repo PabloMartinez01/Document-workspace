@@ -120,7 +120,20 @@ export class ViewFolderComponent implements OnInit {
         error: () => this.alertService.showErrorAlert(Messages.createFolderError.title, Messages.createFolderError.body)
       })
 
+  }
 
+  bytesToString(bytes: number): string {
+    if (bytes < 1024) {
+      return `${bytes} bytes`;
+    }
+    if (bytes < 1024 * 1024) {
+      return `${(bytes / 1024).toFixed(2)} KB`;
+    }
+    if (bytes < 1024 * 1024 * 1024) {
+      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    }
+
+    return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
   }
 
   protected readonly Action = Action;
