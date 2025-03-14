@@ -57,7 +57,7 @@
           <span class="ms-3">{{document.filename}}</span>
         </td>
         <td>{{document.extension}}</td>
-        <td>{{document.length}}&nbsp;bytes</td>
+        <td>{{bytesToString(document.length)}}</td>
         <td>
           @if (document.locked) {
             <i class="fa fa-lock text-red-500 "></i>
