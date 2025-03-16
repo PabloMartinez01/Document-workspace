@@ -4,7 +4,9 @@ import com.pablodev.documentworkspace.dto.folder.FolderInfo;
 import com.pablodev.documentworkspace.dto.folder.FolderRequest;
 import com.pablodev.documentworkspace.dto.folder.FolderResponse;
 import com.pablodev.documentworkspace.mappers.FolderMapper;
+import com.pablodev.documentworkspace.model.Document;
 import com.pablodev.documentworkspace.model.Folder;
+import com.pablodev.documentworkspace.repositories.DocumentRepository;
 import com.pablodev.documentworkspace.repositories.FolderRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 @Transactional
@@ -20,6 +23,7 @@ import java.util.Collections;
 public class DefaultFolderService implements FolderService {
 
     private final FolderRepository folderRepository;
+    private final DocumentRepository documentRepository;
     private final FolderMapper folderMapper;
 
     @PostConstruct
@@ -53,6 +57,21 @@ public class DefaultFolderService implements FolderService {
         return folderMapper.toFolderResponse(folder);
     }
 
+    @Override
+    public FolderResponse findFolderWithFilteredItems(Long folderId, String name) {
+
+        Folder folder = folderRepository.findById(folderId)
+                .orElseThrow(() -> new EntityNotFoundException("Folder not found"));
+
+        List<Folder> folders = folderRepository.findFilteredSubFoldersByFolderId(folderId, name);
+        List<Document> documents = documentRepository.findDocumentsByFolderIdAndName(folderId, name);
+
+        folder.setSubFolders(folders);
+        folder.setDocuments(documents);
+
+        return folderMapper.toFolderResponse(folder);
+
+    }
 
 
 }
