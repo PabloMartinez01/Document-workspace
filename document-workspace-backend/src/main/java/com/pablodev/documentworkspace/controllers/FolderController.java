@@ -20,10 +20,17 @@ public class FolderController {
         return ResponseEntity.ok(folderService.findFolderById(id));
     }
 
+    @GetMapping(value = "/{id}", params = "name")
+    public ResponseEntity<FolderResponse> findFolderWithFilteredItems(@PathVariable Long id, @RequestParam String name) {
+        return ResponseEntity.ok(folderService.findFolderWithFilteredItems(id, name));
+    }
+
     @PostMapping
     public ResponseEntity<FolderInfo> createFolder(@RequestBody FolderRequest folderRequest) {
         return ResponseEntity.ok(folderService.saveFolder(folderRequest));
     }
+
+
 
 
 }
