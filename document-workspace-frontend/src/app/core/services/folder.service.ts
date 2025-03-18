@@ -17,6 +17,10 @@ export class FolderService {
     return this.http.get<Folder>(environment.documentService + "/folder/" + folderId);
   }
 
+  getFolderWithFilteredItems(folderId: number, name: string) {
+    return this.http.get<Folder>(environment.documentService + "/folder/" + folderId, {params: {name}})
+  }
+
   createFolder(folderRequest: FolderRequest): Observable<FolderInfo> {
     return this.http.post<FolderInfo>(environment.documentService + "/folder", folderRequest);
   }
