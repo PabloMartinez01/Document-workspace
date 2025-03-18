@@ -13,6 +13,8 @@ import {DocumentService} from '../../../../core/services/document.service';
 import {Action} from '../../../../core/model/action.enum';
 import {Messages} from '../../../../core/model/messages';
 import {FolderInfo} from '../../../../core/model/folder-info';
+import {debounceTime, filter, Subject, switchMap} from 'rxjs';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-view-folder',
@@ -26,7 +28,8 @@ import {FolderInfo} from '../../../../core/model/folder-info';
     UploadDropzoneComponent,
     RouterLink,
     MatMenuTrigger,
-    NgIf
+    NgIf,
+    FormsModule
 
   ],
   templateUrl: './view-folder.component.html'
@@ -35,6 +38,9 @@ export class ViewFolderComponent implements OnInit {
 
     @ViewChild('inputFolder') inputFolder: ElementRef<HTMLInputElement>  | undefined;
     folder?: Folder;
+
+    search: string = '';
+    private searchSubject: Subject<string> = new Subject<string>();
 
     constructor(
       private folderService: FolderService,
@@ -47,29 +53,44 @@ export class ViewFolderComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
-      this.activatedRoute.paramMap.subscribe(params => {
-        const id = Number(params.get('id'));
-        if (id) {
-          this.folderService.getFolder(id).subscribe({
-            next: folder => this.folder = folder,
-            error: err => {
-              this.alertService.showErrorAlert(Messages.folderNotFound.title, Messages.folderNotFound.body)
-            }
-          });
-        }
-        else {
-          this.alertService.showErrorAlert(Messages.folderNotFound.title, Messages.folderNotFound.body)
-        }
-      })
+      this.initializeParamMapSubscription();
+      this.initializeSearchSubscription();
     }
+
+  private initializeSearchSubscription() {
+    this.searchSubject.pipe(
+      debounceTime(1000),
+      filter(() => !!this.folder?.id),
+      switchMap(searchTerm => this.folderService.getFolderWithFilteredItems(this.folder!.id, searchTerm))
+    ).subscribe({
+      next: folder => {
+        if (!this.folder) return;
+        this.folder.folders = folder.folders;
+        this.folder.documents = folder.documents;
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  private initializeParamMapSubscription() {
+    this.activatedRoute.paramMap.subscribe(params => {
+      const id = Number(params.get('id'));
+      if (id) {
+        this.folderService.getFolder(id).subscribe({
+          next: folder => this.folder = folder,
+          error: err => {
+            this.alertService.showErrorAlert(Messages.folderNotFound.title, Messages.folderNotFound.body)
+          }
+        });
+      }
+      else {
+        this.alertService.showErrorAlert(Messages.folderNotFound.title, Messages.folderNotFound.body)
+      }
+    })
+  }
 
   isEditable(extension: string): boolean {
     return this.extensionService.isEditable(extension);
-  }
-
-  isViewable(extension: string): boolean {
-    return this.extensionService.isViewable(extension);
   }
 
   isSupported(extension: string): boolean {
@@ -140,4 +161,10 @@ export class ViewFolderComponent implements OnInit {
   }
 
   protected readonly Action = Action;
+
+  onSearchChange() {
+    this.searchSubject.next(this.search)
+  }
+
+
 }
