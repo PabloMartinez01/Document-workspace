@@ -1,6 +1,7 @@
 package com.pablodev.documentworkspace.controllers;
 
 import com.pablodev.documentworkspace.dto.folder.FolderInfo;
+import com.pablodev.documentworkspace.dto.folder.FolderItemsResponse;
 import com.pablodev.documentworkspace.dto.folder.FolderRequest;
 import com.pablodev.documentworkspace.dto.folder.FolderResponse;
 import com.pablodev.documentworkspace.services.folder.FolderService;
@@ -21,8 +22,8 @@ public class FolderController {
     }
 
     @GetMapping(value = "/{id}", params = "name")
-    public ResponseEntity<FolderResponse> findFolderWithFilteredItems(@PathVariable Long id, @RequestParam String name) {
-        return ResponseEntity.ok(folderService.findFolderWithFilteredItems(id, name));
+    public ResponseEntity<FolderItemsResponse> findFolderWithFilteredItems(@PathVariable Long id, @RequestParam String name) {
+        return ResponseEntity.ok(folderService.findFolderItemsByName(id, name));
     }
 
     @PostMapping

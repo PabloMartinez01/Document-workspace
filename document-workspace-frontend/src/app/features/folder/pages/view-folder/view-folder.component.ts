@@ -61,12 +61,12 @@ export class ViewFolderComponent implements OnInit {
     this.searchSubject.pipe(
       debounceTime(1000),
       filter(() => !!this.folder?.id),
-      switchMap(searchTerm => this.folderService.getFolderWithFilteredItems(this.folder!.id, searchTerm))
+      switchMap(searchTerm => this.folderService.getFolderItemsByName(this.folder!.id, searchTerm))
     ).subscribe({
-      next: folder => {
+      next: folderItems => {
         if (!this.folder) return;
-        this.folder.folders = folder.folders;
-        this.folder.documents = folder.documents;
+        this.folder.folders = folderItems.folders;
+        this.folder.documents = folderItems.documents;
       },
       error: err => console.log(err)
     })
