@@ -1,6 +1,7 @@
 package com.pablodev.documentworkspace.services.folder;
 
 import com.pablodev.documentworkspace.dto.folder.FolderInfo;
+import com.pablodev.documentworkspace.dto.folder.FolderItemsResponse;
 import com.pablodev.documentworkspace.dto.folder.FolderRequest;
 import com.pablodev.documentworkspace.dto.folder.FolderResponse;
 import com.pablodev.documentworkspace.mappers.FolderMapper;
@@ -58,7 +59,7 @@ public class DefaultFolderService implements FolderService {
     }
 
     @Override
-    public FolderResponse findFolderWithFilteredItems(Long folderId, String name) {
+    public FolderItemsResponse findFolderItemsByName(Long folderId, String name) {
 
         Folder folder = folderRepository.findById(folderId)
                 .orElseThrow(() -> new EntityNotFoundException("Folder not found"));
@@ -66,10 +67,7 @@ public class DefaultFolderService implements FolderService {
         List<Folder> folders = folderRepository.findFilteredSubFoldersByFolderId(folderId, name);
         List<Document> documents = documentRepository.findDocumentsByFolderIdAndName(folderId, name);
 
-        folder.setSubFolders(folders);
-        folder.setDocuments(documents);
-
-        return folderMapper.toFolderResponse(folder);
+        return folderMapper.toFolderItemsResponse(folders, documents);
 
     }
 

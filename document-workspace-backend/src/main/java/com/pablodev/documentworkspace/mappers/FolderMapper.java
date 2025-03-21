@@ -1,13 +1,16 @@
 package com.pablodev.documentworkspace.mappers;
 
 import com.pablodev.documentworkspace.dto.folder.FolderInfo;
+import com.pablodev.documentworkspace.dto.folder.FolderItemsResponse;
 import com.pablodev.documentworkspace.dto.folder.FolderRequest;
 import com.pablodev.documentworkspace.dto.folder.FolderResponse;
+import com.pablodev.documentworkspace.model.Document;
 import com.pablodev.documentworkspace.model.Folder;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -50,6 +53,22 @@ public class FolderMapper {
                 .documents(folder
                         .getDocuments()
                         .stream()
+                        .map(documentMapper::toDocumentInfo)
+                        .toList()
+                )
+                .build();
+    }
+
+    public FolderItemsResponse toFolderItemsResponse(
+            List<Folder> folders,
+            List<Document> documents
+    ) {
+        return FolderItemsResponse.builder()
+                .folders(folders.stream()
+                        .map(this::toFolderInfo)
+                        .toList()
+                )
+                .documents(documents.stream()
                         .map(documentMapper::toDocumentInfo)
                         .toList()
                 )
