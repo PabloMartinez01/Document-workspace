@@ -22,7 +22,7 @@ public class FolderController {
     }
 
     @GetMapping(value = "/{id}", params = "name")
-    public ResponseEntity<FolderItemsResponse> findFolderWithFilteredItems(@PathVariable Long id, @RequestParam String name) {
+    public ResponseEntity<FolderItemsResponse> findFolderItemsByName(@PathVariable Long id, @RequestParam String name) {
         return ResponseEntity.ok(folderService.findFolderItemsByName(id, name));
     }
 
@@ -30,8 +30,5 @@ public class FolderController {
     public ResponseEntity<FolderInfo> createFolder(@RequestBody FolderRequest folderRequest) {
         return ResponseEntity.ok(folderService.saveFolder(folderRequest));
     }
-
-
-
 
 }

@@ -1,6 +1,6 @@
 package com.pablodev.documentworkspace.dto.folder;
 
-import com.pablodev.documentworkspace.dto.document.DocumentInfo;
+import com.pablodev.documentworkspace.dto.document.DocumentResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +15,7 @@ import java.util.List;
 public class FolderResponse {
     private Long id;
     private String name;
-    private List<DocumentInfo> documents;
+    private List<DocumentResponse> documents;
     private List<FolderInfo> folders;
     private FolderInfo parentFolder;
 }

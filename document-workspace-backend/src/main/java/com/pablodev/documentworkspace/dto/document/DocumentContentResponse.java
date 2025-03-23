@@ -7,10 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class DocumentContent {
-
+public class DocumentContentResponse {
     private String filename;
-
     private byte[] content;
-
 }

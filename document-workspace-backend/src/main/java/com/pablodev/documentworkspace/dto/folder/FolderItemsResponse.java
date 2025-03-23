@@ -1,6 +1,6 @@
 package com.pablodev.documentworkspace.dto.folder;
 
-import com.pablodev.documentworkspace.dto.document.DocumentInfo;
+import com.pablodev.documentworkspace.dto.document.DocumentResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class FolderItemsResponse {
-    private List<DocumentInfo> documents;
+    private List<DocumentResponse> documents;
     private List<FolderInfo> folders;
 }

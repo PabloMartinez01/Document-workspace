@@ -1,8 +1,8 @@
 package com.pablodev.documentworkspace.services.document;
 
-import com.pablodev.documentworkspace.dto.document.DocumentContent;
-import com.pablodev.documentworkspace.dto.document.DocumentInfo;
+import com.pablodev.documentworkspace.dto.document.DocumentContentResponse;
 import com.pablodev.documentworkspace.dto.document.DocumentRequest;
+import com.pablodev.documentworkspace.dto.document.DocumentResponse;
 import com.pablodev.documentworkspace.events.DocumentLockEvent;
 import com.pablodev.documentworkspace.mappers.DocumentMapper;
 import com.pablodev.documentworkspace.model.Document;
@@ -29,9 +29,8 @@ public class DefaultDocumentService implements DocumentService {
     private final DocumentMapper documentMapper;
     private final SimpMessagingTemplate messagingTemplate;
 
-
     @Override
-    public DocumentInfo saveDocument(DocumentRequest documentRequest) throws IOException {
+    public DocumentResponse saveDocument(DocumentRequest documentRequest) throws IOException {
         Folder folder = folderRepository.findById(documentRequest.getFolderId())
                 .orElseThrow(() -> new EntityNotFoundException("Folder not found"));
 
@@ -46,7 +45,7 @@ public class DefaultDocumentService implements DocumentService {
 
     @Override
     @Transactional(readOnly = true)
-    public DocumentContent findDocumentContent(Long documentId) {
+    public DocumentContentResponse findDocumentContent(Long documentId) {
         Document document = documentRepository.findById(documentId)
                 .orElseThrow(() -> new EntityNotFoundException("Document with id: " + documentId + " not found"));
         return documentMapper.toDocumentContent(document);
@@ -54,7 +53,7 @@ public class DefaultDocumentService implements DocumentService {
 
     @Override
     @Transactional(readOnly = true)
-    public DocumentInfo findDocumentInfo(Long documentId) {
+    public DocumentResponse findDocumentInfo(Long documentId) {
         Document document = documentRepository.findById(documentId)
                 .orElseThrow(() -> new EntityNotFoundException("Document with id: " + documentId + " not found"));
         return documentMapper.toDocumentInfo(document);
@@ -62,7 +61,7 @@ public class DefaultDocumentService implements DocumentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<DocumentInfo> findAllDocumentInfo() {
+    public List<DocumentResponse> findAllDocumentInfo() {
         return StreamSupport.stream(documentRepository.findAll().spliterator(), false)
                 .map(documentMapper::toDocumentInfo)
                 .toList();
