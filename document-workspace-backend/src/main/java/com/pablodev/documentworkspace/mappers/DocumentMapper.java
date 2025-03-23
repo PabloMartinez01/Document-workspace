@@ -1,7 +1,7 @@
 package com.pablodev.documentworkspace.mappers;
 
-import com.pablodev.documentworkspace.dto.document.DocumentContent;
-import com.pablodev.documentworkspace.dto.document.DocumentInfo;
+import com.pablodev.documentworkspace.dto.document.DocumentContentResponse;
+import com.pablodev.documentworkspace.dto.document.DocumentResponse;
 import com.pablodev.documentworkspace.model.Document;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -30,15 +30,15 @@ public class DocumentMapper {
                 .build();
     }
 
-    public DocumentContent toDocumentContent(Document document) {
-        return DocumentContent.builder()
+    public DocumentContentResponse toDocumentContent(Document document) {
+        return DocumentContentResponse.builder()
                 .filename(document.getFilename())
                 .content(document.getContent())
                 .build();
     }
 
-    public DocumentInfo toDocumentInfo(Document document) {
-        return DocumentInfo.builder()
+    public DocumentResponse toDocumentInfo(Document document) {
+        return DocumentResponse.builder()
                 .id(document.getId())
                 .extension(document.getExtension())
                 .filename(document.getFilename())

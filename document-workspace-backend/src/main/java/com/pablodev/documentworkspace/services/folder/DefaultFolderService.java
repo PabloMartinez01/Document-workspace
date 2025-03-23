@@ -60,15 +60,13 @@ public class DefaultFolderService implements FolderService {
 
     @Override
     public FolderItemsResponse findFolderItemsByName(Long folderId, String name) {
-
-        Folder folder = folderRepository.findById(folderId)
+        folderRepository.findById(folderId)
                 .orElseThrow(() -> new EntityNotFoundException("Folder not found"));
 
         List<Folder> folders = folderRepository.findFilteredSubFoldersByFolderId(folderId, name);
         List<Document> documents = documentRepository.findDocumentsByFolderIdAndName(folderId, name);
 
         return folderMapper.toFolderItemsResponse(folders, documents);
-
     }
 
 

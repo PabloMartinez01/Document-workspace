@@ -59,7 +59,7 @@ export class ViewFolderComponent implements OnInit {
 
   private initializeSearchSubscription() {
     this.searchSubject.pipe(
-      debounceTime(1000),
+      debounceTime(700),
       filter(() => !!this.folder?.id),
       switchMap(searchTerm => this.folderService.getFolderItemsByName(this.folder!.id, searchTerm))
     ).subscribe({

@@ -1,9 +1,9 @@
 package com.pablodev.documentworkspace.controllers;
 
 import com.onlyoffice.model.documenteditor.Callback;
-import com.pablodev.documentworkspace.dto.document.DocumentContent;
-import com.pablodev.documentworkspace.dto.document.DocumentInfo;
+import com.pablodev.documentworkspace.dto.document.DocumentContentResponse;
 import com.pablodev.documentworkspace.dto.document.DocumentRequest;
+import com.pablodev.documentworkspace.dto.document.DocumentResponse;
 import com.pablodev.documentworkspace.services.callback.CallbackService;
 import com.pablodev.documentworkspace.services.document.DocumentService;
 import lombok.RequiredArgsConstructor;
@@ -28,26 +28,26 @@ public class DocumentController {
     private final CallbackService callbackService;
 
     @PostMapping
-    public ResponseEntity<DocumentInfo> createDocument(DocumentRequest documentRequest) throws IOException {
-        DocumentInfo documentInfo = documentService.saveDocument(documentRequest);
-        return ResponseEntity.ok(documentInfo);
+    public ResponseEntity<DocumentResponse> createDocument(DocumentRequest documentRequest) throws IOException {
+        DocumentResponse documentResponse = documentService.saveDocument(documentRequest);
+        return ResponseEntity.ok(documentResponse);
     }
 
     @GetMapping( "/{id}")
     public ResponseEntity<byte[]> findDocument(@PathVariable Long id) {
-        DocumentContent documentContent = documentService.findDocumentContent(id);
+        DocumentContentResponse documentContentResponse = documentService.findDocumentContent(id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentDisposition(
                 ContentDisposition.attachment()
-                        .filename(documentContent.getFilename())
+                        .filename(documentContentResponse.getFilename())
                         .build()
         );
-        return ResponseEntity.ok().headers(headers).body(documentContent.getContent());
+        return ResponseEntity.ok().headers(headers).body(documentContentResponse.getContent());
     }
 
     @GetMapping
-    public ResponseEntity<List<DocumentInfo>> findAllDocuments() {
-        List<DocumentInfo> documentsInfo = documentService.findAllDocumentInfo();
+    public ResponseEntity<List<DocumentResponse>> findAllDocuments() {
+        List<DocumentResponse> documentsInfo = documentService.findAllDocumentInfo();
         return ResponseEntity.ok(documentsInfo);
     }
 

@@ -8,20 +8,12 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class DocumentInfo {
-
+public class DocumentResponse {
     private Long id;
-
     private String filename;
-
     private String extension;
-
     private Long length;
-
     private boolean locked;
-
     private Long version;
-
     private FolderInfo folder;
-
 }
