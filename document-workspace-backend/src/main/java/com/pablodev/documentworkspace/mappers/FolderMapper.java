@@ -1,6 +1,6 @@
 package com.pablodev.documentworkspace.mappers;
 
-import com.pablodev.documentworkspace.dto.folder.FolderInfo;
+import com.pablodev.documentworkspace.dto.folder.FolderInfoResponse;
 import com.pablodev.documentworkspace.dto.folder.FolderItemsResponse;
 import com.pablodev.documentworkspace.dto.folder.FolderRequest;
 import com.pablodev.documentworkspace.dto.folder.FolderResponse;
@@ -30,9 +30,9 @@ public class FolderMapper {
                 .build();
     }
 
-    public FolderInfo toFolderInfo(Folder folder) {
+    public FolderInfoResponse toFolderInfo(Folder folder) {
         return Optional.ofNullable(folder)
-                .map(f -> FolderInfo.builder()
+                .map(f -> FolderInfoResponse.builder()
                         .id(f.getId())
                         .name(f.getName())
                         .build())
