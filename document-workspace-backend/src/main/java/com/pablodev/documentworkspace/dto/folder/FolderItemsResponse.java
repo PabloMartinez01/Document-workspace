@@ -14,5 +14,5 @@ import java.util.List;
 @Builder
 public class FolderItemsResponse {
     private List<DocumentResponse> documents;
-    private List<FolderInfo> folders;
+    private List<FolderInfoResponse> folders;
 }

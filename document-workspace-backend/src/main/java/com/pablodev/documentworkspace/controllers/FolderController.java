@@ -1,6 +1,6 @@
 package com.pablodev.documentworkspace.controllers;
 
-import com.pablodev.documentworkspace.dto.folder.FolderInfo;
+import com.pablodev.documentworkspace.dto.folder.FolderInfoResponse;
 import com.pablodev.documentworkspace.dto.folder.FolderItemsResponse;
 import com.pablodev.documentworkspace.dto.folder.FolderRequest;
 import com.pablodev.documentworkspace.dto.folder.FolderResponse;
@@ -27,7 +27,7 @@ public class FolderController {
     }
 
     @PostMapping
-    public ResponseEntity<FolderInfo> createFolder(@RequestBody FolderRequest folderRequest) {
+    public ResponseEntity<FolderInfoResponse> createFolder(@RequestBody FolderRequest folderRequest) {
         return ResponseEntity.ok(folderService.saveFolder(folderRequest));
     }
 

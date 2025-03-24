@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FolderInfo {
+public class FolderInfoResponse {
     private Long id;
     private String name;
 }

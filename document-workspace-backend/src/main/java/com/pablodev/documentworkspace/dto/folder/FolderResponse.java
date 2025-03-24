@@ -16,6 +16,6 @@ public class FolderResponse {
     private Long id;
     private String name;
     private List<DocumentResponse> documents;
-    private List<FolderInfo> folders;
-    private FolderInfo parentFolder;
+    private List<FolderInfoResponse> folders;
+    private FolderInfoResponse parentFolder;
 }
