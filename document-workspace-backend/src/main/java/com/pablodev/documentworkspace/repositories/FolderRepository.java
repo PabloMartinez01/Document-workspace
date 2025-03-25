@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface FolderRepository extends CrudRepository<Folder, Long> {
 
+    boolean existsById(Long folderId);
+
     @Query("SELECT s FROM Folder s WHERE s.parentFolder.id = :folderId AND s.name LIKE %:name%")
-    List<Folder> findFilteredSubFoldersByFolderId(@Param("folderId") Long folderId, @Param("name") String name);
+    List<Folder> findFilteredFoldersByFolderIdAndName(@Param("folderId") Long folderId, @Param("name") String name);
 }

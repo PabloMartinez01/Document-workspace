@@ -5,6 +5,7 @@ import com.pablodev.documentworkspace.dto.folder.FolderItemsResponse;
 import com.pablodev.documentworkspace.dto.folder.FolderRequest;
 import com.pablodev.documentworkspace.dto.folder.FolderResponse;
 import com.pablodev.documentworkspace.services.folder.FolderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class FolderController {
     }
 
     @PostMapping
-    public ResponseEntity<FolderInfoResponse> createFolder(@RequestBody FolderRequest folderRequest) {
+    public ResponseEntity<FolderInfoResponse> createFolder(@RequestBody @Valid FolderRequest folderRequest) {
         return ResponseEntity.ok(folderService.saveFolder(folderRequest));
     }
 
