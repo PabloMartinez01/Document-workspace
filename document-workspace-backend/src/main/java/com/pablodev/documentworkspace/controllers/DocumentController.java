@@ -6,6 +6,7 @@ import com.pablodev.documentworkspace.dto.document.DocumentRequest;
 import com.pablodev.documentworkspace.dto.document.DocumentResponse;
 import com.pablodev.documentworkspace.services.callback.CallbackService;
 import com.pablodev.documentworkspace.services.document.DocumentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ContentDisposition;
@@ -28,7 +29,7 @@ public class DocumentController {
     private final CallbackService callbackService;
 
     @PostMapping
-    public ResponseEntity<DocumentResponse> createDocument(DocumentRequest documentRequest) throws IOException {
+    public ResponseEntity<DocumentResponse> createDocument(@Valid DocumentRequest documentRequest) throws IOException {
         DocumentResponse documentResponse = documentService.saveDocument(documentRequest);
         return ResponseEntity.ok(documentResponse);
     }
