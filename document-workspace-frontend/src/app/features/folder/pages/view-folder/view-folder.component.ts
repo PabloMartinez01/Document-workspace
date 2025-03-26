@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FolderService} from '../../../../core/services/folder.service';
-import {Folder} from '../../../../core/model/folder';
+import {Folder} from '../../../../core/model/folder/folder';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
@@ -11,8 +11,8 @@ import {ExtensionService} from '../../../../core/services/extension.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import {DocumentService} from '../../../../core/services/document.service';
 import {Action} from '../../../../core/model/action.enum';
-import {Messages} from '../../../../core/model/messages';
-import {FolderInfo} from '../../../../core/model/folder-info';
+import {Messages} from '../../../../core/model/messages/messages';
+import {FolderInfoResponse} from '../../../../core/model/folder/folder-info-response';
 import {debounceTime, filter, Subject, switchMap} from 'rxjs';
 import {FormsModule} from '@angular/forms';
 
@@ -136,7 +136,7 @@ export class ViewFolderComponent implements OnInit {
       this.inputFolder.nativeElement.value = '';
 
       this.folderService.createFolder({name: folderName, parentFolderId: this.folder.id}).subscribe({
-        next: (folderInfo: FolderInfo) => {
+        next: (folderInfo: FolderInfoResponse) => {
           if (!this.folder) return;
           this.folder.folders = [...this.folder.folders, folderInfo];
           this.alertService.showSuccessAlert(Messages.createFolderSuccess.title, Messages.createFolderSuccess.body);

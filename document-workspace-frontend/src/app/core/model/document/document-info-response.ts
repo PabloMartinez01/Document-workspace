@@ -1,4 +1,4 @@
-export interface DocumentInfo {
+export interface DocumentInfoResponse {
   id: number;
   filename: string;
   extension: string;

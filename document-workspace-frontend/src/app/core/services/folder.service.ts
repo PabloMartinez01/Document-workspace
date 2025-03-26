@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {Folder} from '../model/folder';
-import {FolderRequest} from '../model/folder-request';
-import {FolderInfo} from '../model/folder-info';
-import {FolderItemsResponse} from '../model/folder-items-response';
+import {Folder} from '../model/folder/folder';
+import {FolderRequest} from '../model/folder/folder-request';
+import {FolderInfoResponse} from '../model/folder/folder-info-response';
+import {FolderItemsResponse} from '../model/folder/folder-items-response';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +22,8 @@ export class FolderService {
     return this.http.get<FolderItemsResponse>(environment.documentService + "/folder/" + folderId, {params: {name}})
   }
 
-  createFolder(folderRequest: FolderRequest): Observable<FolderInfo> {
-    return this.http.post<FolderInfo>(environment.documentService + "/folder", folderRequest);
+  createFolder(folderRequest: FolderRequest): Observable<FolderInfoResponse> {
+    return this.http.post<FolderInfoResponse>(environment.documentService + "/folder", folderRequest);
   }
 
 
