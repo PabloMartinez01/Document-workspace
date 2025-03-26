@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ExtensionConfiguration} from '../model/extension-configuration';
+import {ExtensionConfiguration} from '../model/configuration/extension-configuration';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
