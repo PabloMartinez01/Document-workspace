@@ -15,6 +15,7 @@ import {Messages} from '../../../../core/model/messages/messages';
 import {FolderInfoResponse} from '../../../../core/model/folder/folder-info-response';
 import {debounceTime, filter, Subject, switchMap} from 'rxjs';
 import {FormsModule} from '@angular/forms';
+import {WebSocketService} from '../../../../core/services/web-socket.service';
 
 @Component({
   selector: 'app-view-folder',
@@ -36,26 +37,28 @@ import {FormsModule} from '@angular/forms';
 })
 export class ViewFolderComponent implements OnInit {
 
-    @ViewChild('inputFolder') inputFolder: ElementRef<HTMLInputElement>  | undefined;
-    folder?: Folder;
+  @ViewChild('inputFolder') inputFolder: ElementRef<HTMLInputElement> | undefined;
+  folder?: Folder;
 
-    search: string = '';
-    private searchSubject: Subject<string> = new Subject<string>();
+  search: string = '';
+  private searchSubject: Subject<string> = new Subject<string>();
 
-    constructor(
-      private folderService: FolderService,
-      private extensionService: ExtensionService,
-      private alertService: AlertService,
-      private documentService: DocumentService,
-      private activatedRoute: ActivatedRoute,
-    ) {
+  constructor(
+    private folderService: FolderService,
+    private extensionService: ExtensionService,
+    private alertService: AlertService,
+    private documentService: DocumentService,
+    private activatedRoute: ActivatedRoute,
+    private webSocketService: WebSocketService
+  ) {
 
-    }
+  }
 
-    ngOnInit(): void {
-      this.initializeParamMapSubscription();
-      this.initializeSearchSubscription();
-    }
+  ngOnInit(): void {
+    this.initializeParamMapSubscription();
+    this.initializeSearchSubscription();
+    this.initializeWebSocket();
+  }
 
   private initializeSearchSubscription() {
     this.searchSubject.pipe(
@@ -72,6 +75,18 @@ export class ViewFolderComponent implements OnInit {
     })
   }
 
+  private initializeWebSocket() {
+    this.webSocketService.getDocumentLockTopic().subscribe({
+      next: lockEvent => {
+        if (!this.folder || !lockEvent || !lockEvent.id) return;
+        this.folder.documents = this.folder.documents.map(document =>
+          document.id === lockEvent.id ? {...document, locked: lockEvent.lock} : document
+        );
+      },
+      error: err => console.log(err)
+    })
+  }
+
   private initializeParamMapSubscription() {
     this.activatedRoute.paramMap.subscribe(params => {
       const id = Number(params.get('id'));
@@ -82,8 +97,7 @@ export class ViewFolderComponent implements OnInit {
             this.alertService.showErrorAlert(Messages.folderNotFound.title, Messages.folderNotFound.body)
           }
         });
-      }
-      else {
+      } else {
         this.alertService.showErrorAlert(Messages.folderNotFound.title, Messages.folderNotFound.body)
       }
     })
@@ -121,7 +135,7 @@ export class ViewFolderComponent implements OnInit {
     this.documentService.uploadDocument(formData).subscribe({
       next: (documentInfo) => {
         if (!this.folder) return;
-        this.folder.documents = [... this.folder.documents, documentInfo];
+        this.folder.documents = [...this.folder.documents, documentInfo];
         this.alertService.showSuccessAlert(Messages.uploadSuccess.title, Messages.uploadSuccess.body);
       },
       error: () => this.alertService.showErrorAlert(Messages.uploadError.title, Messages.uploadError.body)
@@ -129,20 +143,20 @@ export class ViewFolderComponent implements OnInit {
   }
 
   createFolder() {
-      if (!this.inputFolder || !this.folder) return;
-      const folderName: string = this.inputFolder.nativeElement.value;
+    if (!this.inputFolder || !this.folder) return;
+    const folderName: string = this.inputFolder.nativeElement.value;
 
-      if (!folderName) return;
-      this.inputFolder.nativeElement.value = '';
+    if (!folderName) return;
+    this.inputFolder.nativeElement.value = '';
 
-      this.folderService.createFolder({name: folderName, parentFolderId: this.folder.id}).subscribe({
-        next: (folderInfo: FolderInfoResponse) => {
-          if (!this.folder) return;
-          this.folder.folders = [...this.folder.folders, folderInfo];
-          this.alertService.showSuccessAlert(Messages.createFolderSuccess.title, Messages.createFolderSuccess.body);
-        },
-        error: () => this.alertService.showErrorAlert(Messages.createFolderError.title, Messages.createFolderError.body)
-      })
+    this.folderService.createFolder({name: folderName, parentFolderId: this.folder.id}).subscribe({
+      next: (folderInfo: FolderInfoResponse) => {
+        if (!this.folder) return;
+        this.folder.folders = [...this.folder.folders, folderInfo];
+        this.alertService.showSuccessAlert(Messages.createFolderSuccess.title, Messages.createFolderSuccess.body);
+      },
+      error: () => this.alertService.showErrorAlert(Messages.createFolderError.title, Messages.createFolderError.body)
+    })
 
   }
 
