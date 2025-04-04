@@ -1,30 +1,52 @@
 import {Component} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../../../core/services/authentication.service';
 import {Router} from '@angular/router';
 import {NgIf} from '@angular/common';
+import {AuthenticationRequest} from '../../../../core/model/authentication/authentication-request';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     FormsModule,
-    NgIf
+    NgIf,
+    ReactiveFormsModule
   ],
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
 
-  username: string = '';
-  password: string = '';
 
+  loginForm: FormGroup;
   invalid: boolean = false;
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) {
+  constructor(
+    private authenticationService: AuthenticationService,
+    private formBuilder: FormBuilder,
+    private router: Router) {
+
+    this.loginForm = this.formBuilder.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]]
+    })
+
+  }
+
+  get username() {
+    return this.loginForm.get('username');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
   }
 
   onSubmit() {
-    this.authenticationService.authenticate({username: this.username, password: this.password})
+
+    if (this.loginForm.invalid) return;
+
+    const authenticationRequest = this.loginForm.value as AuthenticationRequest;
+    this.authenticationService.authenticate(authenticationRequest)
       .subscribe({
         next: authenticationResponse => {
           this.authenticationService.setToken(authenticationResponse.token);
