@@ -3,15 +3,18 @@ import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
 import {DocumentEditorModule} from '@onlyoffice/document-editor-angular';
-import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
+import {authenticationInterceptor} from './core/interceptors/authentication.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    provideHttpClient(
+      withInterceptors([authenticationInterceptor])
+    ),
+    provideZoneChangeDetection({ eventCoalescing: true }),
     DocumentEditorModule,
     provideAnimationsAsync(),
     SweetAlert2Module
