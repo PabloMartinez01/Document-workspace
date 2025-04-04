@@ -8,6 +8,7 @@
   --mat-menu-container-color: white;
 }
 
+
 html, body {
   padding: 0;
   margin: 0;
@@ -25,4 +26,5 @@ ngx-dropzone {
 
 
 body { font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 
