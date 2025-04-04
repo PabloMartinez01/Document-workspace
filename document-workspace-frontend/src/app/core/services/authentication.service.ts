@@ -20,13 +20,21 @@ export class AuthenticationService {
     return this.httpClient.post<AuthenticationResponse>(environment.documentService + "/authenticate", authenticationRequest)
   }
 
+  getToken(): string | null {
+    return this.tokenStorageService.getToken();
+  }
+
+  setToken(token: string): void {
+    return this.tokenStorageService.setToken(token)
+  }
+
   isTokenValid(): boolean {
     const token = this.tokenStorageService.getToken();
     if (!token) return false;
     try {
       const decodedToken: any = jwtDecode(token);
       if (!decodedToken) return false;
-      const expirationDate = decodedToken.payload.exp * 1000;
+      const expirationDate = decodedToken.exp * 1000;
       return expirationDate > Date.now();
     } catch (error) {
       return false;
