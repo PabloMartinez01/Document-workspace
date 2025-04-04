@@ -1,6 +1,7 @@
+
 <div *ngIf="this.folder" class="w-full px-20 py-5">
 
-  <div class="w-full bg-white text-sm border-t border-x border-gray-200 px-6 py-4 shadow flex gap-10 items-center">
+  <div class="w-full bg-white text-sm px-6 py-4 rounded-lg shadow-md flex gap-10 items-center">
 
     @if (this.folder.parentFolder && this.folder.parentFolder.id) {
       <button mat-icon-button [routerLink]="['/folder', this.folder.parentFolder.id]"
@@ -14,14 +15,14 @@
   </div>
 
 
-  <div class="bg-white p-3 border-t border-x border-gray-200 shadow flex mt-2 gap-2 relative">
+  <div class="bg-white p-3 rounded-lg shadow-md flex mt-2 gap-2 relative">
     <input type="text" placeholder="Search" [(ngModel)]="search" (ngModelChange)="onSearchChange()"
            class="border border-gray-200 w-full px-10 py-2 rounded bg-gray-50  outline-gray-600 focus:bg-white">
     <i class="fas fa-search absolute top-[39%] left-5 text-gray-400"></i>
 
 
     <button mat-icon-button [matMenuTriggerFor]="createMenu"
-            class="fas fa-add !bg-white px-3 py-5 text-gray-600 cursor-pointer hover:!text-black">
+            class="fas fa-add !bg-indigo-700 px-3 py-5 !text-white cursor-pointer">
     </button>
 
     <mat-menu #createMenu="matMenu">
@@ -42,22 +43,22 @@
 
   </div>
 
-  <div class="w-full mt-2 shadow-sm">
+  <div class="w-full mt-2 rounded-lg shadow-md bg-white flex flex-col gap-[7px] p-4">
     <div *ngFor="let subfolder of folder?.folders" [routerLink]="['/folder', subfolder.id]"
-         class="bg-white text-sm border border-gray-200 px-6 py-5 text-gray-500 whitespace-nowrap dark:text-white cursor-pointer">
-      <i class="fas fa-folder text-blue-700"></i>
+         class="bg-gray-100 text-sm rounded-lg px-6 py-5 text-gray-500 whitespace-nowrap cursor-pointer">
+      <i class="fas fa-folder text-indigo-700"></i>
       <span class="ms-3">{{ subfolder.name }}</span>
     </div>
   </div>
 
-  <div class="relative overflow-x-auto mt-2 shadow">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+
+  <div class="relative overflow-x-auto mt-2 rounded-lg shadow-md bg-white">
+    <table class="w-full text-sm text-gray-500 text-nowrap border-separate border-spacing-y-[7px] p-4 py-3">
       <tbody>
-      <tr *ngFor="let document of folder?.documents"
-          class="bg-white border-t border-x border-gray-200 [&>td]:px-6 [&>td]:py-4">
-        <td>
-          <i class="fas fa-file text-gray-500"></i>
-          <span class="ms-3">{{ document.filename }}</span>
+      <tr *ngFor="let document of folder?.documents" class="[&>td]:px-6 [&>td]:py-4 bg-gray-100 ">
+        <td class="rounded-s-lg">
+          <i class="fas fa-file text-gray-500 me-6"></i>
+          <span>{{ document.filename }} {{ document.id }}</span>
         </td>
         <td>{{ document.extension }}</td>
         <td>{{ bytesToString(document.length) }}</td>
@@ -100,9 +101,6 @@
 
           </mat-menu>
         </td>
-        <td class="px-6 py-4">
-          {{ document.id }}
-        </td>
       </tr>
       </tbody>
     </table>
@@ -114,6 +112,8 @@
     />
   </div>
 </div>
+
+
 
 
 

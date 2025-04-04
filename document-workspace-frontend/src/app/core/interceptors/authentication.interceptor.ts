@@ -4,6 +4,13 @@ import {inject} from '@angular/core';
 
 export const authenticationInterceptor: HttpInterceptorFn = (req, next) => {
 
+
+  const excludedRoutes: string[] = ['/authenticate', 'register'];
+
+  if (excludedRoutes.some(route => req.url.includes(route))) {
+    return next(req);
+  }
+
   const authenticationService: AuthenticationService = inject(AuthenticationService)
   const token = authenticationService.getToken();
 
