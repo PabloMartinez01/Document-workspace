@@ -5,7 +5,7 @@ import {inject} from '@angular/core';
 export const authenticationInterceptor: HttpInterceptorFn = (req, next) => {
 
 
-  const excludedRoutes: string[] = ['/authenticate', 'register'];
+  const excludedRoutes: string[] = ['/authenticate', '/register'];
 
   if (excludedRoutes.some(route => req.url.includes(route))) {
     return next(req);
