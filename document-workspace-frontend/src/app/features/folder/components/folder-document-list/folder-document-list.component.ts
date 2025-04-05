@@ -7,6 +7,7 @@ import {NgForOf} from '@angular/common';
 import {Folder} from '../../../../core/model/folder/folder';
 import {RouterLink} from '@angular/router';
 import {ExtensionService} from '../../../../core/services/extension.service';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'folder-document-list',
@@ -26,6 +27,7 @@ export class FolderDocumentListComponent {
 
   @Input() folder?: Folder;
   @Output() deleteDocumentEmitter: EventEmitter<number> = new EventEmitter<number>();
+  readonly downloadUrl: string = `${environment.documentService}/document/`
 
   constructor(private extensionService: ExtensionService) {
   }
@@ -57,4 +59,5 @@ export class FolderDocumentListComponent {
   }
 
   protected readonly Action = Action;
+  protected readonly environment = environment;
 }

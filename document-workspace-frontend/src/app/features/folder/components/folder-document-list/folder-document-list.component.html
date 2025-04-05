@@ -42,6 +42,13 @@
             </a>
           }
 
+          <a [href]="downloadUrl + document.id">
+            <button mat-menu-item>
+              <i class="fa fa-download me-2 text-gray-500"></i>
+              <span class="text-gray-700">Download</span>
+            </button>
+          </a>
+
           <button mat-menu-item (click)="deleteDocument(document.id)" [disabled]="document.locked">
             <i class="fa fa-remove me-2 text-red-500"></i>
             <span class="text-red-500">Delete document</span>
