@@ -1,0 +1,22 @@
+<div class="w-full bg-white text-sm px-6 py-4 rounded-lg shadow-md flex gap-10 items-center">
+
+  @if (folder) {
+
+    @if (folder.parentFolder && folder.parentFolder.id) {
+      <button mat-icon-button
+              [routerLink]="['/folder', folder.parentFolder.id]"
+              class="fas fa-arrow-left fa-2xl text-gray-600 cursor-pointer px-3 py-6">
+      </button>
+    }
+
+    <div>
+      <h1 class="mb-1 text-3xl font-bold leading-none tracking-tight text-gray-900">
+        {{ folder.name }}
+      </h1>
+      <p class="text-lg font-normal text-gray-500">
+        {{ folder.documents.length + folder.folders.length + " items" }}
+      </p>
+    </div>
+  }
+
+</div>

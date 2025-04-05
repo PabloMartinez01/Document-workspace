@@ -1,0 +1,55 @@
+<div class="relative overflow-x-auto mt-2 rounded-lg shadow-md bg-white">
+  <table class="w-full text-sm text-gray-500 text-nowrap border-separate border-spacing-y-[7px] p-4 py-3">
+    <tbody>
+    <tr *ngFor="let document of folder?.documents" class="[&>td]:px-6 [&>td]:py-3 bg-gray-100 ">
+      <td class="rounded-s-lg">
+        <i class="fas fa-file text-gray-500 me-6"></i>
+        <span>{{ document.filename }} {{ document.id }}</span>
+      </td>
+      <td>{{ document.extension }}</td>
+      <td>{{ bytesToString(document.length) }}</td>
+
+      <td>v{{ document.version }}</td>
+      <td>
+        @if (document.locked) {
+          <i class="fa fa-lock text-red-500 "></i>
+        } @else {
+          <i class="fa fa-lock-open text-green-500"></i>
+        }
+      </td>
+
+      <td class="rounded-e-lg">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu">
+
+          @if (isSupported(document.extension)) {
+            @if (isEditable(document.extension)) {
+              <a [routerLink]="['/documents', document.id]" [queryParams]="{action : Action.EDIT}" target="_blank">
+                <button mat-menu-item>
+                  <i class="fa fa-edit me-2 text-gray-500"></i>
+                  <span class="text-gray-700">Edit</span>
+                </button>
+              </a>
+            }
+            <a [routerLink]="['/documents', document.id]" [queryParams]="{action : Action.VIEW}" target="_blank">
+              <button mat-menu-item>
+                <i class="fa fa-eye me-2 text-gray-500"></i>
+                <span class="text-gray-700">View</span>
+              </button>
+            </a>
+          }
+
+          <button mat-menu-item (click)="deleteDocument(document.id)" [disabled]="document.locked">
+            <i class="fa fa-remove me-2 text-red-500"></i>
+            <span class="text-red-500">Delete document</span>
+          </button>
+
+        </mat-menu>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

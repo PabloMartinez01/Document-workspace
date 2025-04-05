@@ -1,0 +1,7 @@
+<div class="w-full mt-2 rounded-lg shadow-md bg-white flex flex-col gap-[7px] p-4">
+  <div *ngFor="let subfolder of folder?.folders" [routerLink]="['/folder', subfolder.id]"
+       class="bg-gray-100 text-sm rounded-lg px-6 py-5 text-gray-500 whitespace-nowrap cursor-pointer">
+    <i class="fas fa-folder text-indigo-700"></i>
+    <span class="ms-3">{{ subfolder.name }}</span>
+  </div>
+</div>
