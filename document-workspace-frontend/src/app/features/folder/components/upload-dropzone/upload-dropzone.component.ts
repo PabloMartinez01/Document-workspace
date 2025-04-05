@@ -3,7 +3,7 @@ import {NgIf} from '@angular/common';
 import {NgxDropzoneModule} from 'ngx-dropzone';
 
 @Component({
-  selector: 'app-upload-dropzone',
+  selector: 'upload-dropzone',
   standalone: true,
   imports: [
     NgIf,
@@ -14,7 +14,7 @@ import {NgxDropzoneModule} from 'ngx-dropzone';
 export class UploadDropzoneComponent {
 
   file: File | null = null;
-  @Output() uploadFileEmitter: EventEmitter<File> = new EventEmitter<File>();
+  @Output() uploadDocumentEmitter: EventEmitter<File> = new EventEmitter<File>();
 
   onSelect(event: any) {
     this.file = event.addedFiles[0];
@@ -32,7 +32,7 @@ export class UploadDropzoneComponent {
         lastModified: this.file.lastModified
       })
 
-      this.uploadFileEmitter.emit(clonedFile);
+      this.uploadDocumentEmitter.emit(clonedFile);
       this.file = null;
     }
   }

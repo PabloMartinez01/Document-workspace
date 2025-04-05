@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FolderService} from '../../../../core/services/folder.service';
 import {Folder} from '../../../../core/model/folder/folder';
 import {ActivatedRoute, RouterLink} from '@angular/router';
@@ -10,12 +10,14 @@ import {UploadDropzoneComponent} from '../../components/upload-dropzone/upload-d
 import {ExtensionService} from '../../../../core/services/extension.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import {DocumentService} from '../../../../core/services/document.service';
-import {Action} from '../../../../core/model/action.enum';
 import {Messages} from '../../../../core/model/messages/messages';
 import {FolderInfoResponse} from '../../../../core/model/folder/folder-info-response';
-import {debounceTime, filter, Subject, switchMap} from 'rxjs';
 import {FormsModule} from '@angular/forms';
 import {WebSocketService} from '../../../../core/services/web-socket.service';
+import {FolderInfoComponent} from '../../components/folder-info/folder-info.component';
+import {FolderListComponent} from '../../components/folder-list/folder-list.component';
+import {FolderDocumentListComponent} from '../../components/folder-document-list/folder-document-list.component';
+import {FolderToolbarComponent} from '../../components/folder-toolbar/folder-toolbar.component';
 
 @Component({
   selector: 'app-view-folder',
@@ -30,18 +32,19 @@ import {WebSocketService} from '../../../../core/services/web-socket.service';
     RouterLink,
     MatMenuTrigger,
     NgIf,
-    FormsModule
+    FormsModule,
+    FolderInfoComponent,
+    FolderListComponent,
+    FolderDocumentListComponent,
+    FolderToolbarComponent
 
   ],
   templateUrl: './view-folder.component.html'
 })
 export class ViewFolderComponent implements OnInit {
 
-  @ViewChild('inputFolder') inputFolder: ElementRef<HTMLInputElement> | undefined;
   folder?: Folder;
 
-  search: string = '';
-  private searchSubject: Subject<string> = new Subject<string>();
 
   constructor(
     private folderService: FolderService,
@@ -56,24 +59,10 @@ export class ViewFolderComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeParamMapSubscription();
-    this.initializeSearchSubscription();
     this.initializeWebSocket();
   }
 
-  private initializeSearchSubscription() {
-    this.searchSubject.pipe(
-      debounceTime(700),
-      filter(() => !!this.folder?.id),
-      switchMap(searchTerm => this.folderService.getFolderItemsByName(this.folder!.id, searchTerm))
-    ).subscribe({
-      next: folderItems => {
-        if (!this.folder) return;
-        this.folder.folders = folderItems.folders;
-        this.folder.documents = folderItems.documents;
-      },
-      error: err => console.log(err)
-    })
-  }
+
 
   private initializeWebSocket() {
     this.webSocketService.getDocumentLockTopic().subscribe({
@@ -103,13 +92,7 @@ export class ViewFolderComponent implements OnInit {
     })
   }
 
-  isEditable(extension: string): boolean {
-    return this.extensionService.isEditable(extension);
-  }
 
-  isSupported(extension: string): boolean {
-    return this.extensionService.isSupported(extension);
-  }
 
   deleteDocument(documentId: number): void {
     this.alertService.showConfirmationAlert(() => {
@@ -142,12 +125,9 @@ export class ViewFolderComponent implements OnInit {
     });
   }
 
-  createFolder() {
-    if (!this.inputFolder || !this.folder) return;
-    const folderName: string = this.inputFolder.nativeElement.value;
+  createFolder(folderName: string): void {
 
-    if (!folderName) return;
-    this.inputFolder.nativeElement.value = '';
+    if (!this.folder) return;
 
     this.folderService.createFolder({name: folderName, parentFolderId: this.folder.id}).subscribe({
       next: (folderInfo: FolderInfoResponse) => {
@@ -158,26 +138,6 @@ export class ViewFolderComponent implements OnInit {
       error: () => this.alertService.showErrorAlert(Messages.createFolderError.title, Messages.createFolderError.body)
     })
 
-  }
-
-  bytesToString(bytes: number): string {
-    if (bytes < 1024) {
-      return `${bytes} bytes`;
-    }
-    if (bytes < 1024 * 1024) {
-      return `${(bytes / 1024).toFixed(2)} KB`;
-    }
-    if (bytes < 1024 * 1024 * 1024) {
-      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-    }
-
-    return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
-  }
-
-  protected readonly Action = Action;
-
-  onSearchChange() {
-    this.searchSubject.next(this.search)
   }
 
 
