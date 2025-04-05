@@ -1,5 +1,6 @@
 package com.pablodev.documentworkspace.services.jwt;
 
+import com.pablodev.documentworkspace.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,10 @@ import java.util.Map;
 
 @Service
 public class ApplicationAbstractJwtService extends AbstractJwtService {
+
+    public ApplicationAbstractJwtService(JwtProperties jwtProperties) {
+        super(jwtProperties);
+    }
 
     public boolean isValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
@@ -30,7 +35,7 @@ public class ApplicationAbstractJwtService extends AbstractJwtService {
                 .claims(extraClaims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expiration))
+                .expiration(new Date(System.currentTimeMillis() + jwtProperties.getExpiration()))
                 .signWith(getSignInKey())
                 .compact();
     }

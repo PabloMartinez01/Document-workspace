@@ -2,6 +2,7 @@ package com.pablodev.documentworkspace.services.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onlyoffice.model.documenteditor.Callback;
+import com.pablodev.documentworkspace.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,10 @@ import java.util.Optional;
 
 @Service
 public class DocumentServerAbstractJwtService extends AbstractJwtService {
+
+    public DocumentServerAbstractJwtService(JwtProperties jwtProperties) {
+        super(jwtProperties);
+    }
 
     public boolean isValid(String token) {
         return !isTokenExpired(token);
