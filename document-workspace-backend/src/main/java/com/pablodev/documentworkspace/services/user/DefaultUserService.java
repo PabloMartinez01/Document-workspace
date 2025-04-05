@@ -18,4 +18,10 @@ public class DefaultUserService implements UserDetailsService {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
+
+    public UserDetails loadUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException(id.toString()));
+    }
+
 }

@@ -1,6 +1,9 @@
 package com.pablodev.documentworkspace.filters;
 
-import com.pablodev.documentworkspace.services.jwt.ApplicationAbstractJwtService;
+import com.onlyoffice.model.documenteditor.Callback;
+import com.onlyoffice.model.documenteditor.callback.Action;
+import com.pablodev.documentworkspace.services.jwt.DocumentServerAbstractJwtService;
+import com.pablodev.documentworkspace.services.user.DefaultUserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -17,15 +19,16 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Optional;
 
-@Component
 @RequiredArgsConstructor
-public class JwtFilter extends OncePerRequestFilter {
+@Component
+public class OnlyOfficeJwtFilter extends OncePerRequestFilter {
 
-    private final UserDetailsService userDetailsService;
-    private final ApplicationAbstractJwtService jwtService;
+    private final DocumentServerAbstractJwtService jwtService;
+    private final DefaultUserService userService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
         Optional<String> authorization = Optional.ofNullable(request.getHeader("Authorization"))
                 .filter(authHeader -> authHeader.startsWith("Bearer "))
@@ -37,11 +40,24 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         String token = authorization.get();
-        String username = jwtService.extractUsername(token);
+        Optional<Long> optionalUserId = jwtService.extractCallback(token)
+                .map(Callback::getActions)
+                .filter(list -> !list.isEmpty())
+                .map(list -> list.get(0))
+                .map(Action::getUserid)
+                .map(Long::parseLong);
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            if (jwtService.isValid(token, userDetails)) {
+
+        if (optionalUserId.isEmpty()) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        Long userId = optionalUserId.get();
+
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = userService.loadUserById(userId);
+            if (jwtService.isValid(token)) {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
@@ -53,6 +69,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+
     }
 
 

@@ -4,6 +4,7 @@ import com.onlyoffice.model.documenteditor.Config;
 import com.pablodev.documentworkspace.dto.Action;
 import com.pablodev.documentworkspace.services.configuration.ConfigurationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,8 +15,12 @@ public class ConfigurationController {
     private final ConfigurationService configurationService;
 
     @GetMapping("/{id}")
-    public Config getConfiguration(@PathVariable Long id, @RequestParam(defaultValue = "view") Action action) {
-        return configurationService.getConfiguration(id, action);
+    public Config getConfiguration(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "view") Action action,
+            Authentication authentication
+    ) {
+        return configurationService.getConfiguration(id, action, authentication);
     }
 
 }
