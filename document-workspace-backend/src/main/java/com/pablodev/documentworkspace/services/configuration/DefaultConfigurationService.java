@@ -9,8 +9,10 @@ import com.pablodev.documentworkspace.dto.Action;
 import com.pablodev.documentworkspace.dto.document.DocumentResponse;
 import com.pablodev.documentworkspace.managers.document.DocumentManager;
 import com.pablodev.documentworkspace.managers.url.UrlManager;
+import com.pablodev.documentworkspace.model.User;
 import com.pablodev.documentworkspace.services.document.DocumentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +26,9 @@ public class DefaultConfigurationService implements ConfigurationService {
     private final UrlManager urlManager;
 
     @Override
-    public Config getConfiguration(Long documentId, Action action) {
+    public Config getConfiguration(Long documentId, Action action, Authentication authentication) {
 
+        User user = (User) authentication.getPrincipal();
         DocumentResponse documentResponse = documentService.findDocumentInfo(documentId);
 
         boolean isEditable = documentManager.isEditable(documentResponse.getFilename());
@@ -51,6 +54,10 @@ public class DefaultConfigurationService implements ConfigurationService {
                         .callbackUrl(urlManager.getDocumentCallback(documentId))
                         .customization(Customization.builder()
                                 .forcesave(true)
+                                .build())
+                        .user(com.onlyoffice.model.common.User.builder()
+                                .id(String.valueOf(user.getId()))
+                                .name(user.getName())
                                 .build())
                         .build()
                 )
