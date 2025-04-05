@@ -1,7 +1,7 @@
 package com.pablodev.documentworkspace.configuration;
 
-import com.pablodev.documentworkspace.filters.JwtFilter;
-import com.pablodev.documentworkspace.filters.OnlyOfficeJwtFilter;
+import com.pablodev.documentworkspace.filters.ApplicationJwtFilter;
+import com.pablodev.documentworkspace.filters.DocumentServerJwtFilter;
 import com.pablodev.documentworkspace.services.user.DefaultUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -30,8 +30,8 @@ import java.util.Collections;
 public class SecurityConfiguration {
 
     private final DefaultUserService userService;
-    private final JwtFilter jwtFilter;
-    private final OnlyOfficeJwtFilter onlyOfficeJwtFilter;
+    private final ApplicationJwtFilter jwtFilter;
+    private final DocumentServerJwtFilter documentServerJwtFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -44,7 +44,7 @@ public class SecurityConfiguration {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(onlyOfficeJwtFilter, JwtFilter.class)
+                .addFilterAfter(documentServerJwtFilter, ApplicationJwtFilter.class)
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .build();
