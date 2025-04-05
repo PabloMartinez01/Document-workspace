@@ -1,9 +1,10 @@
 package com.pablodev.documentworkspace.services.jwt;
 
+import com.pablodev.documentworkspace.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -12,14 +13,10 @@ import java.util.Date;
 import java.util.function.Function;
 
 @Service
+@RequiredArgsConstructor
 public abstract class AbstractJwtService {
 
-    @Value("${application.security.jwt.secret-key}")
-    protected String secret;
-
-    @Value("${application.security.jwt.expiration}")
-    protected Long expiration;
-
+    protected final JwtProperties jwtProperties;
 
     protected Claims extractAllClaims(String token) {
         return Jwts.parser()
@@ -43,6 +40,6 @@ public abstract class AbstractJwtService {
     }
 
     protected SecretKey getSignInKey() {
-        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8));
     }
 }

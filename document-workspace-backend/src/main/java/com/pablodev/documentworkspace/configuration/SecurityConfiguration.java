@@ -29,6 +29,9 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
+    private static final String[] PERMITTED_URLS = new String[] {
+            "/register", "/authenticate", "/document/{id}", "/ws/**" };
+
     private final DefaultUserService userService;
     private final ApplicationJwtFilter jwtFilter;
     private final DocumentServerJwtFilter documentServerJwtFilter;
@@ -39,7 +42,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> corsConfigurationSource())
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/register", "/authenticate", "/document/{id}", "/ws/**").permitAll()
+                        .requestMatchers(PERMITTED_URLS).permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
