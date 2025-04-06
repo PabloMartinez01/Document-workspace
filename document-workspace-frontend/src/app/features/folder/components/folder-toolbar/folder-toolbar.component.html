@@ -1,7 +1,7 @@
-<div class="bg-white p-3 rounded-lg shadow-md flex gap-2 relative">
+<div class="bg-white p-4 rounded-lg shadow-md flex gap-2 relative">
   <input type="text" placeholder="Search" [(ngModel)]="search" (ngModelChange)="onSearchChange()"
-         class="border border-gray-200 w-full px-10 py-2 rounded bg-gray-50  outline-gray-600 focus:bg-white">
-  <i class="fas fa-search absolute top-[39%] left-5 text-gray-400"></i>
+         class="border border-gray-200 w-full px-10 py-2 rounded bg-gray-50 outline-indigo-500 focus:bg-white">
+  <i class="fas fa-search absolute top-[39%] left-7 text-gray-400"></i>
 
 
   <button mat-icon-button [matMenuTriggerFor]="createMenu"
@@ -10,16 +10,16 @@
 
   <mat-menu #createMenu="matMenu">
     <div (click)="$event.stopPropagation()" class="flex flex-col justify-center gap-2 py-2 px-4 w-64">
-      <input #inputFolder
-             [(ngModel)]="folderName"
+      <input [(ngModel)]="folderName"
              required
              type="text"
              class="border border-gray-300 px-3 py-2 rounded shadow font-light outline-gray-600 "
              placeholder="Folder name">
 
-      <button (click)="createFolder()" [disabled]="!this.inputFolder.value"
-              class="px-5 py-2 text-white bg-gray-700 rounded hover:bg-black transition-all disabled:bg-gray-500 disabled:border-gray-500
-          disabled:cursor-not-allowed ease duration-200 border-[1px] border-black cursor-pointer">Create folder
+      <button (click)="createFolder()" [disabled]="!folderName"
+              class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none
+              focus:ring-2 focus:ring-indigo-500 disabled:bg-indigo-300 disabled:text-gray-500 disabled:cursor-not-allowed">
+        Create folder
       </button>
 
     </div>

@@ -8,7 +8,6 @@
   --mat-menu-container-color: white;
 }
 
-
 html, body {
   padding: 0;
   margin: 0;
@@ -18,13 +17,14 @@ html, body {
 
 body {
   background-color: #f6f6f6;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 ngx-dropzone {
   background-color: #fdfdfd !important;
+  border-color: rgb(67 56 202) !important;
 }
 
 
-body { font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
