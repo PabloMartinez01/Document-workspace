@@ -8,6 +8,7 @@ import {Folder} from '../../../../core/model/folder/folder';
 import {RouterLink} from '@angular/router';
 import {ExtensionService} from '../../../../core/services/extension.service';
 import {environment} from '../../../../../environments/environment';
+import {WebSocketService} from '../../../../core/services/web-socket.service';
 
 @Component({
   selector: 'folder-document-list',
@@ -29,7 +30,23 @@ export class FolderDocumentListComponent {
   @Output() deleteDocumentEmitter: EventEmitter<number> = new EventEmitter<number>();
   readonly downloadUrl: string = `${environment.documentService}/document/`
 
-  constructor(private extensionService: ExtensionService) {
+  constructor(
+    private extensionService: ExtensionService,
+    private webSocketService: WebSocketService
+  ) {
+    this.initializeWebSocket();
+  }
+
+  private initializeWebSocket() {
+    this.webSocketService.getDocumentLockTopic().subscribe({
+      next: lockEvent => {
+        if (!this.folder || !lockEvent || !lockEvent.id) return;
+        this.folder.documents = this.folder.documents.map(document =>
+          document.id === lockEvent.id ? {...document, locked: lockEvent.lock} : document
+        );
+      },
+      error: err => console.log(err)
+    })
   }
 
   isEditable(extension: string): boolean {

@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FolderService} from '../../../../core/services/folder.service';
 import {Folder} from '../../../../core/model/folder/folder';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {NgForOf, NgIf} from '@angular/common';
 import {UploadDropzoneComponent} from '../../components/upload-dropzone/upload-dropzone.component';
-import {ExtensionService} from '../../../../core/services/extension.service';
 import {AlertService} from '../../../../core/services/alert.service';
 import {DocumentService} from '../../../../core/services/document.service';
 import {Messages} from '../../../../core/model/messages/messages';
@@ -18,6 +17,7 @@ import {FolderInfoComponent} from '../../components/folder-info/folder-info.comp
 import {FolderListComponent} from '../../components/folder-list/folder-list.component';
 import {FolderDocumentListComponent} from '../../components/folder-document-list/folder-document-list.component';
 import {FolderToolbarComponent} from '../../components/folder-toolbar/folder-toolbar.component';
+import {AuthenticationService} from '../../../../core/services/authentication.service';
 
 @Component({
   selector: 'app-view-folder',
@@ -48,33 +48,20 @@ export class ViewFolderComponent implements OnInit {
 
   constructor(
     private folderService: FolderService,
-    private extensionService: ExtensionService,
+    private authenticationService: AuthenticationService,
     private alertService: AlertService,
     private documentService: DocumentService,
     private activatedRoute: ActivatedRoute,
-    private webSocketService: WebSocketService
+    private webSocketService: WebSocketService,
+    private router: Router
   ) {
 
   }
 
   ngOnInit(): void {
     this.initializeParamMapSubscription();
-    this.initializeWebSocket();
   }
 
-
-
-  private initializeWebSocket() {
-    this.webSocketService.getDocumentLockTopic().subscribe({
-      next: lockEvent => {
-        if (!this.folder || !lockEvent || !lockEvent.id) return;
-        this.folder.documents = this.folder.documents.map(document =>
-          document.id === lockEvent.id ? {...document, locked: lockEvent.lock} : document
-        );
-      },
-      error: err => console.log(err)
-    })
-  }
 
   private initializeParamMapSubscription() {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -141,4 +128,8 @@ export class ViewFolderComponent implements OnInit {
   }
 
 
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']).then();
+  }
 }
