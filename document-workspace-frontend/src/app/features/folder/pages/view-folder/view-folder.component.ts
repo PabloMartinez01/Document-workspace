@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FolderService} from '../../../../core/services/folder.service';
 import {Folder} from '../../../../core/model/folder/folder';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute, RouterLink, RouterOutlet} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
@@ -36,7 +36,8 @@ import {SidebarComponent} from '../../../../shared/sidebar/sidebar.component';
     FolderListComponent,
     FolderDocumentListComponent,
     FolderToolbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    RouterOutlet
 
   ],
   templateUrl: './view-folder.component.html'
