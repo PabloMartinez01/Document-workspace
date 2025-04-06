@@ -46,6 +46,7 @@ export class AuthenticationService {
   }
 
 
-
-
+  logout(): void {
+    this.tokenStorageService.clearToken();
+  }
 }
