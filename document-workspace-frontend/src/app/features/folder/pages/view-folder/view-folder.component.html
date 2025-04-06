@@ -37,14 +37,12 @@
 
   </div>
 
-  <div *ngIf="this.folder" class="flex-grow">
+  <div *ngIf="this.folder" class="flex-grow flex flex-col gap-2.5">
     <folder-info [folder]="folder" />
     <folder-toolbar [folder]="folder" (createFolderEmitter)="createFolder($event)" />
     <folder-list [folder]="folder"  />
     <folder-document-list [folder]="folder" (deleteDocumentEmitter)="deleteDocument($event)" />
-    <div class="py-5">
-      <upload-dropzone (uploadDocumentEmitter)="uploadDocument($event)"/>
-    </div>
+    <upload-dropzone (uploadDocumentEmitter)="uploadDocument($event)"/>
   </div>
 
 </div>
