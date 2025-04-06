@@ -1,11 +1,13 @@
-<div *ngIf="this.folder" class="flex-grow flex flex-col gap-2.5">
-  <folder-info [folder]="folder" />
-  <folder-toolbar [folder]="folder" (createFolderEmitter)="createFolder($event)" />
-  <folder-list [folder]="folder"  />
-  <folder-document-list [folder]="folder" (deleteDocumentEmitter)="deleteDocument($event)" />
-  <upload-dropzone (uploadDocumentEmitter)="uploadDocument($event)"/>
+<div class="flex p-5 gap-4">
+  <sidebar />
+  <div *ngIf="this.folder" class="flex-grow flex flex-col gap-2.5">
+    <folder-info [folder]="folder" />
+    <folder-toolbar [folder]="folder" (createFolderEmitter)="createFolder($event)" />
+    <folder-list [folder]="folder"  />
+    <folder-document-list [folder]="folder" (deleteDocumentEmitter)="deleteDocument($event)" />
+    <upload-dropzone (uploadDocumentEmitter)="uploadDocument($event)"/>
+  </div>
 </div>
-
 
 
 
