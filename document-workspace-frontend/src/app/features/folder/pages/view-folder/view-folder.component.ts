@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FolderService} from '../../../../core/services/folder.service';
 import {Folder} from '../../../../core/model/folder/folder';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
@@ -12,15 +12,14 @@ import {DocumentService} from '../../../../core/services/document.service';
 import {Messages} from '../../../../core/model/messages/messages';
 import {FolderInfoResponse} from '../../../../core/model/folder/folder-info-response';
 import {FormsModule} from '@angular/forms';
-import {WebSocketService} from '../../../../core/services/web-socket.service';
 import {FolderInfoComponent} from '../../components/folder-info/folder-info.component';
 import {FolderListComponent} from '../../components/folder-list/folder-list.component';
 import {FolderDocumentListComponent} from '../../components/folder-document-list/folder-document-list.component';
 import {FolderToolbarComponent} from '../../components/folder-toolbar/folder-toolbar.component';
-import {AuthenticationService} from '../../../../core/services/authentication.service';
+import {SidebarComponent} from '../../../../shared/sidebar/sidebar.component';
 
 @Component({
-  selector: 'app-view-folder',
+  selector: 'view-folder',
   standalone: true,
   imports: [
     MatIcon,
@@ -36,7 +35,8 @@ import {AuthenticationService} from '../../../../core/services/authentication.se
     FolderInfoComponent,
     FolderListComponent,
     FolderDocumentListComponent,
-    FolderToolbarComponent
+    FolderToolbarComponent,
+    SidebarComponent
 
   ],
   templateUrl: './view-folder.component.html'
@@ -45,15 +45,11 @@ export class ViewFolderComponent implements OnInit {
 
   folder?: Folder;
 
-
   constructor(
     private folderService: FolderService,
-    private authenticationService: AuthenticationService,
     private alertService: AlertService,
     private documentService: DocumentService,
-    private activatedRoute: ActivatedRoute,
-    private webSocketService: WebSocketService,
-    private router: Router
+    private activatedRoute: ActivatedRoute
   ) {
 
   }
@@ -127,9 +123,4 @@ export class ViewFolderComponent implements OnInit {
 
   }
 
-
-  logout() {
-    this.authenticationService.logout();
-    this.router.navigate(['/login']).then();
-  }
 }
