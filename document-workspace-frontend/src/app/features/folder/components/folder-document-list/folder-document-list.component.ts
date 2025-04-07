@@ -3,12 +3,13 @@ import {Action} from '../../../../core/model/action.enum';
 import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgStyle} from '@angular/common';
 import {Folder} from '../../../../core/model/folder/folder';
 import {RouterLink} from '@angular/router';
 import {ExtensionService} from '../../../../core/services/extension.service';
 import {environment} from '../../../../../environments/environment';
 import {WebSocketService} from '../../../../core/services/web-socket.service';
+import {Type} from '../../../../core/model/type.enum';
 
 @Component({
   selector: 'folder-document-list',
@@ -20,7 +21,8 @@ import {WebSocketService} from '../../../../core/services/web-socket.service';
     MatMenuItem,
     NgForOf,
     MatMenuTrigger,
-    RouterLink
+    RouterLink,
+    NgStyle
   ],
   templateUrl: './folder-document-list.component.html'
 })
@@ -29,6 +31,14 @@ export class FolderDocumentListComponent {
   @Input() folder?: Folder;
   @Output() deleteDocumentEmitter: EventEmitter<number> = new EventEmitter<number>();
   readonly downloadUrl: string = `${environment.documentService}/document/`
+
+
+  colors = {
+    [Type.DOCUMENT]: 'blue',
+    [Type.SLIDE]: 'orange',
+    [Type.SPREADSHEET]: 'green',
+    [Type.FORM]: 'red',
+  }
 
   constructor(
     private extensionService: ExtensionService,
@@ -59,6 +69,13 @@ export class FolderDocumentListComponent {
 
   deleteDocument(id: number): void {
     this.deleteDocumentEmitter.emit(id);
+  }
+
+  getType(extension: string): string {
+    console.log(extension)
+    const type = this.extensionService.getType(extension);
+    if (type === null) return "gray";
+    return this.colors[type];
   }
 
   bytesToString(bytes: number): string {

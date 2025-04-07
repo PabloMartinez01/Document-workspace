@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ExtensionConfiguration} from '../model/configuration/extension-configuration';
 import {HttpClient} from '@angular/common/http';
+import {Type} from '../model/type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +62,14 @@ export class ExtensionService {
 
   isForm(extension: string): boolean {
     return this.extensionConfiguration.formFormats.includes(extension.toLowerCase());
+  }
+
+  getType(extension: string): Type | null {
+    if (this.isDocument(extension)) return Type.DOCUMENT;
+    if (this.isSlide(extension)) return Type.SLIDE;
+    if (this.isSpreadSheet(extension)) return Type.SPREADSHEET;
+    if (this.isForm(extension)) return Type.FORM;
+    return null;
   }
 
 
