@@ -72,7 +72,6 @@ export class FolderDocumentListComponent {
   }
 
   getType(extension: string): string {
-    console.log(extension)
     const type = this.extensionService.getType(extension);
     if (type === null) return "gray";
     return this.colors[type];
