@@ -10,18 +10,28 @@ export class ExtensionService {
   private extensionsUrl = 'extensions.json';
   private extensionConfiguration: ExtensionConfiguration = {
     editableFormats: [],
-    viewableFormats: []
+    viewableFormats: [],
+    documentFormats: [],
+    slideFormats: [],
+    spreadsheetFormats: [],
+    formFormats: []
   }
 
   constructor(private http: HttpClient) {
     this.http.get<ExtensionConfiguration>(this.extensionsUrl).subscribe({
       next: extensions => {
-        this.extensionConfiguration = {
-          editableFormats: extensions.editableFormats.map(ext => ext.toLowerCase()),
-          viewableFormats: extensions.viewableFormats.map(ext => ext.toLowerCase()),
-        }
+        const keys: (keyof ExtensionConfiguration)[] = Object.keys(extensions) as (keyof ExtensionConfiguration)[]
+        keys.forEach(key => {
+          if (extensions[key] && Array.isArray(extensions[key])) {
+            this.extensionConfiguration[key] = extensions[key].map(format => format.toLowerCase());
+          }
+        });
       }
     })
+  }
+
+  private mapFormats(formats: string[]): string[] {
+    return formats.map(format => format.toLowerCase());
   }
 
   isEditable(extension: string): boolean {
@@ -36,6 +46,9 @@ export class ExtensionService {
     const lowerExtension = extension.toLowerCase();
     return this.isEditable(lowerExtension) || this.isViewable(lowerExtension);
   }
+
+
+
 
 
 
