@@ -47,6 +47,22 @@ export class ExtensionService {
     return this.isEditable(lowerExtension) || this.isViewable(lowerExtension);
   }
 
+  isDocument(extension: string): boolean {
+    return this.extensionConfiguration.documentFormats.includes(extension.toLowerCase());
+  }
+
+  isSlide(extension: string): boolean {
+    return this.extensionConfiguration.slideFormats.includes(extension.toLowerCase());
+  }
+
+  isSpreadSheet(extension: string): boolean {
+    return this.extensionConfiguration.spreadsheetFormats.includes(extension.toLowerCase());
+  }
+
+  isForm(extension: string): boolean {
+    return this.extensionConfiguration.formFormats.includes(extension.toLowerCase());
+  }
+
 
 
 
