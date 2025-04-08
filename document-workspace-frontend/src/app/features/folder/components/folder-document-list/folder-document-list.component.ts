@@ -28,14 +28,14 @@ import {FolderDocumentMenuComponent} from '../folder-document-menu/folder-docume
   templateUrl: './folder-document-list.component.html'
 })
 export class FolderDocumentListComponent {
+
   readonly colors: Record<Type, string> = {
     [Type.DOCUMENT]: '#006199',
     [Type.SLIDE]: '#ffa845',
     [Type.SPREADSHEET]: '#009913',
     [Type.FORM]: '#ff4545',
   }
-
-  @Input() folder?: Folder;
+  @Input() folder!: Folder;
   @Output() deleteDocumentEmitter: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(
@@ -48,7 +48,7 @@ export class FolderDocumentListComponent {
   private initializeWebSocket() {
     this.webSocketService.getDocumentLockTopic().subscribe({
       next: lockEvent => {
-        if (!this.folder || !lockEvent || !lockEvent.id) return;
+        if (!lockEvent?.id) return;
         this.folder.documents = this.folder.documents.map(document =>
           document.id === lockEvent.id ? {...document, locked: lockEvent.lock} : document
         );
@@ -73,7 +73,6 @@ export class FolderDocumentListComponent {
     if (bytes < 1024 * 1024 * 1024) {
       return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
     }
-
     return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
   }
 
