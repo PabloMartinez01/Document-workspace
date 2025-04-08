@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class ApplicationAbstractJwtService extends AbstractJwtService {
+public class ApplicationJwtService extends AbstractJwtService {
 
-    public ApplicationAbstractJwtService(JwtProperties jwtProperties) {
+    public ApplicationJwtService(JwtProperties jwtProperties) {
         super(jwtProperties);
     }
 
