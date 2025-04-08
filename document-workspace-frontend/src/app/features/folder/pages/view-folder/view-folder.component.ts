@@ -44,7 +44,7 @@ import {SidebarComponent} from '../../../../shared/sidebar/sidebar.component';
 })
 export class ViewFolderComponent implements OnInit {
 
-  folder?: Folder;
+  folder!: Folder;
 
   constructor(
     private folderService: FolderService,
@@ -66,9 +66,7 @@ export class ViewFolderComponent implements OnInit {
       if (id) {
         this.folderService.getFolder(id).subscribe({
           next: folder => this.folder = folder,
-          error: err => {
-            this.alertService.showErrorAlert(Messages.folderNotFound.title, Messages.folderNotFound.body)
-          }
+          error: () => this.alertService.showErrorAlert(Messages.folderNotFound.title, Messages.folderNotFound.body)
         });
       } else {
         this.alertService.showErrorAlert(Messages.folderNotFound.title, Messages.folderNotFound.body)
@@ -82,7 +80,6 @@ export class ViewFolderComponent implements OnInit {
     this.alertService.showConfirmationAlert(() => {
       this.documentService.deleteDocument(documentId).subscribe({
         next: () => {
-          if (!this.folder) return;
           this.folder.documents = this.folder.documents.filter(doc => doc.id !== documentId);
           this.alertService.showSuccessAlert(Messages.deleteSuccess.title, Messages.deleteSuccess.body);
         },
@@ -93,7 +90,7 @@ export class ViewFolderComponent implements OnInit {
 
   uploadDocument(file: File): void {
 
-    if (!(file && this.folder)) return;
+    if (!file) return;
 
     const formData: FormData = new FormData();
     formData.append('file', file);
@@ -101,7 +98,6 @@ export class ViewFolderComponent implements OnInit {
 
     this.documentService.uploadDocument(formData).subscribe({
       next: (documentInfo) => {
-        if (!this.folder) return;
         this.folder.documents = [...this.folder.documents, documentInfo];
         this.alertService.showSuccessAlert(Messages.uploadSuccess.title, Messages.uploadSuccess.body);
       },
@@ -110,12 +106,8 @@ export class ViewFolderComponent implements OnInit {
   }
 
   createFolder(folderName: string): void {
-
-    if (!this.folder) return;
-
     this.folderService.createFolder({name: folderName, parentFolderId: this.folder.id}).subscribe({
       next: (folderInfo: FolderInfoResponse) => {
-        if (!this.folder) return;
         this.folder.folders = [...this.folder.folders, folderInfo];
         this.alertService.showSuccessAlert(Messages.createFolderSuccess.title, Messages.createFolderSuccess.body);
       },

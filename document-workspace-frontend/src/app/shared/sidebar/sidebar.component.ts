@@ -16,7 +16,6 @@ export class SidebarComponent {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
-
   ) {
 
   }

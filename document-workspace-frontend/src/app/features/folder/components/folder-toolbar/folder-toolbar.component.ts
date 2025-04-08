@@ -20,8 +20,9 @@ import {FolderService} from '../../../../core/services/folder.service';
 })
 export class FolderToolbarComponent implements OnInit {
 
-  @Input() folder?: Folder;
+  @Input() folder!: Folder;
   @Output() createFolderEmitter: EventEmitter<string> = new EventEmitter<string>();
+
   private searchSubject: Subject<string> = new Subject<string>();
 
   folderName: string = '';
@@ -37,11 +38,10 @@ export class FolderToolbarComponent implements OnInit {
   private initializeSearchSubscription() {
     this.searchSubject.pipe(
       debounceTime(700),
-      filter(() => !!this.folder?.id),
-      switchMap(searchTerm => this.folderService.getFolderItemsByName(this.folder!.id, searchTerm))
+      filter(() => !!this.folder.id),
+      switchMap(searchTerm => this.folderService.getFolderItemsByName(this.folder.id, searchTerm))
     ).subscribe({
       next: folderItems => {
-        if (!this.folder) return;
         this.folder.folders = folderItems.folders;
         this.folder.documents = folderItems.documents;
       },
@@ -50,11 +50,9 @@ export class FolderToolbarComponent implements OnInit {
   }
 
   createFolder() {
-    if (!this.folderName) return;
     this.createFolderEmitter.emit(this.folderName);
     this.folderName = '';
   }
-
 
   onSearchChange() {
     this.searchSubject.next(this.search)

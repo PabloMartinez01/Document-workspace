@@ -1,11 +1,10 @@
 <div class="w-full bg-white text-sm px-6 py-4 rounded-lg shadow-md flex gap-10 items-center">
 
   @if (folder) {
-
-    @if (folder.parentFolder && folder.parentFolder.id) {
-      <button mat-icon-button
-              [routerLink]="['/folder', folder.parentFolder.id]"
-              class="fas fa-arrow-left fa-2xl text-gray-600 cursor-pointer px-3 py-6">
+    @if (folder.parentFolder) {
+      <button mat-icon-button [routerLink]="['/folder', folder.parentFolder.id]"
+              class="fas fa-arrow-left fa-2xl !text-white !bg-indigo-700 hover:!bg-indigo-900 cursor-pointer px-3 py-6
+              transition-all ease duration-200">
       </button>
     }
 
