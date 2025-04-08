@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Action} from '../../../../core/model/action.enum';
 import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
@@ -10,6 +9,7 @@ import {ExtensionService} from '../../../../core/services/extension.service';
 import {environment} from '../../../../../environments/environment';
 import {WebSocketService} from '../../../../core/services/web-socket.service';
 import {Type} from '../../../../core/model/type.enum';
+import {FolderDocumentMenuComponent} from '../folder-document-menu/folder-document-menu.component';
 
 @Component({
   selector: 'folder-document-list',
@@ -22,13 +22,12 @@ import {Type} from '../../../../core/model/type.enum';
     NgForOf,
     MatMenuTrigger,
     RouterLink,
-    NgStyle
+    NgStyle,
+    FolderDocumentMenuComponent
   ],
   templateUrl: './folder-document-list.component.html'
 })
 export class FolderDocumentListComponent {
-
-  readonly downloadUrl: string = `${environment.documentService}/document/`
   readonly colors: Record<Type, string> = {
     [Type.DOCUMENT]: '#006199',
     [Type.SLIDE]: '#ffa845',
@@ -58,18 +57,6 @@ export class FolderDocumentListComponent {
     })
   }
 
-  isEditable(extension: string): boolean {
-    return this.extensionService.isEditable(extension);
-  }
-
-  isSupported(extension: string): boolean {
-    return this.extensionService.isSupported(extension);
-  }
-
-  deleteDocument(id: number): void {
-    this.deleteDocumentEmitter.emit(id);
-  }
-
   getType(extension: string): string {
     const type = this.extensionService.getType(extension);
     if (type === null) return "gray";
@@ -90,6 +77,5 @@ export class FolderDocumentListComponent {
     return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
   }
 
-  protected readonly Action = Action;
   protected readonly environment = environment;
 }
