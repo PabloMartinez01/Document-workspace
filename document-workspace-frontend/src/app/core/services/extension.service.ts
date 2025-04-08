@@ -31,10 +31,6 @@ export class ExtensionService {
     })
   }
 
-  private mapFormats(formats: string[]): string[] {
-    return formats.map(format => format.toLowerCase());
-  }
-
   isEditable(extension: string): boolean {
     return this.extensionConfiguration.editableFormats.includes(extension.toLowerCase());
   }

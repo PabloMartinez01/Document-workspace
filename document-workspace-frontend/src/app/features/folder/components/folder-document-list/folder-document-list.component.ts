@@ -28,17 +28,16 @@ import {Type} from '../../../../core/model/type.enum';
 })
 export class FolderDocumentListComponent {
 
+  readonly downloadUrl: string = `${environment.documentService}/document/`
+  readonly colors: Record<Type, string> = {
+    [Type.DOCUMENT]: '#006199',
+    [Type.SLIDE]: '#ffa845',
+    [Type.SPREADSHEET]: '#009913',
+    [Type.FORM]: '#ff4545',
+  }
+
   @Input() folder?: Folder;
   @Output() deleteDocumentEmitter: EventEmitter<number> = new EventEmitter<number>();
-  readonly downloadUrl: string = `${environment.documentService}/document/`
-
-
-  colors = {
-    [Type.DOCUMENT]: 'blue',
-    [Type.SLIDE]: 'orange',
-    [Type.SPREADSHEET]: 'green',
-    [Type.FORM]: 'red',
-  }
 
   constructor(
     private extensionService: ExtensionService,

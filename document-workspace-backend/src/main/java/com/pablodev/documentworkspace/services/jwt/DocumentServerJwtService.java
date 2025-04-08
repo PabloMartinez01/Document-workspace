@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class DocumentServerAbstractJwtService extends AbstractJwtService {
+public class DocumentServerJwtService extends AbstractJwtService {
 
-    public DocumentServerAbstractJwtService(JwtProperties jwtProperties) {
+    public DocumentServerJwtService(JwtProperties jwtProperties) {
         super(jwtProperties);
     }
 

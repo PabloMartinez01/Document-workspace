@@ -119,6 +119,7 @@
   ],
   "slideFormats": [
     "pptx",
+    "ppt",
     "pptm",
     "ppsx",
     "ppsm",
@@ -139,9 +140,7 @@
     "docxf",
     "djvu",
     "sxi",
-    "ppt",
     "pps",
-    "otp",
     "fodp",
     "pdf"
   ]

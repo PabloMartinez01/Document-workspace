@@ -1,6 +1,6 @@
 package com.pablodev.documentworkspace.filters;
 
-import com.pablodev.documentworkspace.services.jwt.ApplicationAbstractJwtService;
+import com.pablodev.documentworkspace.services.jwt.ApplicationJwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ import java.util.Optional;
 public class ApplicationJwtFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
-    private final ApplicationAbstractJwtService jwtService;
+    private final ApplicationJwtService jwtService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
