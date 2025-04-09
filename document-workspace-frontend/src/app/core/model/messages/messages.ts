@@ -26,6 +26,10 @@ export const Messages = {
   createFolderError: {
     title: 'Create error',
     body: 'The folder was not created successfully',
+  },
+  sessionExpired: {
+    title: "Session exipired",
+    body: "You will be redirected to the login page!"
   }
 
 };

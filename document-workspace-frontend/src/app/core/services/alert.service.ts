@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import Swal from 'sweetalert2';
+import Swal, {SweetAlertIcon, SweetAlertResult} from 'sweetalert2';
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,12 @@ export class AlertService {
         onSuccess();
       }
     });
+  }
+
+  public showTimerAlert(title: string, text: string, icon: SweetAlertIcon, timer: number,
+                        callback: (result: SweetAlertResult<any>) => void) {
+    Swal.fire({title, text, icon, timer, timerProgressBar: true, didOpen: () =>  Swal.showLoading()})
+      .then(callback);
   }
 
 }
