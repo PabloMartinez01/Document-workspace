@@ -1,7 +1,6 @@
 <div class="flex p-5 gap-4">
-  <sidebar />
-
   @if (folder) {
+    <sidebar />
     <div class="flex-grow flex flex-col gap-2.5">
       <folder-info [folder]="folder" />
       <folder-toolbar [folder]="folder" (createFolderEmitter)="createFolder($event)" />
