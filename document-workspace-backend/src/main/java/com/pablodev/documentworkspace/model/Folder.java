@@ -10,7 +10,11 @@ import lombok.experimental.SuperBuilder;
 import java.util.List;
 
 @Entity
-@Table(name = "folders")
+@Table(name = "folders",
+        uniqueConstraints = @UniqueConstraint(
+                columnNames = {"name", "parent_folder_id"}
+        )
+)
 @Getter
 @Setter
 @AllArgsConstructor

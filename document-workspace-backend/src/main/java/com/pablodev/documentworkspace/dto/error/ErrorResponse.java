@@ -14,5 +14,4 @@ public class ErrorResponse {
     private HttpStatus status;
     private String message;
     private List<String> errors;
-
 }

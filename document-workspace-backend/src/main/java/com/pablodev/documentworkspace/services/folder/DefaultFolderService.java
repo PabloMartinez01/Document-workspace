@@ -10,6 +10,7 @@ import com.pablodev.documentworkspace.model.Folder;
 import com.pablodev.documentworkspace.repositories.DocumentRepository;
 import com.pablodev.documentworkspace.repositories.FolderRepository;
 import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,8 +44,13 @@ public class DefaultFolderService implements FolderService {
     @Override
     public FolderInfoResponse saveFolder(FolderRequest folderRequest) {
         Folder folder = folderMapper.toFolderEntity(folderRequest);
+
         Folder parentFolder = folderRepository.findById(folderRequest.getParentFolderId())
                 .orElseThrow(() -> new EntityNotFoundException("Parent folder not found"));
+
+        if (folderRepository.existsByParentFolderAndName(parentFolder, folder.getName()))
+            throw new EntityExistsException("The folder name already exists");
+
         folder.setParentFolder(parentFolder);
         Folder savedFolder = folderRepository.save(folder);
         return folderMapper.toFolderInfo(savedFolder);
@@ -59,6 +65,7 @@ public class DefaultFolderService implements FolderService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FolderItemsResponse findFolderItemsByName(Long folderId, String name) {
 
         if (!folderRepository.existsById(folderId))

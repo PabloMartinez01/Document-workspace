@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface FolderRepository extends CrudRepository<Folder, Long> {
 
+    boolean existsByParentFolderAndName(Folder parentFolder, String name);
     boolean existsById(Long folderId);
 
     @Query("SELECT s FROM Folder s WHERE s.parentFolder.id = :folderId AND s.name LIKE %:name%")
