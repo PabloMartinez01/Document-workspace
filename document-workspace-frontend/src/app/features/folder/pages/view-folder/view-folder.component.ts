@@ -17,6 +17,8 @@ import {FolderListComponent} from '../../components/folder-list/folder-list.comp
 import {FolderDocumentListComponent} from '../../components/folder-document-list/folder-document-list.component';
 import {FolderToolbarComponent} from '../../components/folder-toolbar/folder-toolbar.component';
 import {SidebarComponent} from '../../../../shared/sidebar/sidebar.component';
+import {ErrorResponse} from '../../../../core/model/error/error-response';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'view-folder',
@@ -111,7 +113,19 @@ export class ViewFolderComponent implements OnInit {
         this.folder.folders = [...this.folder.folders, folderInfo];
         this.alertService.showSuccessAlert(Messages.createFolderSuccess.title, Messages.createFolderSuccess.body);
       },
-      error: () => this.alertService.showErrorAlert(Messages.createFolderError.title, Messages.createFolderError.body)
+      error: (error: HttpErrorResponse) => {
+
+        try {
+          const errorResponse: ErrorResponse = error.error as ErrorResponse;
+          if (errorResponse?.errors?.[0]) {
+            this.alertService.showErrorAlert(Messages.createFolderError.title, errorResponse?.errors?.[0]);
+            return;
+          }
+        } catch (e) {}
+
+
+        this.alertService.showErrorAlert(Messages.createFolderError.title, Messages.createFolderError.body);
+      }
     })
 
   }

@@ -1,6 +1,7 @@
 package com.pablodev.documentworkspace.controllers;
 
 import com.pablodev.documentworkspace.dto.error.ErrorResponse;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -17,12 +18,25 @@ import java.util.List;
 @RestControllerAdvice
 public class ExceptionController {
 
+    public static final String VALIDATION_FAILED = "Validation failed";
+    public static final String ENTITY_EXIST = "Entity exist";
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> entityNotFoundException(EntityNotFoundException e) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST)
                 .message(e.getMessage())
                 .errors(Collections.emptyList())
+                .build();
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<ErrorResponse> handleFolderCreationException(EntityExistsException e) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .message(ENTITY_EXIST)
+                .errors(Collections.singletonList(e.getMessage()))
                 .build();
         return ResponseEntity.badRequest().body(errorResponse);
     }
@@ -57,7 +71,7 @@ public class ExceptionController {
 
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST)
-                .message("Validation failed")
+                .message(VALIDATION_FAILED)
                 .errors(errors)
                 .build();
 
