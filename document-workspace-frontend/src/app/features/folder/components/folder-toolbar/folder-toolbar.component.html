@@ -1,9 +1,9 @@
-<div class="bg-white p-4 rounded-lg shadow-md flex gap-2 relative">
+<div class="bg-white p-4 rounded-lg shadow-md flex gap-4 relative max-sm:!text-sm">
 
   <input type="text" placeholder="Search" [(ngModel)]="search" (ngModelChange)="onSearchChange()"
-         class="border border-gray-200 w-full px-10 py-2 rounded bg-gray-50 outline-indigo-500 focus:bg-white">
+         class="border border-gray-200 w-full px-10 py-2 rounded bg-gray-50 outline-indigo-500 focus:bg-white ">
 
-  <i class="fas fa-search absolute top-[40%] left-7 text-gray-400"></i>
+  <i class="fas fa-search absolute top-[40%] left-7 text-gray-400 "></i>
 
 
   <button mat-icon-button [matMenuTriggerFor]="createMenu"

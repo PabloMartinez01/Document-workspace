@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {FolderService} from '../../../../core/services/folder.service';
 import {Folder} from '../../../../core/model/folder/folder';
 import {ActivatedRoute, RouterLink, RouterOutlet} from '@angular/router';
@@ -47,6 +47,13 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class ViewFolderComponent implements OnInit {
 
   folder!: Folder;
+
+  private touchStartX = 0;
+  private touchEndX = 0;
+  private ignoreSwipe = false;
+
+
+  sidebarOpen = false;
 
   constructor(
     private folderService: FolderService,
@@ -128,6 +135,57 @@ export class ViewFolderComponent implements OnInit {
       }
     })
 
+  }
+
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent) {
+    if (!this.isTouchDevice()) return;
+    const target = event.target as HTMLElement;
+    if (this.isInsideHorizontallyScrollableElement(target)) {
+      this.ignoreSwipe = true;
+      return;
+    }
+
+    this.ignoreSwipe = false;
+    this.touchStartX = event.changedTouches[0].screenX;
+  }
+
+  @HostListener('touchend', ['$event'])
+  onTouchEnd(event: TouchEvent) {
+    if (!this.isTouchDevice()) return;
+    if (this.ignoreSwipe) return;
+
+    this.touchEndX = event.changedTouches[0].screenX;
+    this.handleSwipeGesture();
+  }
+
+  isInsideHorizontallyScrollableElement(element: HTMLElement): boolean {
+    while (element) {
+      const style = window.getComputedStyle(element);
+      const hasHorizontalScroll =
+        (style.overflowX === 'auto' || style.overflowX === 'scroll') &&
+        element.scrollWidth > element.clientWidth;
+
+      if (hasHorizontalScroll) {
+        return true;
+      }
+
+      element = element.parentElement!;
+    }
+    return false;
+  }
+
+  handleSwipeGesture() {
+    const swipeDistance = this.touchEndX - this.touchStartX;
+    if (swipeDistance > 50) {
+      this.sidebarOpen = false;
+    } else if (swipeDistance < -50) {
+      this.sidebarOpen = true;
+    }
+  }
+
+  isTouchDevice(): boolean {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   }
 
 }

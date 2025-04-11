@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AuthenticationService} from '../../core/services/authentication.service';
 import {Router} from '@angular/router';
 import {NgIf} from '@angular/common';
@@ -12,6 +12,8 @@ import {NgIf} from '@angular/common';
   templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent {
+
+  @Input() hidden: boolean = false;
 
   constructor(
     private authenticationService: AuthenticationService,
