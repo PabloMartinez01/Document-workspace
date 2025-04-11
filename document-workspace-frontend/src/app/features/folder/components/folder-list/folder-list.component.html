@@ -1,10 +1,10 @@
-<div class="w-full rounded-lg shadow-md bg-white flex flex-col gap-[7px]">
+<div class="w-full rounded-lg shadow-md bg-white flex flex-col gap-[7px] max-sm:text-sm">
 
   @if (folder && folder.folders.length > 0) {
-    <div class="p-4">
+    <div class="p-4 flex flex-col gap-2 ">
       <div *ngFor="let subfolder of folder?.folders" [routerLink]="['/folder', subfolder.id]"
-           class="mt-2 bg-gray-100 text-sm rounded-lg px-6 py-5 text-gray-500 whitespace-nowrap cursor-pointer
-           hover:bg-indigo-100 transition-all ease duration-150">
+           class="bg-gray-100 text-sm rounded-lg px-6 py-5 text-gray-500 whitespace-nowrap cursor-pointer max-sm:text-sm
+           hover:bg-indigo-100 transition-all ease duration-150 ">
         <i class="fas fa-folder text-indigo-700"></i>
         <span class="ms-3">{{ subfolder.name }}</span>
       </div>
