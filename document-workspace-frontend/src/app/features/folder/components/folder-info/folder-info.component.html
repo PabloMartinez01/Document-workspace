@@ -1,15 +1,14 @@
-<div class="w-full bg-white text-sm px-6 py-4 rounded-lg shadow-md flex gap-2 items-center">
+<div class="w-full bg-white text-sm px-3 py-4 rounded-lg shadow-md flex items-center">
 
   @if (folder) {
     @if (folder.parentFolder) {
       <button mat-icon-button [routerLink]="['/folder', folder.parentFolder.id]"
-              class="!text-white !bg-indigo-700 hover:!bg-indigo-900 cursor-pointer
-              transition-all ease duration-200">
-        <i class="fas fa-arrow-left"></i>
+              class="!text-lg !text-gray-800 cursor-pointer !transition-all !ease !duration-200">
+        <i class="fas fa-chevron-up"></i>
       </button>
     }
 
-    <div class="ps-[1em]">
+    <div class="ms-3">
       <h1 class="mb-1 text-3xl max-sm:text-sm font-bold leading-none tracking-tight text-gray-900">
         {{ folder.name }}
       </h1>

@@ -1,9 +1,9 @@
-<div class="rounded-lg shadow-md bg-white w-full max-sm:text-sm ">
+<div class="rounded-lg shadow-md bg-white w-full max-sm:text-sm p-4 py-3">
 
   @if (folder && folder.documents.length > 0) {
 
-    <div class="overflow-x-auto w-full">
-      <table class="w-full text-sm max-sm:text-sm text-gray-500 border-separate border-spacing-y-[7px] p-4 py-3">
+    <div class="overflow-x-auto w-full whitespace-nowrap">
+      <table class="w-full text-sm max-sm:text-sm text-gray-500 border-separate border-spacing-y-[7px]">
         <tbody>
         <tr *ngFor="let document of folder?.documents" class="[&>td]:px-6 [&>td]:py-3 bg-gray-100">
 

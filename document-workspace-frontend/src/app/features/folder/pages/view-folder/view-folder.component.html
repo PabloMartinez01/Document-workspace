@@ -1,7 +1,14 @@
-<div class="flex flex-row sm:gap-4 h-full">
+<div class="relative flex flex-row sm:gap-4">
+
   @if (folder) {
-    <sidebar [hidden]="sidebarOpen" />
+
+    <sidebar [(hidden)]="sidebarHidden"/>
+
     <div class="flex flex-col gap-2.5 w-full py-5 pe-2 max-sm:p-3">
+
+      @if (sidebarHidden) {
+        <i class="fas fa-bars bg-white p-3 rounded-md shadow-lg text-gray-800 w-fit" (click)="sidebarHidden=false"></i>
+      }
       <folder-info [folder]="folder" />
       <folder-toolbar [folder]="folder" (createFolderEmitter)="createFolder($event)" />
       <folder-list [folder]="folder"  />
