@@ -1,19 +1,21 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {AuthenticationService} from '../../core/services/authentication.service';
 import {Router} from '@angular/router';
-import {NgIf} from '@angular/common';
+import {NgIf, NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'sidebar',
   standalone: true,
   imports: [
-    NgIf
+    NgIf,
+    NgOptimizedImage
   ],
   templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent {
 
-  @Input() hidden: boolean = false;
+  @Input() hidden: boolean = true;
+  @Output() hiddenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -30,4 +32,6 @@ export class SidebarComponent {
   isAuthenticated(): boolean {
     return this.authenticationService.isAuthenticated();
   }
+
+
 }

@@ -19,6 +19,7 @@ import {FolderToolbarComponent} from '../../components/folder-toolbar/folder-too
 import {SidebarComponent} from '../../../../shared/sidebar/sidebar.component';
 import {ErrorResponse} from '../../../../core/model/error/error-response';
 import {HttpErrorResponse} from '@angular/common/http';
+import {DeviceDetectorService} from 'ngx-device-detector';
 
 @Component({
   selector: 'view-folder',
@@ -53,14 +54,16 @@ export class ViewFolderComponent implements OnInit {
   private ignoreSwipe = false;
 
 
-  sidebarOpen = false;
+  sidebarHidden = true;
 
   constructor(
     private folderService: FolderService,
     private alertService: AlertService,
     private documentService: DocumentService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private deviceService: DeviceDetectorService
   ) {
+
 
   }
 
@@ -164,7 +167,7 @@ export class ViewFolderComponent implements OnInit {
       const style = window.getComputedStyle(element);
       const hasHorizontalScroll =
         (style.overflowX === 'auto' || style.overflowX === 'scroll') &&
-        element.scrollWidth > element.clientWidth;
+        (element.scrollWidth > element.clientWidth) && element.scrollLeft !== 0;
 
       if (hasHorizontalScroll) {
         return true;
@@ -178,14 +181,14 @@ export class ViewFolderComponent implements OnInit {
   handleSwipeGesture() {
     const swipeDistance = this.touchEndX - this.touchStartX;
     if (swipeDistance > 50) {
-      this.sidebarOpen = false;
+      this.sidebarHidden = false;
     } else if (swipeDistance < -50) {
-      this.sidebarOpen = true;
+      this.sidebarHidden = true;
     }
   }
 
   isTouchDevice(): boolean {
-    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    return this.deviceService.isMobile();
   }
 
 }
