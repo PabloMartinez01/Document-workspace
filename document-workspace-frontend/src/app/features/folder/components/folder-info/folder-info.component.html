@@ -2,14 +2,13 @@
 
   @if (folder) {
     @if (folder.parentFolder) {
-      <button mat-icon-button [routerLink]="['/folder', folder.parentFolder.id]"
-              class="!text-lg !text-gray-800 cursor-pointer !transition-all !ease !duration-200">
-        <i class="fas fa-chevron-up"></i>
+      <button mat-icon-button [routerLink]="['/folder', folder.parentFolder.id]">
+        <mat-icon>navigate_before</mat-icon>
       </button>
     }
 
     <div class="ms-3">
-      <h1 class="mb-1 text-3xl max-sm:text-sm font-bold leading-none tracking-tight text-gray-900">
+      <h1 class="mb-1 text-3xl max-sm:text-xl font-bold leading-none tracking-tight text-gray-900">
         {{ folder.name }}
       </h1>
       <p class="text-lg max-sm:text-sm font-normal text-gray-500">

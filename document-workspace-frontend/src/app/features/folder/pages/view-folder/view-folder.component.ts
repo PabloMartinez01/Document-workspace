@@ -142,12 +142,7 @@ export class ViewFolderComponent implements OnInit {
 
   @HostListener('touchstart', ['$event'])
   onTouchStart(event: TouchEvent) {
-    if (!this.isTouchDevice()) return;
-    const target = event.target as HTMLElement;
-    if (this.isInsideHorizontallyScrollableElement(target)) {
-      this.ignoreSwipe = true;
-      return;
-    }
+    if (!this.isMobile()) return;
 
     this.ignoreSwipe = false;
     this.touchStartX = event.changedTouches[0].screenX;
@@ -155,28 +150,13 @@ export class ViewFolderComponent implements OnInit {
 
   @HostListener('touchend', ['$event'])
   onTouchEnd(event: TouchEvent) {
-    if (!this.isTouchDevice()) return;
+    if (!this.isMobile()) return;
     if (this.ignoreSwipe) return;
 
     this.touchEndX = event.changedTouches[0].screenX;
     this.handleSwipeGesture();
   }
 
-  isInsideHorizontallyScrollableElement(element: HTMLElement): boolean {
-    while (element) {
-      const style = window.getComputedStyle(element);
-      const hasHorizontalScroll =
-        (style.overflowX === 'auto' || style.overflowX === 'scroll') &&
-        (element.scrollWidth > element.clientWidth) && element.scrollLeft !== 0;
-
-      if (hasHorizontalScroll) {
-        return true;
-      }
-
-      element = element.parentElement!;
-    }
-    return false;
-  }
 
   handleSwipeGesture() {
     const swipeDistance = this.touchEndX - this.touchStartX;
@@ -187,7 +167,7 @@ export class ViewFolderComponent implements OnInit {
     }
   }
 
-  isTouchDevice(): boolean {
+  isMobile(): boolean {
     return this.deviceService.isMobile();
   }
 
