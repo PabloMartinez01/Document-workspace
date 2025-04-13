@@ -5,17 +5,19 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Folder} from '../../../../core/model/folder/folder';
 import {debounceTime, filter, Subject, switchMap} from 'rxjs';
 import {FolderService} from '../../../../core/services/folder.service';
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'folder-toolbar',
   standalone: true,
-  imports: [
-    MatIconButton,
-    MatMenu,
-    ReactiveFormsModule,
-    FormsModule,
-    MatMenuTrigger
-  ],
+    imports: [
+        MatIconButton,
+        MatMenu,
+        ReactiveFormsModule,
+        FormsModule,
+        MatMenuTrigger,
+        MatIcon
+    ],
   templateUrl: './folder-toolbar.component.html'
 })
 export class FolderToolbarComponent implements OnInit {
