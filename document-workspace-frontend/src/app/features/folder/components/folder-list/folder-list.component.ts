@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {NgForOf} from '@angular/common';
+import {NgClass, NgForOf} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {Folder} from '../../../../core/model/folder/folder';
 import {MatIcon} from "@angular/material/icon";
@@ -18,12 +18,17 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
     FormsModule,
     MatMenu,
     MatMenuTrigger,
-    MatMenuItem
+    MatMenuItem,
+    NgClass
   ],
   templateUrl: './folder-list.component.html'
 })
 export class FolderListComponent {
 
   @Input() folder!: Folder;
+  grid: boolean = true;
 
+  toggleGrid() {
+    this.grid = !this.grid;
+  }
 }
