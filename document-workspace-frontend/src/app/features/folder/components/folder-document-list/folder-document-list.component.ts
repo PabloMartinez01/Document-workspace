@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
-import {NgForOf, NgStyle} from '@angular/common';
+import {NgClass, NgForOf, NgStyle} from '@angular/common';
 import {Folder} from '../../../../core/model/folder/folder';
 import {RouterLink} from '@angular/router';
 import {ExtensionService} from '../../../../core/services/extension.service';
@@ -10,6 +10,7 @@ import {environment} from '../../../../../environments/environment';
 import {WebSocketService} from '../../../../core/services/web-socket.service';
 import {Type} from '../../../../core/model/type.enum';
 import {FolderDocumentMenuComponent} from '../folder-document-menu/folder-document-menu.component';
+import {MatChipGrid, MatChipOption} from '@angular/material/chips';
 
 @Component({
   selector: 'folder-document-list',
@@ -23,7 +24,10 @@ import {FolderDocumentMenuComponent} from '../folder-document-menu/folder-docume
     MatMenuTrigger,
     RouterLink,
     NgStyle,
-    FolderDocumentMenuComponent
+    FolderDocumentMenuComponent,
+    MatChipGrid,
+    MatChipOption,
+    NgClass
   ],
   templateUrl: './folder-document-list.component.html'
 })

@@ -6,6 +6,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 
 @Component({
   selector: 'folder-list',
@@ -19,7 +20,9 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
     MatMenu,
     MatMenuTrigger,
     MatMenuItem,
-    NgClass
+    NgClass,
+    MatButtonToggleGroup,
+    MatButtonToggle
   ],
   templateUrl: './folder-list.component.html'
 })

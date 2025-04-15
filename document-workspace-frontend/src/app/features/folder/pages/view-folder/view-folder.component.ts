@@ -54,7 +54,7 @@ export class ViewFolderComponent implements OnInit {
   private ignoreSwipe = false;
 
 
-  sidebarHidden = true;
+  sidebarHidden = false;
 
   constructor(
     private folderService: FolderService,
