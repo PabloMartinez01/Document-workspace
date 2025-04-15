@@ -1,34 +1,44 @@
 
 @if (isAuthenticated() && !hidden) {
-  <div class="rounded-lg shadow-md w-[15em] sm:h-full sm:min-h-screen max-sm:fixed max-sm:z-50 max-sm:h-screen">
-    <div class="flex flex-col gap-3 bg-white p-5 h-full">
+  <div class="w-[15em] sm:h-full sm:min-h-screen max-sm:fixed max-sm:z-50 max-sm:h-screen">
+    <div class="bg-gray-50 p-3 h-full border-x border-gray-300">
 
-      <i class="fas fa-arrow-left text-gray-800 " (click)="hidden = true; hiddenChange.emit(true)"></i>
-      <img class="rounded-full max-w-32 object-cover aspect-square self-center"
-           ngSrc="images/default-profile-image.png"
-           width="1280"
-           height="1280"
-           alt=""
-      />
-      <h1 class="font-bold text-2xl mt-5 max-sm:text-md max-sm:mt-2 border-b pb-2">Pepito</h1>
-      <div class="flex flex-col gap-2 text-lg py-2">
-        <div class="group text-gray-800 rounded hover:bg-indigo-700 hover:text-white duration-100 ease transition-all cursor-pointer px-2 py-1">
-          <i class="text-indigo-700 fas fa-folder w-1/6 group-hover:text-white"></i>
-          Workspace
-        </div>
+      <div class="flex items-center gap-2 border-b pb-3">
+        <img class="rounded aspect-square shadow w-6 object-cover"
+          src="images/img_1.png" />
+        <span class="!font-bold cabin">SyncroSpace</span>
+      </div>
 
-        <div class="group text-gray-800 rounded hover:bg-indigo-700 hover:text-white duration-100 ease transition-all cursor-pointer px-2 py-1">
-          <i class="text-indigo-700 fas fa-user w-1/6 group-hover:text-white"></i>
-          Profile
-        </div>
-
-        <div (click)="logout()"
-             class="text-red-500 rounded hover:bg-red-500 hover:text-white duration-100 ease transition-all cursor-pointer px-2 py-1">
-
-          <i class="fas fa-sign-out w-1/6"></i>
-          Log out
+      <div class="flex items-center gap-2 border-b py-3">
+        <img src="images/default-profile-image.png"
+          class="rounded-full aspect-square shadow size-9 object-cover"
+        />
+        <div class="truncate">
+          <div class="text-sm">Pepito pepito</div>
+          <div class="text-xs text-gray-500">{{'pepito@example.com'}}</div>
         </div>
       </div>
+
+
+      <div class="text-gray-500 flex flex-col text-[.9em]">
+        <div class="text-xs text-gray-400 my-4 mb-2">Menu</div>
+        <div class="hover:border-gray-200 hover:shadow border rounded border-transparent px-4 p-2 cursor-pointer">
+          <i class="fas fa-laptop me-2 w-5"></i> Workspace
+        </div>
+        <div class="hover:border-gray-200 hover:shadow border rounded border-transparent px-4 p-2 cursor-pointer">
+          <i class="fa-regular fa-star me-2 w-5"></i> Favorite
+        </div>
+        <div class="hover:border-gray-200 hover:shadow border rounded border-transparent px-4 p-2 cursor-pointer">
+          <i class="fa-regular fa-user me-2 w-5"></i> Profile
+        </div>
+        <div class="hover:border-gray-200 hover:shadow border rounded border-transparent px-4 p-2 cursor-pointer">
+          <i class="fas fa-gears me-2 w-5"></i> Settings
+        </div>
+        <div class="hover:border-red-500 text-red-500 hover:shadow border rounded border-transparent px-4 p-2 cursor-pointer">
+          <i class="fa-solid fa-arrow-right-from-bracket me-2 w-5"></i> Log out
+        </div>
+      </div>
+
     </div>
   </div>
 

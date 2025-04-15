@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-weight: normal;
   font-style: normal;
@@ -13,9 +13,34 @@ body {
     "wdth" 100;
 }
 
+.cabin {
+  font-family: "Cabin", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+.animated {
+  transition: all ease .2s;
+}
+
 :root {
   --mat-menu-container-color: white;
+  /*
+  --mdc-chip-label-text-color: #4f46e5;
+  --mdc-chip-outline-color: #4f46e5;
+
+  --mdc-chip-elevated-selected-container-color: #4f46e5;
+  --mdc-chip-selected-label-text-color: white;
+  --mdc-chip-with-icon-selected-icon-color: white;
+  */
 }
+
+
+
+
 
 html, body {
   padding: 0;
@@ -24,7 +49,7 @@ html, body {
 }
 
 body {
-  background-color: #f6f6f6;
+
 
 }
 

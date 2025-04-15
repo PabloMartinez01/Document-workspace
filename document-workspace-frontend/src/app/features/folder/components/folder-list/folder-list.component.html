@@ -1,22 +1,35 @@
-<div class="rounded-lg shadow-md bg-white max-sm:text-sm p-4 text-gray-900">
-
-  <div class="flex justify-between items-start">
-    <span class="font-bold">Your folders</span>
-
-    <mat-icon (click)="toggleGrid()" class="!text-gray-900 cursor-pointer">
-      {{ grid ? 'view_list' : 'view_module' }}
-    </mat-icon>
-
+<div class="text-sm px-5">
+  <div class="flex flex-col md:flex-row md:justify-between gap-2 mt-5 mb-2">
+    <div>
+      <div class="font-bold">Folders</div>
+      <div class="text-xs text-gray-500">All the subfolders of the current folder</div>
+    </div>
+     <div class="max-md:self-end max-md:mt-2 flex-shrink-0">
+       <button class="px-3 py-2 border rounded text-gray-700 shadow-sm animated hover:bg-black hover:text-white me-2">
+         <i class="fas fa-plus me-2"></i> <span class="text-xs">Create folder</span>
+       </button>
+       <button  class="px-3 py-2 border rounded text-gray-700 shadow-sm animated hover:bg-black hover:text-white"
+                (click)="toggleGrid()">
+         <i class="fas fa-list me-2"></i>
+         <span class="text-xs">Switch view</span>
+       </button>
+     </div>
   </div>
 
-  <div [ngClass]="grid ? 'grid' : 'flex flex-col'" class=" gap-2 mt-3" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+  <div [ngClass]="grid ? 'grid' : 'flex flex-col'"
+       class="gap-2 border-y bg-gray-50 -mx-5 p-5 grid-cols-[repeat(auto-fit,minmax(150px,1fr))]"
+       >
     @for (subfolder of folder.folders; track subfolder.id) {
 
-      <div [routerLink]="['/folder', subfolder.id]" class="bg-gray-100 text-sm rounded-lg max-sm:ps-3  ps-6 p-3 pe-2 whitespace-nowrap
-      cursor-pointer max-sm:text-sm hover:bg-indigo-100 transition-all ease duration-150 flex items-center gap-3">
+      <div [routerLink]="['/folder', subfolder.id]"
+           class="bg-white border rounded-lg max-sm:ps-3 ps-4 p-3 pe-2 whitespace-nowrap cursor-pointer
+           hover:bg-indigo-100 animated flex items-center gap-3">
 
-        <i class="fas fa-folder text-amber-400"></i>
-        <span class="flex-grow overflow-hidden">{{ subfolder.name }}</span>
+        <i class="fa-regular fa-folder-closed text-amber-500"></i>
+        <div class="flex-grow overflow-hidden">
+          <div>{{ subfolder.name }}</div>
+          <div class="text-[.8em] text-gray-500">10-12-2024 17:22</div>
+        </div>
 
         <button mat-icon-button [matMenuTriggerFor]="folderMenu" (click)="$event.stopPropagation()">
           <mat-icon>more_vert</mat-icon>
@@ -39,7 +52,6 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
         </svg>
-
         There are no folders or none match your search
       </div>
     }

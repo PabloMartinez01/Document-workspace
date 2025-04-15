@@ -1,17 +1,16 @@
-<div class="w-full bg-white text-sm px-3 py-4 rounded-lg shadow-md flex items-center">
+<div class="flex items-center border-b p-3 text-sm">
 
   @if (folder) {
-    @if (folder.parentFolder) {
-      <button mat-icon-button [routerLink]="['/folder', folder.parentFolder.id]">
-        <mat-icon>navigate_before</mat-icon>
-      </button>
-    }
+    <button mat-icon-button
+            [routerLink]="folder.parentFolder ? ['/folder', folder.parentFolder.id] : null">
+      <mat-icon>navigate_before</mat-icon>
+    </button>
 
     <div class="ms-3">
-      <h1 class="mb-1 text-3xl max-sm:text-xl font-bold leading-none tracking-tight text-gray-900">
+      <h1 class="font-bold text-gray-900">
         {{ folder.name }}
       </h1>
-      <p class="text-lg max-sm:text-sm font-normal text-gray-500">
+      <p class="font-normal text-gray-500">
         {{ folder.documents.length + folder.folders.length + " items" }}
       </p>
     </div>
