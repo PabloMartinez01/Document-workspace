@@ -1,22 +1,30 @@
-<div class="w-full max-sm:text-sm mb-5">
+<div class="text-sm p-5">
+  <span class="font-bold">Upload files</span>
+  <div class="text-xs text-gray-500 mb-5">
+    Upload files to the current folder
+  </div>
+
   <ngx-dropzone [multiple]="false" (change)="onSelect($event)">
-    <ngx-dropzone-label class="max-sm:text-sm">Drag your file here or click to select it</ngx-dropzone-label>
+    <ngx-dropzone-label class="text-sm">
+      <div><i class="fas fa-upload fa-xl mb-5"></i></div>
+      Drag your file here or click to select it
+    </ngx-dropzone-label>
     <ngx-dropzone-preview *ngIf="file" [file]="file" (removed)="onRemove()">
       <ngx-dropzone-label>{{ file.name }}</ngx-dropzone-label>
     </ngx-dropzone-preview>
   </ngx-dropzone>
 
-  <div class="flex justify-end gap-2 mt-3">
+  <div class="flex justify-end gap-2 my-5 text-xs">
     <button
-      class="px-5 py-2 text-red-500 border-[1px] border-red-500 rounded bg-white hover:text-white hover:bg-red-500
-        transition-all ease duration-200 cursor-pointer disabled:cursor-not-allowed disabled:hover:bg-white
-        disabled:hover:text-red-500"
-      (click)="onRemove()" [disabled]="!file">Delete document</button>
+      class="px-5 py-2 text-red-500 border border-red-500 rounded bg-white hover:text-white hover:bg-red-500 animated cursor-pointer disabled:pointer-events-none"
+      (click)="onRemove()"
+      [disabled]="!file"
+    >
+      Delete document
+    </button>
 
-    <button
-      class="px-5 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none
-            focus:ring-2 focus:ring-indigo-500 disabled:bg-indigo-300 disabled:text-gray-500 disabled:cursor-not-allowed"
-      (click)="onUploadFile()" [disabled]="!file">Upload</button>
+    <button mat-button (click)="onUploadFile()" [disabled]="!file">
+      Upload
+    </button>
   </div>
 </div>
-
