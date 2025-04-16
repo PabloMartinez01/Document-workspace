@@ -57,11 +57,9 @@
             <td>v{{ document.version }}</td>
             <td>
               <i
-                [ngClass]="
-                  document.locked
+                [ngClass]=" document.locked
                     ? 'fas fa-lock text-red-500'
-                    : 'fas fa-lock-open text-green-500'
-                "
+                    : 'fas fa-lock-open text-green-500'"
               ></i>
             </td>
             <td>

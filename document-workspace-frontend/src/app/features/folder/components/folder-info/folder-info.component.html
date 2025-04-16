@@ -2,9 +2,9 @@
   @if (folder) {
     <button
       mat-icon-button
-      [routerLink]="
-        folder.parentFolder ? ['/folder', folder.parentFolder.id] : null
-      "
+      [routerLink]="folder.parentFolder
+        ? ['/folder', folder.parentFolder.id]
+        : null"
     >
       <mat-icon>navigate_before</mat-icon>
     </button>
