@@ -1,7 +1,5 @@
 <div class="text-xs px-5 pt-5">
-  <div
-    class="flex flex-col md:items-end md:flex-row md:justify-between gap-2 mb-4"
-  >
+  <div class="flex flex-col md:items-end md:flex-row md:justify-between gap-2 mb-4">
     <div>
       <div class="text-sm font-bold">Folders</div>
       <div class="text-gray-500">All the subfolders of the current folder</div>
@@ -16,14 +14,12 @@
     </div>
   </div>
 
-  <div
-    class="gap-2 border-y bg-gray-50 grid-cols-[repeat(auto-fit,minmax(150px,1fr))] -mx-5 p-5"
-    [ngClass]="grid ? 'grid' : 'flex flex-col'"
+  <div class="gap-2 border-y bg-gray-50 grid-cols-[repeat(auto-fit,minmax(150px,1fr))] -mx-5 p-5"
+       [ngClass]="grid ? 'grid' : 'flex flex-col'"
   >
     @for (subfolder of subfolders; track subfolder.id) {
-      <div
+      <div class="flex items-center gap-3 bg-white border rounded-lg whitespace-nowrap cursor-pointer hover:bg-indigo-100 animated ps-4 p-3 pe-2"
         [routerLink]="['/folder', subfolder.id]"
-        class="flex items-center gap-3 bg-white border rounded-lg whitespace-nowrap cursor-pointer hover:bg-indigo-100 animated ps-4 p-3 pe-2"
       >
         <i class="fa-regular fa-folder-closed text-amber-500"></i>
         <div class="flex-grow overflow-hidden">
@@ -43,19 +39,8 @@
       <div
         class="py-12 text-center text-gray-700 flex flex-col items-center gap-2"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-10"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776"/>
         </svg>
         There are no folders or none match your search
       </div>
@@ -79,14 +64,12 @@
     (click)="$event.stopPropagation()"
     class="!text-xs flex flex-col justify-center gap-2 py-2 px-4 w-64"
   >
-    <input
+    <input class="border border-gray-300 px-3 py-2 rounded shadow font-light outline-gray-600"
       [(ngModel)]="folderName"
       required
       type="text"
-      class="border border-gray-300 px-3 py-2 rounded shadow font-light outline-gray-600"
       placeholder="Folder name"
     />
-
     <button mat-button (click)="createFolder()" [disabled]="!folderName">
       <i class="fas fa-add me-2"></i>Create folder
     </button>
