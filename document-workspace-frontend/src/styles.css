@@ -26,20 +26,41 @@ body {
   transition: all ease .2s;
 }
 
+
 :root {
   --mat-menu-container-color: white;
-  /*
-  --mdc-chip-label-text-color: #4f46e5;
-  --mdc-chip-outline-color: #4f46e5;
+  --mdc-chip-label-text-size: 1em;
+  --mdc-chip-outline-color: #e3e3e3;
+  --mdc-chip-label-text-color: #989898;
 
-  --mdc-chip-elevated-selected-container-color: #4f46e5;
-  --mdc-chip-selected-label-text-color: white;
-  --mdc-chip-with-icon-selected-icon-color: white;
-  */
 }
 
+.mdc-button {
+  border: 1px solid #dcdcdc !important;
+  height: fit-content !important;
+  padding: 0.7em !important;
+  color: #565656 !important;
+  border-radius: 5px !important;
+  transition: all .2s ease;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-size: 1em !important;
+}
 
+.mdc-button:hover {
+  color: white !important;
+  background-color: black !important;
+}
 
+.mdc-button:disabled {
+  background-color: #f8f8f8 !important;
+  color: #bbbbbb !important;
+}
+
+.swal2-popup {
+  font-size: small !important;
+}
 
 
 html, body {
@@ -48,14 +69,9 @@ html, body {
   width: 100%
 }
 
-body {
-
-
-}
-
 ngx-dropzone {
-  background-color: #fdfdfd !important;
-  border-color: rgb(67 56 202) !important;
+  background-color: #F9FAFB !important;
+  border-color: rgb(42, 42, 42) !important;
 }
 
 

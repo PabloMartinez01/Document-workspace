@@ -1,13 +1,15 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {NgIf} from '@angular/common';
 import {NgxDropzoneModule} from 'ngx-dropzone';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'upload-dropzone',
   standalone: true,
   imports: [
     NgIf,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    MatButton
   ],
   templateUrl: './upload-dropzone.component.html'
 })

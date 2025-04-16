@@ -1,12 +1,15 @@
-import {Component, Input} from '@angular/core';
-import {NgClass, NgForOf} from '@angular/common';
-import {RouterLink} from '@angular/router';
-import {Folder} from '../../../../core/model/folder/folder';
-import {MatIcon} from "@angular/material/icon";
-import {MatIconButton} from '@angular/material/button';
-import {FormsModule} from '@angular/forms';
-import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
-import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgClass, NgForOf } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import {
+  MatButtonToggle,
+  MatButtonToggleGroup,
+} from '@angular/material/button-toggle';
+import { FolderInfoResponse } from '../../../../core/model/folder/folder-info-response';
 
 @Component({
   selector: 'folder-list',
@@ -22,16 +25,25 @@ import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-to
     MatMenuItem,
     NgClass,
     MatButtonToggleGroup,
-    MatButtonToggle
+    MatButtonToggle,
+    MatButton,
   ],
-  templateUrl: './folder-list.component.html'
+  templateUrl: './folder-list.component.html',
 })
 export class FolderListComponent {
+  @Input() subfolders!: FolderInfoResponse[];
+  @Output() createFolderEmitter: EventEmitter<string> =
+    new EventEmitter<string>();
 
-  @Input() folder!: Folder;
+  folderName: string = '';
+  search: string = '';
   grid: boolean = true;
 
   toggleGrid() {
     this.grid = !this.grid;
+  }
+
+  createFolder() {
+    this.createFolderEmitter.emit(this.folderName);
   }
 }
