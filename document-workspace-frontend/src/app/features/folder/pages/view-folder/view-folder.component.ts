@@ -1,25 +1,24 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { FolderService } from '../../../../core/services/folder.service';
-import { Folder } from '../../../../core/model/folder/folder';
-import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
-import { MatIconButton } from '@angular/material/button';
-import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
-import { NgForOf, NgIf } from '@angular/common';
-import { UploadDropzoneComponent } from '../../components/upload-dropzone/upload-dropzone.component';
-import { AlertService } from '../../../../core/services/alert.service';
-import { DocumentService } from '../../../../core/services/document.service';
-import { Messages } from '../../../../core/model/messages/messages';
-import { FolderInfoResponse } from '../../../../core/model/folder/folder-info-response';
-import { FormsModule } from '@angular/forms';
-import { FolderInfoComponent } from '../../components/folder-info/folder-info.component';
-import { FolderListComponent } from '../../components/folder-list/folder-list.component';
-import { FolderDocumentListComponent } from '../../components/folder-document-list/folder-document-list.component';
-import { FolderToolbarComponent } from '../../components/folder-toolbar/folder-toolbar.component';
-import { SidebarComponent } from '../../../../shared/sidebar/sidebar.component';
-import { ErrorResponse } from '../../../../core/model/error/error-response';
-import { HttpErrorResponse } from '@angular/common/http';
-import { DeviceDetectorService } from 'ngx-device-detector';
+import {Component, HostListener, OnInit} from '@angular/core';
+import {FolderService} from '../../../../core/services/folder.service';
+import {Folder} from '../../../../core/model/folder/folder';
+import {ActivatedRoute, RouterLink, RouterOutlet} from '@angular/router';
+import {MatIcon} from '@angular/material/icon';
+import {MatIconButton} from '@angular/material/button';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {NgForOf, NgIf} from '@angular/common';
+import {UploadDropzoneComponent} from '../../components/upload-dropzone/upload-dropzone.component';
+import {AlertService} from '../../../../core/services/alert.service';
+import {DocumentService} from '../../../../core/services/document.service';
+import {Messages} from '../../../../core/model/messages/messages';
+import {FolderInfoResponse} from '../../../../core/model/folder/folder-info-response';
+import {FormsModule} from '@angular/forms';
+import {FolderInfoComponent} from '../../components/folder-info/folder-info.component';
+import {FolderListComponent} from '../../components/folder-list/folder-list.component';
+import {FolderDocumentListComponent} from '../../components/folder-document-list/folder-document-list.component';
+import {SidebarComponent} from '../../../../shared/sidebar/sidebar.component';
+import {ErrorResponse} from '../../../../core/model/error/error-response';
+import {HttpErrorResponse} from '@angular/common/http';
+import {DeviceDetectorService} from 'ngx-device-detector';
 
 @Component({
   selector: 'view-folder',
@@ -38,7 +37,6 @@ import { DeviceDetectorService } from 'ngx-device-detector';
     FolderInfoComponent,
     FolderListComponent,
     FolderDocumentListComponent,
-    FolderToolbarComponent,
     SidebarComponent,
     RouterOutlet,
   ],
