@@ -8,10 +8,11 @@
 
   <div class="relative mb-2 mt-4">
     <i class="fas fa-search absolute text-gray-400 left-2 top-3"></i>
-    <input
+    <input class="w-full bg-gray-50 border border-gray-300 px-3 ps-6 py-2 rounded"
+      [(ngModel)]="search"
+      (ngModelChange)="onSearchChange()"
       type="text"
       placeholder="Search..."
-      class="w-full bg-gray-50 border border-gray-300 px-3 ps-6 py-2 rounded"
     />
   </div>
 

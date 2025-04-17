@@ -15,6 +15,7 @@
         (createFolderEmitter)="createFolder($event)"
       />
       <folder-document-list
+        [folderId]="folder.id"
         [documents]="folder.documents"
         (deleteDocumentEmitter)="deleteDocument($event)"
       />
