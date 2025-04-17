@@ -2,13 +2,13 @@
   @if (folder) {
     <sidebar [(hidden)]="sidebarHidden" />
     <div class="w-full">
-      @if (sidebarHidden && !isMobile()) {
-        <i
-          class="fas fa-bars bg-white p-3 rounded-md shadow-lg text-gray-800 w-fit"
-          (click)="sidebarHidden = false"
-        ></i>
-      }
 
+      @if (sidebarHidden) {
+        <button mat-icon-button
+          class="fas fa-bars p-3 text-gray-800 w-fit !text-lg sm:!hidden"
+          (click)="showSidebar()"
+        ></button>
+      }
       <folder-info [folder]="folder" />
       <folder-list
         [subfolders]="folder.folders"

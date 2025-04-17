@@ -189,5 +189,10 @@ export class ViewFolderComponent implements OnInit {
     return this.deviceService.isMobile();
   }
 
+  showSidebar() {
+    this.sidebarHidden = false;
+  }
+
+
   protected readonly document = document;
 }

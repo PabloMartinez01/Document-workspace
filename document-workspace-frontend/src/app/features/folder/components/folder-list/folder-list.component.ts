@@ -1,15 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgClass, NgForOf } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
-import { MatButton, MatIconButton } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
-import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
-import {
-  MatButtonToggle,
-  MatButtonToggleGroup,
-} from '@angular/material/button-toggle';
-import { FolderInfoResponse } from '../../../../core/model/folder/folder-info-response';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {NgClass, NgForOf} from '@angular/common';
+import {RouterLink} from '@angular/router';
+import {MatIcon} from '@angular/material/icon';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {FormsModule} from '@angular/forms';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatButtonToggle, MatButtonToggleGroup,} from '@angular/material/button-toggle';
+import {FolderInfoResponse} from '../../../../core/model/folder/folder-info-response';
 
 @Component({
   selector: 'folder-list',
@@ -31,12 +28,11 @@ import { FolderInfoResponse } from '../../../../core/model/folder/folder-info-re
   templateUrl: './folder-list.component.html',
 })
 export class FolderListComponent {
+
   @Input() subfolders!: FolderInfoResponse[];
-  @Output() createFolderEmitter: EventEmitter<string> =
-    new EventEmitter<string>();
+  @Output() createFolderEmitter: EventEmitter<string> = new EventEmitter<string>();
 
   folderName: string = '';
-  search: string = '';
   grid: boolean = true;
 
   toggleGrid() {
@@ -46,4 +42,5 @@ export class FolderListComponent {
   createFolder() {
     this.createFolderEmitter.emit(this.folderName);
   }
+
 }

@@ -108,7 +108,6 @@ export class FolderDocumentListComponent {
     return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
   }
 
-
   onSearchChange() {
     this.searchSubject.next(this.search)
   }
