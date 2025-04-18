@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
-import {NgClass, NgForOf, NgStyle} from '@angular/common';
+import {DatePipe, NgClass, NgForOf, NgStyle} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {ExtensionService} from '../../../../core/services/extension.service';
 import {environment} from '../../../../../environments/environment';
@@ -34,6 +34,7 @@ import {FormsModule} from '@angular/forms';
     NgClass,
     UploadDropzoneComponent,
     FormsModule,
+    DatePipe,
   ],
   templateUrl: './folder-document-list.component.html',
 })
@@ -101,6 +102,7 @@ export class FolderDocumentListComponent {
     if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
     return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
   }
+
 
   onSearchChange() {
     this.searchSubject.next(this.search)

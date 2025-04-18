@@ -45,6 +45,8 @@ public class DocumentMapper {
                 .length(document.getLength())
                 .locked(document.isLocked())
                 .version(document.getVersion())
+                .createdDate(document.getCreatedDate())
+                .lastModifiedDate(document.getLastModifiedDate())
                 .folder(folderMapper.toFolderInfo(document.getFolder()))
                 .build();
     }

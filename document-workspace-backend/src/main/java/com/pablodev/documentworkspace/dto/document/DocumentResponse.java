@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @Builder
@@ -14,6 +16,8 @@ public class DocumentResponse {
     private String extension;
     private Long length;
     private boolean locked;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
     private Long version;
     private FolderInfoResponse folder;
 }

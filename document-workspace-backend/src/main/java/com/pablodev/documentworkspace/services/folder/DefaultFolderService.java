@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,6 +37,8 @@ public class DefaultFolderService implements FolderService {
                     .documents(Collections.emptyList())
                     .subFolders(Collections.emptyList())
                     .parentFolder(null)
+                    .createdDate(LocalDateTime.now())
+                    .createdBy("system")
                     .build()
             );
         }

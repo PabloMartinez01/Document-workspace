@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -18,4 +19,6 @@ public class FolderResponse {
     private List<DocumentResponse> documents;
     private List<FolderInfoResponse> folders;
     private FolderInfoResponse parentFolder;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 }
