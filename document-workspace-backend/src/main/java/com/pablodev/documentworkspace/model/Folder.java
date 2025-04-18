@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class Folder  {
+public class Folder extends AbstractEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,4 +14,6 @@ import lombok.NoArgsConstructor;
 public class FolderInfoResponse {
     private Long id;
     private String name;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 }

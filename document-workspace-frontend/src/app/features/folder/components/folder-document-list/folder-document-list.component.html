@@ -53,8 +53,12 @@
             <td>
               {{ bytesToString(document.length) }}
             </td>
-            <td>18-02-2025 17:00</td>
-            <td>18-02-2025 17:00</td>
+            <td>
+              {{ document.createdDate | date: 'yyyy-MM-dd HH:mm' }}
+            </td>
+            <td>
+              {{ (document.lastModifiedDate || document.createdDate) | date: 'yyyy-MM-dd HH:mm'}}
+            </td>
             <td>v{{ document.version }}</td>
             <td>
               <i

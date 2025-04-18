@@ -16,7 +16,7 @@ import java.util.Optional;
 @Component
 public class FolderMapper {
 
-    private DocumentMapper documentMapper;
+    private final DocumentMapper documentMapper;
 
     public FolderMapper(@Lazy DocumentMapper documentMapper) {
         this.documentMapper = documentMapper;
@@ -35,6 +35,8 @@ public class FolderMapper {
                 .map(f -> FolderInfoResponse.builder()
                         .id(f.getId())
                         .name(f.getName())
+                        .createdDate(f.getCreatedDate())
+                        .lastModifiedDate(f.getLastModifiedDate())
                         .build())
                 .orElse(null);
     }
@@ -56,6 +58,8 @@ public class FolderMapper {
                         .map(documentMapper::toDocumentInfo)
                         .toList()
                 )
+                .createdDate(folder.getCreatedDate())
+                .lastModifiedDate(folder.getLastModifiedDate())
                 .build();
     }
 

@@ -51,6 +51,8 @@ body {
 .mdc-button:hover {
   color: white !important;
   background-color: black !important;
+  border: none !important;
+  outline: none !important;
 }
 
 .mdc-button:disabled {
