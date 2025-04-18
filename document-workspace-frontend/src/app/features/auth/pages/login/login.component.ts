@@ -1,15 +1,9 @@
-import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { AuthenticationService } from '../../../../core/services/authentication.service';
-import { Router } from '@angular/router';
-import { NgIf } from '@angular/common';
-import { AuthenticationRequest } from '../../../../core/model/authentication/authentication-request';
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from '@angular/forms';
+import {AuthenticationService} from '../../../../core/services/authentication.service';
+import {Router} from '@angular/router';
+import {NgIf} from '@angular/common';
+import {AuthenticationRequest} from '../../../../core/model/authentication/authentication-request';
 
 @Component({
   selector: 'app-login',
@@ -46,7 +40,7 @@ export class LoginComponent {
     const authenticationRequest = this.loginForm.value as AuthenticationRequest;
     this.authenticationService.authenticate(authenticationRequest).subscribe({
       next: (authenticationResponse) => {
-        this.authenticationService.setToken(authenticationResponse.token);
+        this.authenticationService.setAuthentication(authenticationResponse.token);
         this.router.navigate(['folder/1']).then();
       },
       error: (err) => {

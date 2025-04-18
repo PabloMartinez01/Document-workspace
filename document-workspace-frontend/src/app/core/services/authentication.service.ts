@@ -13,13 +13,13 @@ import {jwtDecode} from 'jwt-decode';
 export class AuthenticationService {
 
   private readonly checkIntervalMs = 10000;
+
   private tokenStatusSubject = new BehaviorSubject<boolean>(false);
   tokenStatus$ = this.tokenStatusSubject.asObservable()
 
   constructor(private httpClient: HttpClient, private tokenStorageService: TokenStorageService) {
     this.startTokenStatusWatcher();
   }
-
 
   authenticate(authenticationRequest: AuthenticationRequest): Observable<AuthenticationResponse> {
     return this.httpClient.post<AuthenticationResponse>(environment.documentService + "/authenticate", authenticationRequest)
@@ -29,19 +29,15 @@ export class AuthenticationService {
     return this.tokenStorageService.getToken();
   }
 
-  setToken(token: string): void {
-    return this.tokenStorageService.setToken(token)
+  setAuthentication(token: string): void {
+    this.tokenStorageService.setToken(token)
   }
 
   isTokenValid(): boolean {
-    const token = this.tokenStorageService.getToken();
-    if (!token) return false;
     try {
-      const decodedToken: any = jwtDecode(token);
-      if (!decodedToken) return false;
-      const expirationDate = decodedToken.exp * 1000;
-      return expirationDate > Date.now();
-    } catch (error) {
+      const exp = this.getDecodedToken()?.exp;
+      return exp ? exp * 1000 > Date.now() : false;
+    } catch {
       return false;
     }
   }
@@ -52,6 +48,18 @@ export class AuthenticationService {
 
   logout(): void {
     this.tokenStorageService.clearToken();
+  }
+
+  getUsername(): string | null {
+    try {
+      return this.getDecodedToken()?.sub || null;
+    } catch {
+      return null;
+    }
+  }
+
+  private getDecodedToken(): any {
+    return jwtDecode(this.tokenStorageService.getToken() || '');
   }
 
   private startTokenStatusWatcher(): void {
