@@ -39,13 +39,13 @@ public class DefaultDocumentService implements DocumentService {
     public DocumentResponse saveDocument(DocumentRequest documentRequest) throws IOException {
         String extensionName = documentUtils.getExtensionFromMultipart(documentRequest.getFile());
 
+        // Gets the container folder
         Folder folder = folderRepository.findById(documentRequest.getFolderId())
                 .orElseThrow(() -> new EntityNotFoundException("Folder not found: " + documentRequest.getFolderId()));
 
-        Type type = typeRepository.findTypeByExtension(extensionName)
-                .orElseGet(() -> typeRepository.findByName("other")
-                        .orElseThrow(() -> new EntityNotFoundException("Type not found"))
-                );
+        // Gets the type associated with the extension, or in its absence the default type
+        Type type = typeRepository.findByExtension(extensionName)
+                .orElseGet(typeRepository::findDefault);
 
         Document document = documentMapper.toDocumentEntity(documentRequest.getFile());
         document.setType(type);
@@ -116,13 +116,16 @@ public class DefaultDocumentService implements DocumentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DocumentResponse> findDocumentsByFilters(DocumentFilterRequest documentFilterRequest) {
         List<Document> filteredDocuments = documentRepository.findDocumentsByFilter(
                 documentFilterRequest.getFolderId(),
                 documentFilterRequest.getFilename(),
                 documentFilterRequest.getTypes()
         );
-        return filteredDocuments.stream().map(documentMapper::toDocumentResponse).toList();
+        return filteredDocuments.stream()
+                .map(documentMapper::toDocumentResponse)
+                .toList();
     }
 
 

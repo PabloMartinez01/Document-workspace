@@ -10,8 +10,12 @@ import java.util.Optional;
 
 @Repository
 public interface TypeRepository extends CrudRepository<Type, Integer> {
-    Optional<Type> findById(Integer id);
     Optional<Type> findByName(String name);
+
     @Query("SELECT e.type FROM Extension e WHERE e.name = :extension")
-    Optional<Type> findTypeByExtension(@Param("extension") String extension);
+    Optional<Type> findByExtension(@Param("extension") String extension);
+
+    @Query("SELECT t FROM Type t WHERE t.name = 'other'")
+    Type findDefault();
+
 }

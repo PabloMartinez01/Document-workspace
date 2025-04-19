@@ -1,12 +1,13 @@
 package com.pablodev.documentworkspace.services.extension;
 
+import com.pablodev.documentworkspace.dto.extension.ExtensionResponse;
+import com.pablodev.documentworkspace.mappers.ExtensionMapper;
 import com.pablodev.documentworkspace.model.Extension;
 import com.pablodev.documentworkspace.repositories.ExtensionRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -14,12 +15,14 @@ import java.util.List;
 public class DefaultExtensionService implements ExtensionService {
 
     private final ExtensionRepository extensionRepository;
+    private final ExtensionMapper extensionMapper;
 
     @Override
     @Transactional(readOnly = true)
-    public List<String> findExtensionActionsByName(String name) {
+    public ExtensionResponse findExtensionByName(String name) {
         Extension extension = extensionRepository.findByName(name)
-                .orElseThrow(() -> new RuntimeException("Extension not found: " + name));
-        return  extension.getActions();
+                .orElseThrow(() -> new EntityNotFoundException("Extension not found: " + name));
+        return extensionMapper.toExtensionResponse(extension);
     }
+
 }
