@@ -70,8 +70,8 @@ public class DocumentController {
     }
 
     @PostMapping("/filter")
-    public ResponseEntity<List<DocumentResponse>> filterDocumentsByFilters
-            (@RequestBody DocumentFilterRequest documentFilterRequest) {
+    public ResponseEntity<List<DocumentResponse>> filterDocumentsByFilters(
+            @RequestBody DocumentFilterRequest documentFilterRequest) {
         return ResponseEntity.ok(documentService.findDocumentsByFilters(documentFilterRequest));
     }
 
