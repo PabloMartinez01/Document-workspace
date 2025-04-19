@@ -9,6 +9,7 @@ import com.pablodev.documentworkspace.dto.Action;
 import com.pablodev.documentworkspace.dto.document.DocumentResponse;
 import com.pablodev.documentworkspace.managers.document.DocumentManager;
 import com.pablodev.documentworkspace.managers.url.UrlManager;
+import com.pablodev.documentworkspace.mappers.DocumentTypeMapper;
 import com.pablodev.documentworkspace.model.User;
 import com.pablodev.documentworkspace.services.document.DocumentService;
 import com.pablodev.documentworkspace.services.extension.ExtensionService;
@@ -27,7 +28,7 @@ public class DefaultConfigurationService implements ConfigurationService {
     private final DocumentService documentService;
     private final DocumentManager documentManager;
     private final ExtensionService extensionService;
-
+    private final DocumentTypeMapper documentTypeMapper;
     private final UrlManager urlManager;
 
     @Override
@@ -36,7 +37,7 @@ public class DefaultConfigurationService implements ConfigurationService {
         User user = (User) authentication.getPrincipal();
         DocumentResponse documentResponse = documentService.findDocumentInfo(documentId);
 
-        List<String> actions = extensionService.findExtensionActionsByName(documentResponse.getExtension());
+        List<String> actions = extensionService.findExtensionByName(documentResponse.getExtension()).getActions();
 
         boolean isEditable = actions.contains("edit");
         boolean isViewable = actions.contains("view");
@@ -55,7 +56,7 @@ public class DefaultConfigurationService implements ConfigurationService {
                         .url(urlManager.getDocumentUrl(documentId))
                         .build()
                 )
-                .documentType(documentManager.getDocumentType(documentResponse.getFilename()))
+                .documentType(documentTypeMapper.toDocumentType(documentResponse.getType()))
                 .editorConfig(EditorConfig.builder()
                         .mode(mode)
                         .callbackUrl(urlManager.getDocumentCallback(documentId))

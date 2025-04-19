@@ -1,7 +1,7 @@
 package com.pablodev.documentworkspace.services.extension;
 
-import java.util.List;
+import com.pablodev.documentworkspace.dto.extension.ExtensionResponse;
 
 public interface ExtensionService {
-    List<String> findExtensionActionsByName(String name);
+    ExtensionResponse findExtensionByName(String name);
 }

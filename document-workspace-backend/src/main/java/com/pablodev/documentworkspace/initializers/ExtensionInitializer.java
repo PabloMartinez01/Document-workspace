@@ -49,16 +49,13 @@ public class ExtensionInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) {
-        extensionsData.forEach(this::insertExtensionIfNotExists);
-    }
-
-    private void insertExtensionIfNotExists(ExtensionData extensionData) {
-        if (extensionRepository.findByName(extensionData.getName()).isEmpty()) {
-            Type type = typeRepository.findByName(extensionData.getType())
-                    .or(() -> typeRepository.findByName("other"))
-                    .orElseThrow(() -> new RuntimeException("Type not found: " + extensionData.getType()));
-            extensionRepository.save(new Extension(extensionData.getName(), type, extensionData.getActions()));
-        }
+        Type defaultType = typeRepository.findDefault();
+        extensionsData.forEach(extensionData -> {
+            if (extensionRepository.findByName(extensionData.getName()).isEmpty()) {
+                Type type = typeRepository.findByName(extensionData.getType()).orElse(defaultType);
+                extensionRepository.save(new Extension(extensionData.getName(), type, extensionData.getActions()));
+            }
+        });
     }
 
 }
