@@ -1,11 +1,10 @@
-import {Type} from '../type.enum';
+import {ExtensionResponse} from '../extension/extension-response';
 
 export interface DocumentInfoResponse {
   id: number;
   filename: string;
-  extension: string;
   length: number;
-  type: Type;
+  extension: ExtensionResponse;
   createdDate: string;
   lastModifiedDate: string;
   locked: boolean;
