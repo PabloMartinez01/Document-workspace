@@ -1,14 +1,18 @@
 package com.pablodev.documentworkspace.services.document;
 
 import com.pablodev.documentworkspace.dto.document.DocumentContentResponse;
+import com.pablodev.documentworkspace.dto.document.DocumentFilterRequest;
 import com.pablodev.documentworkspace.dto.document.DocumentRequest;
 import com.pablodev.documentworkspace.dto.document.DocumentResponse;
 import com.pablodev.documentworkspace.events.DocumentLockEvent;
 import com.pablodev.documentworkspace.mappers.DocumentMapper;
 import com.pablodev.documentworkspace.model.Document;
 import com.pablodev.documentworkspace.model.Folder;
+import com.pablodev.documentworkspace.model.Type;
 import com.pablodev.documentworkspace.repositories.DocumentRepository;
 import com.pablodev.documentworkspace.repositories.FolderRepository;
+import com.pablodev.documentworkspace.repositories.TypeRepository;
+import com.pablodev.documentworkspace.utils.DocumentUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -26,21 +30,29 @@ public class DefaultDocumentService implements DocumentService {
 
     private final FolderRepository folderRepository;
     private final DocumentRepository documentRepository;
+    private final TypeRepository typeRepository;
     private final DocumentMapper documentMapper;
     private final SimpMessagingTemplate messagingTemplate;
+    private final DocumentUtils documentUtils;
 
     @Override
     public DocumentResponse saveDocument(DocumentRequest documentRequest) throws IOException {
+        String extensionName = documentUtils.getExtensionFromMultipart(documentRequest.getFile());
+
         Folder folder = folderRepository.findById(documentRequest.getFolderId())
-                .orElseThrow(() -> new EntityNotFoundException("Folder not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Folder not found: " + documentRequest.getFolderId()));
+
+        Type type = typeRepository.findTypeByExtension(extensionName)
+                .orElseGet(() -> typeRepository.findByName("other")
+                        .orElseThrow(() -> new EntityNotFoundException("Type not found")));
 
         Document document = documentMapper.toDocumentEntity(documentRequest.getFile());
-
+        document.setType(type);
         document.setFolder(folder);
         folder.getDocuments().add(document);
 
         Document savedDocument = documentRepository.save(document);
-        return documentMapper.toDocumentInfo(savedDocument);
+        return documentMapper.toDocumentResponse(savedDocument);
     }
 
     @Override
@@ -56,14 +68,15 @@ public class DefaultDocumentService implements DocumentService {
     public DocumentResponse findDocumentInfo(Long documentId) {
         Document document = documentRepository.findById(documentId)
                 .orElseThrow(() -> new EntityNotFoundException("Document with id: " + documentId + " not found"));
-        return documentMapper.toDocumentInfo(document);
+        return documentMapper.toDocumentResponse(document);
     }
+
 
     @Override
     @Transactional(readOnly = true)
     public List<DocumentResponse> findAllDocumentInfo() {
         return StreamSupport.stream(documentRepository.findAll().spliterator(), false)
-                .map(documentMapper::toDocumentInfo)
+                .map(documentMapper::toDocumentResponse)
                 .toList();
     }
 
@@ -101,6 +114,15 @@ public class DefaultDocumentService implements DocumentService {
         documentRepository.delete(document);
     }
 
+    @Override
+    public List<DocumentResponse> findDocumentsByFilters(DocumentFilterRequest documentFilterRequest) {
+        List<Document> filteredDocuments = documentRepository.findDocumentsByFilter(
+                documentFilterRequest.getFolderId(),
+                documentFilterRequest.getFilename(),
+                documentFilterRequest.getTypes()
+        );
+        return filteredDocuments.stream().map(documentMapper::toDocumentResponse).toList();
+    }
 
 
 }

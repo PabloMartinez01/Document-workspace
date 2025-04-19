@@ -16,6 +16,7 @@ public class DocumentResponse {
     private String extension;
     private Long length;
     private boolean locked;
+    private String type;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
     private Long version;

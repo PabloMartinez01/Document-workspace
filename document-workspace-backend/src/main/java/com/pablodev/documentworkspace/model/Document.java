@@ -37,4 +37,6 @@ public class Document extends AbstractEntity {
     @ManyToOne
     private Folder folder;
 
+    @ManyToOne
+    private Type type;
 }

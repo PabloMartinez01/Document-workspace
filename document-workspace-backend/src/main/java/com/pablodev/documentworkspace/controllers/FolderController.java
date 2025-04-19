@@ -1,7 +1,6 @@
 package com.pablodev.documentworkspace.controllers;
 
 import com.pablodev.documentworkspace.dto.folder.FolderInfoResponse;
-import com.pablodev.documentworkspace.dto.folder.FolderItemsResponse;
 import com.pablodev.documentworkspace.dto.folder.FolderRequest;
 import com.pablodev.documentworkspace.dto.folder.FolderResponse;
 import com.pablodev.documentworkspace.services.folder.FolderService;
@@ -22,16 +21,11 @@ public class FolderController {
         return ResponseEntity.ok(folderService.findFolderById(id));
     }
 
-    @GetMapping(value = "/{id}", params = "name")
-    public ResponseEntity<FolderItemsResponse> findFolderItemsByName(@PathVariable Long id, @RequestParam String name) {
-        return ResponseEntity.ok(folderService.findFolderItemsByName(id, name));
-    }
 
     @PostMapping
     public ResponseEntity<FolderInfoResponse> createFolder(@RequestBody @Valid FolderRequest folderRequest) {
         return ResponseEntity.ok(folderService.saveFolder(folderRequest));
     }
-
 
 
 
