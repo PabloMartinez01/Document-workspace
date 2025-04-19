@@ -44,7 +44,8 @@ public class DefaultDocumentService implements DocumentService {
 
         Type type = typeRepository.findTypeByExtension(extensionName)
                 .orElseGet(() -> typeRepository.findByName("other")
-                        .orElseThrow(() -> new EntityNotFoundException("Type not found")));
+                        .orElseThrow(() -> new EntityNotFoundException("Type not found"))
+                );
 
         Document document = documentMapper.toDocumentEntity(documentRequest.getFile());
         document.setType(type);

@@ -21,12 +21,9 @@ public class FolderController {
         return ResponseEntity.ok(folderService.findFolderById(id));
     }
 
-
     @PostMapping
     public ResponseEntity<FolderInfoResponse> createFolder(@RequestBody @Valid FolderRequest folderRequest) {
         return ResponseEntity.ok(folderService.saveFolder(folderRequest));
     }
-
-
 
 }
