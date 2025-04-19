@@ -4,7 +4,6 @@ import {MatIconButton} from '@angular/material/button';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {DatePipe, NgClass, NgForOf, NgStyle} from '@angular/common';
 import {RouterLink} from '@angular/router';
-import {ExtensionService} from '../../../../core/services/extension.service';
 import {environment} from '../../../../../environments/environment';
 import {WebSocketService} from '../../../../core/services/web-socket.service';
 import {Type} from '../../../../core/model/type.enum';
@@ -13,8 +12,9 @@ import {MatChipGrid, MatChipOption} from '@angular/material/chips';
 import {UploadDropzoneComponent} from '../upload-dropzone/upload-dropzone.component';
 import {DocumentInfoResponse} from '../../../../core/model/document/document-info-response';
 import {debounceTime, filter, Subject, switchMap} from 'rxjs';
-import {FolderService} from '../../../../core/services/folder.service';
 import {FormsModule} from '@angular/forms';
+import {DocumentService} from '../../../../core/services/document.service';
+import {DocumentFilterRequest} from '../../../../core/model/document/document-filter-request';
 
 @Component({
   selector: 'folder-document-list',
@@ -39,25 +39,34 @@ import {FormsModule} from '@angular/forms';
   templateUrl: './folder-document-list.component.html',
 })
 export class FolderDocumentListComponent {
+
   readonly colors: Record<Type, string> = {
-    [Type.DOCUMENT]: '#006199',
+    [Type.WORD]: '#006199',
     [Type.SLIDE]: '#ffa845',
-    [Type.SPREADSHEET]: '#009913',
-    [Type.FORM]: '#ff4545',
+    [Type.CELL]: '#009913',
+    [Type.PDF]: '#ff4545',
+    [Type.OTHER]: '#949494'
   };
+
+  searchTypeFilters = [
+    { type: Type.WORD, label: 'Document', activated: true },
+    { type: Type.SLIDE, label: 'Slide', activated: true },
+    { type: Type.CELL, label: 'Spreadsheet', activated: true },
+    { type: Type.PDF, label: 'Form', activated: true },
+    { type: Type.OTHER, label: 'Other', activated: true },
+  ];
 
   @Input() folderId!: number;
   @Input() documents!: DocumentInfoResponse[];
 
   @Output() deleteDocumentEmitter: EventEmitter<number> = new EventEmitter<number>();
 
-  private searchSubject: Subject<string> = new Subject<string>();
+  private searchSubject: Subject<DocumentFilterRequest> = new Subject<DocumentFilterRequest>();
   search: string = '';
 
   constructor(
-    private extensionService: ExtensionService,
     private webSocketService: WebSocketService,
-    private folderService: FolderService
+    private documentService: DocumentService
   ) {
     this.initializeWebSocket();
     this.initializeSearchSubscription();
@@ -81,20 +90,13 @@ export class FolderDocumentListComponent {
     this.searchSubject.pipe(
       debounceTime(700),
       filter(() => !!this.folderId),
-      switchMap(searchTerm => this.folderService.getFolderItemsByName(this.folderId, searchTerm))
+      switchMap(documentFilterRequest => this.documentService.getDocumentsByFilter(documentFilterRequest))
     ).subscribe({
-      next: folderItems => {
-        this.documents = folderItems.documents;
-      },
+      next: documents => this.documents = documents,
       error: err => console.log(err)
     })
   }
 
-  getType(extension: string): string {
-    const type = this.extensionService.getType(extension);
-    if (type === null) return 'gray';
-    return this.colors[type];
-  }
 
   bytesToString(bytes: number): string {
     if (bytes < 1024) return `${bytes} bytes`;
@@ -103,9 +105,14 @@ export class FolderDocumentListComponent {
     return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
   }
 
-
   onSearchChange() {
-    this.searchSubject.next(this.search)
+    this.searchSubject.next({
+      folderId: this.folderId,
+      filename: this.search || '',
+      types: this.searchTypeFilters
+        .filter(e => e.activated)
+        .map(e => e.type.valueOf().toLowerCase())
+    })
   }
 
   protected readonly environment = environment;

@@ -11,10 +11,13 @@ import com.pablodev.documentworkspace.managers.document.DocumentManager;
 import com.pablodev.documentworkspace.managers.url.UrlManager;
 import com.pablodev.documentworkspace.model.User;
 import com.pablodev.documentworkspace.services.document.DocumentService;
+import com.pablodev.documentworkspace.services.extension.ExtensionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -23,6 +26,8 @@ public class DefaultConfigurationService implements ConfigurationService {
 
     private final DocumentService documentService;
     private final DocumentManager documentManager;
+    private final ExtensionService extensionService;
+
     private final UrlManager urlManager;
 
     @Override
@@ -31,8 +36,10 @@ public class DefaultConfigurationService implements ConfigurationService {
         User user = (User) authentication.getPrincipal();
         DocumentResponse documentResponse = documentService.findDocumentInfo(documentId);
 
-        boolean isEditable = documentManager.isEditable(documentResponse.getFilename());
-        boolean isViewable = documentManager.isViewable(documentResponse.getFilename());
+        List<String> actions = extensionService.findExtensionActionsByName(documentResponse.getExtension());
+
+        boolean isEditable = actions.contains("edit");
+        boolean isViewable = actions.contains("view");
 
         if (!isEditable && !isViewable) {
             throw new RuntimeException("The specified format is not supported");

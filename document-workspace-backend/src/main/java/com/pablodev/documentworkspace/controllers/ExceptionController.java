@@ -80,6 +80,7 @@ public class ExceptionController {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> exception(Exception e) {
+        e.printStackTrace();
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .message(e.getMessage())

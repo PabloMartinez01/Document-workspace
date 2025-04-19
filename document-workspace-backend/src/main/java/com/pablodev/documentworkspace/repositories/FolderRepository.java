@@ -1,17 +1,10 @@
 package com.pablodev.documentworkspace.repositories;
 
 import com.pablodev.documentworkspace.model.Folder;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-
-import java.util.List;
 
 public interface FolderRepository extends CrudRepository<Folder, Long> {
-
     boolean existsByParentFolderAndName(Folder parentFolder, String name);
     boolean existsById(Long folderId);
 
-    @Query("SELECT s FROM Folder s WHERE s.parentFolder.id = :folderId AND s.name LIKE %:name%")
-    List<Folder> findFilteredFoldersByFolderIdAndName(@Param("folderId") Long folderId, @Param("name") String name);
 }

@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {DocumentInfoResponse} from '../model/document/document-info-response';
+import {DocumentFilterRequest} from '../model/document/document-filter-request';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class DocumentService {
 
   uploadDocument(formData: FormData): Observable<DocumentInfoResponse> {
     return this.http.post<DocumentInfoResponse>(environment.documentService  + '/document', formData);
+  }
+
+  getDocumentsByFilter(filter: DocumentFilterRequest) {
+    return this.http.post<DocumentInfoResponse[]>(environment.documentService + "/document/filter", filter)
   }
 
 }

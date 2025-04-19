@@ -16,12 +16,14 @@
     />
   </div>
 
-  <mat-chip-grid>
-    <mat-chip-option class="shadow-sm" selected>Document</mat-chip-option>
-    <mat-chip-option class="shadow-sm" selected>Slide</mat-chip-option>
-    <mat-chip-option class="shadow-sm" selected>Spreadsheet</mat-chip-option>
-    <mat-chip-option class="shadow-sm" selected>Form</mat-chip-option>
-  </mat-chip-grid>
+    @for (filter of searchTypeFilters; track filter.type) {
+      <mat-chip-option class="shadow-sm me-2"
+        [selected]="filter.activated"
+        (click)="filter.activated = !filter.activated; onSearchChange()"
+      >
+        {{ filter.label }}
+      </mat-chip-option>
+    }
 
   <div class="overflow-x-auto shadow-sm my-2">
     <table class="w-full whitespace-nowrap text-left text-gray-600 border">
@@ -43,7 +45,7 @@
             <td class="font-medium text-black">
               <i
                 class="fas fa-file border rounded shadow me-2 py-1.5 px-2"
-                [style.color]="getType(document.extension)"
+                [style.color]="colors[document.type]"
               ></i>
               {{ document.filename }}
             </td>

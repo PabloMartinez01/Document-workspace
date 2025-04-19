@@ -2,6 +2,7 @@ package com.pablodev.documentworkspace.controllers;
 
 import com.onlyoffice.model.documenteditor.Callback;
 import com.pablodev.documentworkspace.dto.document.DocumentContentResponse;
+import com.pablodev.documentworkspace.dto.document.DocumentFilterRequest;
 import com.pablodev.documentworkspace.dto.document.DocumentRequest;
 import com.pablodev.documentworkspace.dto.document.DocumentResponse;
 import com.pablodev.documentworkspace.services.callback.CallbackService;
@@ -67,6 +68,13 @@ public class DocumentController {
             return ResponseEntity.internalServerError().body(Collections.singletonMap("error", 1));
         }
     }
+
+    @PostMapping("/filter")
+    public ResponseEntity<List<DocumentResponse>> filterDocumentsByFilters
+            (@RequestBody DocumentFilterRequest documentFilterRequest) {
+        return ResponseEntity.ok(documentService.findDocumentsByFilters(documentFilterRequest));
+    }
+
 
 
 

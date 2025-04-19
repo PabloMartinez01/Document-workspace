@@ -16,9 +16,11 @@ public interface DocumentRepository extends CrudRepository<Document, Long> {
     void updateDocumentLock(boolean locked, Long id);
 
 
-    @Query("SELECT d FROM Document d " +
-            "WHERE d.folder.id = :folderId " +
-            "AND d.filename LIKE %:name%")
-    List<Document> findDocumentsByFolderIdAndName(@Param("folderId") Long folderId,
-                                                  @Param("name") String name);
+    @Query("SELECT d FROM Document d WHERE " +
+            "d.folder.id = :folderId AND " +
+            "d.filename LIKE %:filename% AND " +
+            "d.type.name IN :types")
+    List<Document> findDocumentsByFilter(@Param("folderId") Long folderId,
+                                   @Param("filename") String filename,
+                                   @Param("types") List<String> types);
 }
