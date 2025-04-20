@@ -27,37 +27,29 @@ public class DocumentServerJwtFilter extends AbstractJwtFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
         Optional<String> authorization = extractAuthorizationHeader(request);
 
         if (authorization.isEmpty()) {
             filterChain.doFilter(request, response);
             return;
         }
-
         String token = authorization.get();
-        Optional<Long> optionalUserId = jwtService.extractCallback(token)
-                .map(Callback::getActions)
-                .filter(Predicate.not(List::isEmpty))
-                .map(list -> Long.parseLong(list.get(0).getUserid()));
+        Optional<Long> optionalUserId = extractUserId(token);
 
-
-        if (optionalUserId.isEmpty()) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        Long userId = optionalUserId.get();
-
-        if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userService.loadUserById(userId);
+        if (optionalUserId.isPresent() && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = userService.loadUserById(optionalUserId.get());
             if (jwtService.isValid(token)) {
                 authenticate(request, userDetails);
             }
         }
-
         filterChain.doFilter(request, response);
+    }
 
+    private Optional<Long> extractUserId(String token) {
+        return jwtService.extractCallback(token)
+                .map(Callback::getActions)
+                .filter(Predicate.not(List::isEmpty))
+                .map(list -> Long.parseLong(list.get(0).getUserid()));
     }
 
 

@@ -22,15 +22,14 @@ public class ApplicationJwtFilter extends AbstractJwtFilter {
     private final JwtService jwtService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         Optional<String> authorization = extractAuthorizationHeader(request);
 
         if (authorization.isEmpty()) {
             filterChain.doFilter(request, response);
             return;
         }
-
         String token = authorization.get();
         String username = jwtService.extractUsername(token);
 
@@ -40,10 +39,7 @@ public class ApplicationJwtFilter extends AbstractJwtFilter {
                authenticate(request, userDetails);
             }
         }
-
         filterChain.doFilter(request, response);
     }
-
-
 
 }
