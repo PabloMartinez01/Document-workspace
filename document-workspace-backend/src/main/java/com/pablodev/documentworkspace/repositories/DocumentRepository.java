@@ -19,7 +19,7 @@ public interface DocumentRepository extends CrudRepository<Document, Long> {
     @Query("SELECT d FROM Document d WHERE " +
             "d.folder.id = :folderId AND " +
             "d.filename LIKE %:filename% AND " +
-            "d.type.name IN :types")
+            "d.extension.type.name IN :types")
     List<Document> findDocumentsByFilter(@Param("folderId") Long folderId,
                                    @Param("filename") String filename,
                                    @Param("types") List<String> types);

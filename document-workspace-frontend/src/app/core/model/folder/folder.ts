@@ -1,4 +1,4 @@
-import {DocumentInfoResponse} from "../document/document-info-response";
+import {DocumentResponse} from "../document/document-response";
 import {FolderInfoResponse} from "./folder-info-response";
 
 export interface Folder {
@@ -6,7 +6,7 @@ export interface Folder {
     name: string;
     createdDate: string;
     lastModifiedDate: string;
-    documents: DocumentInfoResponse[];
+    documents: DocumentResponse[];
     folders: FolderInfoResponse[];
     parentFolder: FolderInfoResponse;
 }

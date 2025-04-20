@@ -45,12 +45,12 @@
             <td class="font-medium text-black">
               <i
                 class="fas fa-file border rounded shadow me-2 py-1.5 px-2"
-                [style.color]="colors[document.type]"
+                [style.color]="colors[document.extension.type]"
               ></i>
               {{ document.filename }}
             </td>
             <td>
-              {{ document.extension }}
+              {{ document.extension.name }}
             </td>
             <td>
               {{ bytesToString(document.length) }}

@@ -10,7 +10,7 @@ import {Type} from '../../../../core/model/type.enum';
 import {FolderDocumentMenuComponent} from '../folder-document-menu/folder-document-menu.component';
 import {MatChipGrid, MatChipOption} from '@angular/material/chips';
 import {UploadDropzoneComponent} from '../upload-dropzone/upload-dropzone.component';
-import {DocumentInfoResponse} from '../../../../core/model/document/document-info-response';
+import {DocumentResponse} from '../../../../core/model/document/document-response';
 import {debounceTime, filter, Subject, switchMap} from 'rxjs';
 import {FormsModule} from '@angular/forms';
 import {DocumentService} from '../../../../core/services/document.service';
@@ -57,7 +57,7 @@ export class FolderDocumentListComponent {
   ];
 
   @Input() folderId!: number;
-  @Input() documents!: DocumentInfoResponse[];
+  @Input() documents!: DocumentResponse[];
 
   @Output() deleteDocumentEmitter: EventEmitter<number> = new EventEmitter<number>();
 

@@ -6,8 +6,8 @@
   #menu="matMenu"
   class="!w-fit !shadow-lg [&_span]:text-[.8em] [&_button]:text-gray-700 [&_i]:me-2"
 >
-  @if (isViewable) {
-    @if (isEditable) {
+  @if (isViewable()) {
+    @if (isEditable()) {
       <a
         [routerLink]="['/documents', document.id]"
         [queryParams]="{ action: Action.EDIT }"

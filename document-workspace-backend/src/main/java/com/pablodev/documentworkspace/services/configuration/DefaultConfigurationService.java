@@ -1,5 +1,7 @@
 package com.pablodev.documentworkspace.services.configuration;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onlyoffice.model.documenteditor.Config;
 import com.onlyoffice.model.documenteditor.config.Document;
 import com.onlyoffice.model.documenteditor.config.EditorConfig;
@@ -12,13 +14,14 @@ import com.pablodev.documentworkspace.managers.url.UrlManager;
 import com.pablodev.documentworkspace.mappers.DocumentTypeMapper;
 import com.pablodev.documentworkspace.model.User;
 import com.pablodev.documentworkspace.services.document.DocumentService;
-import com.pablodev.documentworkspace.services.extension.ExtensionService;
+import com.pablodev.documentworkspace.services.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -27,17 +30,16 @@ public class DefaultConfigurationService implements ConfigurationService {
 
     private final DocumentService documentService;
     private final DocumentManager documentManager;
-    private final ExtensionService extensionService;
     private final DocumentTypeMapper documentTypeMapper;
     private final UrlManager urlManager;
+    private final JwtService jwtService;
 
     @Override
     public Config getConfiguration(Long documentId, Action action, Authentication authentication) {
 
         User user = (User) authentication.getPrincipal();
         DocumentResponse documentResponse = documentService.findDocumentInfo(documentId);
-
-        List<String> actions = extensionService.findExtensionByName(documentResponse.getExtension()).getActions();
+        List<String> actions = documentResponse.getExtension().getActions();
 
         boolean isEditable = actions.contains("edit");
         boolean isViewable = actions.contains("view");
@@ -51,12 +53,12 @@ public class DefaultConfigurationService implements ConfigurationService {
         Config config = Config.builder()
                 .document(Document.builder()
                         .key(documentManager.getDocumentKey(documentId, documentResponse.getVersion()))
-                        .fileType(documentResponse.getExtension())
+                        .fileType(documentResponse.getExtension().getName())
                         .title(documentResponse.getFilename())
                         .url(urlManager.getDocumentUrl(documentId))
                         .build()
                 )
-                .documentType(documentTypeMapper.toDocumentType(documentResponse.getType()))
+                .documentType(documentTypeMapper.toDocumentType(documentResponse.getExtension().getType()))
                 .editorConfig(EditorConfig.builder()
                         .mode(mode)
                         .callbackUrl(urlManager.getDocumentCallback(documentId))
@@ -70,6 +72,12 @@ public class DefaultConfigurationService implements ConfigurationService {
                         .build()
                 )
                 .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> configMap = objectMapper.convertValue(config, new TypeReference<>() {});
+
+        String token = jwtService.createToken(configMap, user);
+        config.setToken(token);
 
         return config;
     }

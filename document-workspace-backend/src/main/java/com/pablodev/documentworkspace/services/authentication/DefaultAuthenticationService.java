@@ -5,7 +5,7 @@ import com.pablodev.documentworkspace.dto.authentication.AuthenticationResponse;
 import com.pablodev.documentworkspace.dto.authentication.RegistrationRequest;
 import com.pablodev.documentworkspace.model.User;
 import com.pablodev.documentworkspace.repositories.UserRepository;
-import com.pablodev.documentworkspace.services.jwt.ApplicationJwtService;
+import com.pablodev.documentworkspace.services.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +22,7 @@ public class DefaultAuthenticationService implements AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final ApplicationJwtService jwtService;
+    private final JwtService jwtService;
 
     @Override
     public void register(RegistrationRequest registrationRequest) {

@@ -2,7 +2,7 @@ package com.pablodev.documentworkspace.filters;
 
 import com.onlyoffice.model.documenteditor.Callback;
 import com.onlyoffice.model.documenteditor.callback.Action;
-import com.pablodev.documentworkspace.services.jwt.DocumentServerJwtService;
+import com.pablodev.documentworkspace.services.jwt.JwtService;
 import com.pablodev.documentworkspace.services.user.DefaultUserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @Component
 public class DocumentServerJwtFilter extends OncePerRequestFilter {
 
-    private final DocumentServerJwtService jwtService;
+    private final JwtService jwtService;
     private final DefaultUserService userService;
 
     @Override

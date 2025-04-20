@@ -1,6 +1,6 @@
 import {ExtensionResponse} from '../extension/extension-response';
 
-export interface DocumentInfoResponse {
+export interface DocumentResponse {
   id: number;
   filename: string;
   length: number;

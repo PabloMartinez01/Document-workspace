@@ -20,9 +20,6 @@ public class Document extends AbstractEntity {
     private String filename;
 
     @Column(nullable = false)
-    private String extension;
-
-    @Column(nullable = false)
     private Long length;
 
     @Column(nullable = false)
@@ -35,8 +32,9 @@ public class Document extends AbstractEntity {
     private byte[] content;
 
     @ManyToOne
-    private Folder folder;
+    private Extension extension;
 
     @ManyToOne
-    private Type type;
+    private Folder folder;
+
 }

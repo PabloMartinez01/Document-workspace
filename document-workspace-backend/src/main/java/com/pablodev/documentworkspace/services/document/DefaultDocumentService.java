@@ -7,9 +7,10 @@ import com.pablodev.documentworkspace.dto.document.DocumentResponse;
 import com.pablodev.documentworkspace.events.DocumentLockEvent;
 import com.pablodev.documentworkspace.mappers.DocumentMapper;
 import com.pablodev.documentworkspace.model.Document;
+import com.pablodev.documentworkspace.model.Extension;
 import com.pablodev.documentworkspace.model.Folder;
-import com.pablodev.documentworkspace.model.Type;
 import com.pablodev.documentworkspace.repositories.DocumentRepository;
+import com.pablodev.documentworkspace.repositories.ExtensionRepository;
 import com.pablodev.documentworkspace.repositories.FolderRepository;
 import com.pablodev.documentworkspace.repositories.TypeRepository;
 import com.pablodev.documentworkspace.utils.DocumentUtils;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -31,24 +33,33 @@ public class DefaultDocumentService implements DocumentService {
     private final FolderRepository folderRepository;
     private final DocumentRepository documentRepository;
     private final TypeRepository typeRepository;
+    private final ExtensionRepository extensionRepository;
     private final DocumentMapper documentMapper;
     private final SimpMessagingTemplate messagingTemplate;
     private final DocumentUtils documentUtils;
 
+
     @Override
     public DocumentResponse saveDocument(DocumentRequest documentRequest) throws IOException {
+
         String extensionName = documentUtils.getExtensionFromMultipart(documentRequest.getFile());
 
         // Gets the container folder
         Folder folder = folderRepository.findById(documentRequest.getFolderId())
                 .orElseThrow(() -> new EntityNotFoundException("Folder not found: " + documentRequest.getFolderId()));
 
-        // Gets the type associated with the extension, or in its absence the default type
-        Type type = typeRepository.findByExtension(extensionName)
-                .orElseGet(typeRepository::findDefault);
+        // Gets or creates the associated extension
+        Extension extension = extensionRepository.findByName(extensionName)
+                .orElseGet(() -> extensionRepository.save(
+                       Extension.builder()
+                               .name(extensionName)
+                               .actions(Collections.emptyList())
+                               .type(typeRepository.findDefault())
+                               .build())
+                );
 
         Document document = documentMapper.toDocumentEntity(documentRequest.getFile());
-        document.setType(type);
+        document.setExtension(extension);
         document.setFolder(folder);
         folder.getDocuments().add(document);
 
