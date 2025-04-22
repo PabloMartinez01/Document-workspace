@@ -33,6 +33,7 @@ public class DefaultConfigurationService implements ConfigurationService {
     private final DocumentTypeMapper documentTypeMapper;
     private final UrlManager urlManager;
     private final JwtService jwtService;
+    private final ObjectMapper objectMapper;
 
     @Override
     public Config getConfiguration(Long documentId, Action action, Authentication authentication) {
@@ -73,12 +74,8 @@ public class DefaultConfigurationService implements ConfigurationService {
                 )
                 .build();
 
-        ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> configMap = objectMapper.convertValue(config, new TypeReference<>() {});
-
-        String token = jwtService.createToken(configMap, user);
-        config.setToken(token);
-
+        config.setToken(jwtService.createToken(configMap, user));
         return config;
     }
 
