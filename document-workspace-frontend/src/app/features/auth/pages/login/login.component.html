@@ -17,7 +17,7 @@
           required
           class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
-        <div *ngIf="username?.touched && username?.invalid" class="text-red-500">
+        <div *ngIf="(username?.touched || username?.dirty) && username?.invalid" class="text-red-500">
           <small *ngIf="username?.hasError('required')">Username is required</small>
         </div>
       </div>
@@ -32,7 +32,7 @@
           required
           class="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
-        <div *ngIf="password?.touched && password?.invalid" class="text-red-500">
+        <div *ngIf="(password?.touched || password?.dirty) && password?.invalid" class="text-red-500">
           <small *ngIf="password?.hasError('required')">Password is required</small>
         </div>
       </div>
@@ -51,7 +51,7 @@
       </button>
 
       <div class="text-center mt-4">
-        <a href="#" class="text-sm text-indigo-600 hover:underline">Forgot your password?</a>
+        <a [routerLink]="['/register']" class="text-sm text-indigo-600 hover:underline">Don't have an account?</a>
       </div>
     </form>
   </div>
