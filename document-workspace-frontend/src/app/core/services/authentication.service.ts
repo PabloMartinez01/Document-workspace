@@ -6,6 +6,7 @@ import {AuthenticationResponse} from '../model/authentication/authentication-res
 import {environment} from '../../../environments/environment';
 import {TokenStorageService} from './token-storage.service';
 import {jwtDecode} from 'jwt-decode';
+import {RegisterRequest} from '../model/authentication/register-request';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,10 @@ export class AuthenticationService {
 
   authenticate(authenticationRequest: AuthenticationRequest): Observable<AuthenticationResponse> {
     return this.httpClient.post<AuthenticationResponse>(environment.documentService + "/authenticate", authenticationRequest)
+  }
+
+  register(registerRequest: RegisterRequest): Observable<RegisterRequest> {
+    return this.httpClient.post<RegisterRequest>(environment.documentService + "/register", registerRequest);
   }
 
   getToken(): string | null {

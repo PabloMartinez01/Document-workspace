@@ -28,5 +28,6 @@ public class AuthenticationController {
         AuthenticationResponse authenticationResponse = authenticationService.authenticate(authenticationRequest);
         return ResponseEntity.ok().body(authenticationResponse);
     }
+    
 
 }
