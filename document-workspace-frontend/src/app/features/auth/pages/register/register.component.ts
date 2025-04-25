@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgIf} from "@angular/common";
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
+import {AuthenticationService} from '../../../../core/services/authentication.service';
+import {RegisterRequest} from '../../../../core/model/authentication/register-request';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +20,11 @@ export class RegisterComponent {
 
   registerForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private router: Router
+    ) {
     this.registerForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -36,5 +42,16 @@ export class RegisterComponent {
 
   onSubmit() {
 
+    if (this.registerForm.invalid) return;
+
+    const registerRequest = this.registerForm.value as RegisterRequest;
+    this.authenticationService.register(registerRequest).subscribe({
+      next: () => {
+        this.router.navigate(['/login']).then();
+      },
+      error: err => console.log(err)
+    })
+
   }
+
 }

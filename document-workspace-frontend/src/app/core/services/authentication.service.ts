@@ -26,8 +26,8 @@ export class AuthenticationService {
     return this.httpClient.post<AuthenticationResponse>(environment.documentService + "/authenticate", authenticationRequest)
   }
 
-  register(registerRequest: RegisterRequest): Observable<RegisterRequest> {
-    return this.httpClient.post<RegisterRequest>(environment.documentService + "/register", registerRequest);
+  register(registerRequest: RegisterRequest): Observable<any> {
+    return this.httpClient.post<any>(environment.documentService + "/register", registerRequest);
   }
 
   getToken(): string | null {
