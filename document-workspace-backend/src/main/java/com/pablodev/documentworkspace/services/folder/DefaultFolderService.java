@@ -37,12 +37,18 @@ public class DefaultFolderService implements FolderService {
 
     @Override
     @Transactional(readOnly = true)
-    public FolderResponse findFolderById(Long id) {
-        Folder folder = folderRepository.findById(id)
+    public FolderResponse findFolderById(Long folderId) {
+        Folder folder = folderRepository.findById(folderId)
                 .orElseThrow(() -> new EntityNotFoundException("Folder not found"));
         return folderMapper.toFolderResponse(folder);
     }
 
+    @Override
+    public void deleteFolderById(Long folderId) {
+        Folder folder = folderRepository.findById(folderId)
+                .orElseThrow(() -> new EntityNotFoundException("Folder not found"));
+        folderRepository.delete(folder);
+    }
 
 
 }

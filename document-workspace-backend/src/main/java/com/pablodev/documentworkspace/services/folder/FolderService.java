@@ -6,5 +6,6 @@ import com.pablodev.documentworkspace.dto.folder.FolderResponse;
 
 public interface FolderService {
     FolderInfoResponse saveFolder(FolderRequest folderRequest);
-    FolderResponse findFolderById(Long folder);
+    FolderResponse findFolderById(Long folderId);
+    void deleteFolderById(Long folderId);
 }
