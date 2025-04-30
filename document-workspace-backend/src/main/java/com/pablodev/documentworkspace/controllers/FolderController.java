@@ -26,7 +26,7 @@ public class FolderController {
         return ResponseEntity.ok(folderService.saveFolder(folderRequest));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFolder(@PathVariable Long id) {
         folderService.deleteFolderById(id);
         return ResponseEntity.ok().build();
