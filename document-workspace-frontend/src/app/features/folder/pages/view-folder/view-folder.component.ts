@@ -85,7 +85,7 @@ export class ViewFolderComponent implements OnInit {
   }
 
   deleteDocument(documentId: number): void {
-    this.alertService.showConfirmationAlert(() => {
+    this.alertService.showDefaultConfirmationAlert(() => {
       this.documentService.deleteDocument(documentId).subscribe({
         next: () => {
           this.folder.documents = this.folder.documents.filter(
@@ -161,13 +161,27 @@ export class ViewFolderComponent implements OnInit {
 
   deleteFolder(folderId: number) {
 
-    this.folderService.deleteFolder(folderId).subscribe({
-      next: () => {
-        this.folder.folders = this.folder.folders.filter(folder => folder.id !== folderId);
-      },
-      error: err => console.log(err)
-    })
-
+    this.alertService.showConfirmationAlert(
+      Messages.deleteFolderConfirmation.title,
+      Messages.deleteFolderConfirmation.body,
+      () => {
+        this.folderService.deleteFolder(folderId).subscribe({
+          next: () => {
+            this.folder.folders = this.folder.folders.filter(folder => folder.id !== folderId);
+            this.alertService.showSuccessAlert(
+              Messages.deleteFolderSuccess.title,
+              Messages.deleteFolderSuccess.body
+            )
+          },
+          error: err => {
+            this.alertService.showErrorAlert(
+              Messages.deleteFolderError.title,
+              Messages.deleteFolderError.body
+            )
+          }
+        })
+      }
+    )
   }
 
   @HostListener('touchstart', ['$event'])

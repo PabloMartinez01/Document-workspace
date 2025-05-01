@@ -15,10 +15,10 @@ export class AlertService {
     Swal.fire(title, text, 'error').then();
   }
 
-  public showConfirmationAlert(onSuccess: () => void) {
+  public showConfirmationAlert(title: string, text: string, onSuccess: () => void) {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title,
+      text,
       icon: 'warning',
       showCancelButton: true,
       cancelButtonColor: '#ff5161',
@@ -29,6 +29,10 @@ export class AlertService {
         onSuccess();
       }
     });
+  }
+
+  public showDefaultConfirmationAlert(onSuccess: () => void) {
+    this.showConfirmationAlert('Are you sure?', 'You won\'t be able to revert this!', onSuccess)
   }
 
   public showTimerAlert(title: string, text: string, icon: SweetAlertIcon, timer: number,
