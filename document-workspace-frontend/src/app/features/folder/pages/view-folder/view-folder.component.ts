@@ -159,6 +159,17 @@ export class ViewFolderComponent implements OnInit {
       });
   }
 
+  deleteFolder(folderId: number) {
+
+    this.folderService.deleteFolder(folderId).subscribe({
+      next: () => {
+        this.folder.folders = this.folder.folders.filter(folder => folder.id !== folderId);
+      },
+      error: err => console.log(err)
+    })
+
+  }
+
   @HostListener('touchstart', ['$event'])
   onTouchStart(event: TouchEvent) {
     if (!this.isMobile()) return;
@@ -195,4 +206,5 @@ export class ViewFolderComponent implements OnInit {
 
 
   protected readonly document = document;
+
 }

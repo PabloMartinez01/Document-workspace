@@ -30,7 +30,9 @@ import {FolderInfoResponse} from '../../../../core/model/folder/folder-info-resp
 export class FolderListComponent {
 
   @Input() subfolders!: FolderInfoResponse[];
+
   @Output() createFolderEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() deleteFolderEmitter: EventEmitter<number> = new EventEmitter<number>();
 
   folderName: string = '';
   grid: boolean = true;
@@ -41,6 +43,10 @@ export class FolderListComponent {
 
   createFolder() {
     this.createFolderEmitter.emit(this.folderName);
+  }
+
+  deleteFolder(id: number) {
+    this.deleteFolderEmitter.emit(id);
   }
 
 }

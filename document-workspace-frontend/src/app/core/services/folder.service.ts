@@ -21,4 +21,8 @@ export class FolderService {
     return this.http.post<FolderInfoResponse>(environment.documentService + "/folder", folderRequest);
   }
 
+  deleteFolder(folderId: number): Observable<any> {
+    return this.http.delete<any>(environment.documentService + "/folder/" + folderId);
+  }
+
 }

@@ -13,6 +13,7 @@
       <folder-list
         [subfolders]="folder.folders"
         (createFolderEmitter)="createFolder($event)"
+        (deleteFolderEmitter)="deleteFolder($event)"
       />
       <folder-document-list
         [folderId]="folder.id"
