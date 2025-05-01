@@ -13,19 +13,19 @@ export class DocumentService {
   constructor(private http: HttpClient) {}
 
   getDocuments(): Observable<DocumentResponse[]> {
-    return this.http.get<DocumentResponse[]>(environment.documentService + "/document");
+    return this.http.get<DocumentResponse[]>(`${environment.documentService}/document`);
   }
 
   deleteDocument(id: number): Observable<any> {
-    return this.http.delete(environment.documentService + "/document/" + id)
+    return this.http.delete(`${environment.documentService}/document/${id}`)
   }
 
   uploadDocument(formData: FormData): Observable<DocumentResponse> {
-    return this.http.post<DocumentResponse>(environment.documentService  + '/document', formData);
+    return this.http.post<DocumentResponse>(`${environment.documentService}/document`, formData);
   }
 
   getDocumentsByFilter(filter: DocumentFilterRequest) {
-    return this.http.post<DocumentResponse[]>(environment.documentService + "/document/filter", filter)
+    return this.http.post<DocumentResponse[]>(`${environment.documentService}/document/filter`, filter)
   }
 
 }

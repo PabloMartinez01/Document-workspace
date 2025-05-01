@@ -23,11 +23,11 @@ export class AuthenticationService {
   }
 
   authenticate(authenticationRequest: AuthenticationRequest): Observable<AuthenticationResponse> {
-    return this.httpClient.post<AuthenticationResponse>(environment.documentService + "/authenticate", authenticationRequest)
+    return this.httpClient.post<AuthenticationResponse>(`${environment.documentService}/authenticate`, authenticationRequest)
   }
 
   register(registerRequest: RegisterRequest): Observable<any> {
-    return this.httpClient.post<any>(environment.documentService + "/register", registerRequest);
+    return this.httpClient.post<any>(`${environment.documentService}/register`, registerRequest);
   }
 
   getToken(): string | null {

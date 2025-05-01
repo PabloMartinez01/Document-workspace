@@ -14,15 +14,15 @@ export class FolderService {
   constructor(private http: HttpClient) {}
 
   getFolder(folderId: number): Observable<Folder> {
-    return this.http.get<Folder>(environment.documentService + "/folder/" + folderId);
+    return this.http.get<Folder>(`${environment.documentService}/folder/${folderId}`);
   }
 
   createFolder(folderRequest: FolderRequest): Observable<FolderInfoResponse> {
-    return this.http.post<FolderInfoResponse>(environment.documentService + "/folder", folderRequest);
+    return this.http.post<FolderInfoResponse>(`${environment.documentService}/folder`, folderRequest);
   }
 
   deleteFolder(folderId: number): Observable<any> {
-    return this.http.delete<any>(environment.documentService + "/folder/" + folderId);
+    return this.http.delete<any>(`${environment.documentService}/folder/${folderId}`);
   }
 
 }
