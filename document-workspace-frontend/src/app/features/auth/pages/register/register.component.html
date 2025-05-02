@@ -40,6 +40,12 @@
         </div>
       </div>
 
+      @if (invalid) {
+        <small class="text-red-500 text-center block my-0">
+          {{ errorMessage || 'Something went wrong' }}
+        </small>
+      }
+
       <button
         [disabled]="registerForm.invalid"
         type="submit"

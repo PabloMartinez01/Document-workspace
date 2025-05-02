@@ -6,6 +6,7 @@ import com.pablodev.documentworkspace.dto.authentication.RegistrationRequest;
 import com.pablodev.documentworkspace.model.User;
 import com.pablodev.documentworkspace.repositories.UserRepository;
 import com.pablodev.documentworkspace.services.jwt.JwtService;
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,10 +27,16 @@ public class DefaultAuthenticationService implements AuthenticationService {
 
     @Override
     public void register(RegistrationRequest registrationRequest) {
+
+        if (userRepository.findByUsername(registrationRequest.getUsername()).isPresent()) {
+            throw new EntityExistsException("The username already exists");
+        }
+
         User user = User.builder()
                 .username(registrationRequest.getUsername())
                 .password(passwordEncoder.encode(registrationRequest.getPassword()))
                 .build();
+
         userRepository.save(user);
     }
 

@@ -4,6 +4,7 @@ import {NgIf} from "@angular/common";
 import {Router, RouterLink} from '@angular/router';
 import {AuthenticationService} from '../../../../core/services/authentication.service';
 import {RegisterRequest} from '../../../../core/model/authentication/register-request';
+import {ErrorResponse} from '../../../../core/model/error/error-response';
 
 @Component({
   selector: 'app-register',
@@ -19,6 +20,8 @@ import {RegisterRequest} from '../../../../core/model/authentication/register-re
 export class RegisterComponent {
 
   registerForm: FormGroup;
+  invalid: boolean = false;
+  errorMessage: string | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,7 +52,13 @@ export class RegisterComponent {
       next: () => {
         this.router.navigate(['/login']).then();
       },
-      error: err => console.log(err)
+      error: (error) => {
+        const errorResponse: ErrorResponse = error.error as ErrorResponse;
+        this.invalid = true;
+        if (errorResponse?.errors?.[0]) {
+          this.errorMessage = errorResponse.errors[0]
+        }
+      }
     })
 
   }
