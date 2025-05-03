@@ -3,10 +3,10 @@ package com.pablodev.documentworkspace.services.folder;
 import com.pablodev.documentworkspace.dto.folder.FolderInfoResponse;
 import com.pablodev.documentworkspace.dto.folder.FolderRequest;
 import com.pablodev.documentworkspace.dto.folder.FolderResponse;
+import com.pablodev.documentworkspace.exceptions.FolderExistsException;
 import com.pablodev.documentworkspace.mappers.FolderMapper;
 import com.pablodev.documentworkspace.model.Folder;
 import com.pablodev.documentworkspace.repositories.FolderRepository;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class DefaultFolderService implements FolderService {
                 .orElseThrow(() -> new EntityNotFoundException("Parent folder not found"));
 
         if (folderRepository.existsByParentFolderAndName(parentFolder, folder.getName()))
-            throw new EntityExistsException("The folder name already exists");
+            throw new FolderExistsException();
 
         folder.setParentFolder(parentFolder);
         Folder savedFolder = folderRepository.save(folder);
