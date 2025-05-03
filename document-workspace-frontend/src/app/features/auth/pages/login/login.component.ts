@@ -44,7 +44,6 @@ export class LoginComponent {
         this.router.navigate(['folder/1']).then();
       },
       error: (err) => {
-        console.log(err);
         this.invalid = true;
       },
     });

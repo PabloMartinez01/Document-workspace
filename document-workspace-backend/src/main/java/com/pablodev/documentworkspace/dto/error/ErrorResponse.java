@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -13,5 +14,7 @@ import java.util.List;
 public class ErrorResponse {
     private HttpStatus status;
     private String message;
-    private List<String> errors;
+
+    @Builder.Default
+    private List<String> errors = Collections.emptyList();
 }
