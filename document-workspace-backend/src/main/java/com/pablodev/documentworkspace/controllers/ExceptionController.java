@@ -4,6 +4,7 @@ import com.pablodev.documentworkspace.constants.ErrorMessages;
 import com.pablodev.documentworkspace.dto.error.ErrorResponse;
 import com.pablodev.documentworkspace.exceptions.FolderExistsException;
 import com.pablodev.documentworkspace.exceptions.UserExistsException;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class ExceptionController {
     }
 
     @ExceptionHandler({FolderExistsException.class, UserExistsException.class})
-    public ResponseEntity<ErrorResponse> folderAndUserExistsException(FolderExistsException e) {
+    public ResponseEntity<ErrorResponse> folderAndUserExistsException(EntityExistsException e) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST)
                 .message(e.getMessage())
