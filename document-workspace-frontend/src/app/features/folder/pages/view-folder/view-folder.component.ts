@@ -140,20 +140,9 @@ export class ViewFolderComponent implements OnInit {
           );
         },
         error: (error: HttpErrorResponse) => {
-          try {
-            const errorResponse: ErrorResponse = error.error as ErrorResponse;
-            if (errorResponse?.errors?.[0]) {
-              this.alertService.showErrorAlert(
-                Messages.createFolderError.title,
-                errorResponse?.errors?.[0],
-              );
-              return;
-            }
-          } catch (e) {}
-
           this.alertService.showErrorAlert(
             Messages.createFolderError.title,
-            Messages.createFolderError.body,
+            (error.error as ErrorResponse)?.message || Messages.createFolderError.body,
           );
         },
       });

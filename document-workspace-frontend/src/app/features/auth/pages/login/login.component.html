@@ -37,9 +37,11 @@
         </div>
       </div>
 
-      <small *ngIf="this.invalid" class="text-red-500 text-center block my-0">
-        Incorrect username or/and password
-      </small>
+      @if (invalid) {
+        <small class="text-red-500 text-center block my-0">
+          {{ errorMessage || 'Something went wrong' }}
+        </small>
+      }
 
       <button
         [disabled]="loginForm.invalid"

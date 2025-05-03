@@ -4,6 +4,7 @@ import {AuthenticationService} from '../../../../core/services/authentication.se
 import {Router, RouterLink} from '@angular/router';
 import {NgIf} from '@angular/common';
 import {AuthenticationRequest} from '../../../../core/model/authentication/authentication-request';
+import {ErrorResponse} from '../../../../core/model/error/error-response';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import {AuthenticationRequest} from '../../../../core/model/authentication/authe
 export class LoginComponent {
   loginForm: FormGroup;
   invalid: boolean = false;
+  errorMessage?: string;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -43,8 +45,9 @@ export class LoginComponent {
         this.authenticationService.setAuthentication(authenticationResponse.token);
         this.router.navigate(['folder/1']).then();
       },
-      error: (err) => {
+      error: (error) => {
         this.invalid = true;
+        this.errorMessage = (error.error as ErrorResponse).message;
       },
     });
   }

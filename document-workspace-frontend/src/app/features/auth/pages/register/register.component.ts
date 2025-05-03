@@ -21,7 +21,7 @@ export class RegisterComponent {
 
   registerForm: FormGroup;
   invalid: boolean = false;
-  errorMessage: string | undefined;
+  errorMessage?: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,11 +53,8 @@ export class RegisterComponent {
         this.router.navigate(['/login']).then();
       },
       error: (error) => {
-        const errorResponse: ErrorResponse = error.error as ErrorResponse;
         this.invalid = true;
-        if (errorResponse?.errors?.[0]) {
-          this.errorMessage = errorResponse.errors[0]
-        }
+        this.errorMessage = (error.error as ErrorResponse).message;
       }
     })
 
