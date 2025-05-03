@@ -48,15 +48,52 @@ Además, el sistema se integra con OnlyOffice, una potente suite ofimática onli
 
 -   **Java 23**: Versión necesaria para ejecutar el backend desarrollado con Spring Boot.
 
--   **Maven**: Herramienta de construcción y gestión de dependencias para el proyecto backend.
+-   **Maven**: Herramienta de construcción y gestión de dependencias del proyecto
+
 
 ### Frontend
 -   **Angular 18.2.12**: Framework utilizado para el desarrollo del frontend.
 
--   **Node.js**: Plataforma de ejecución de JavaScript para el frontend.
+-   **Node.js**: Plataforma de ejecución de JavaScript.
 
--   **npm**: Gestor de paquetes para instalar las dependencias del frontend.
+-   **npm**: Gestor de paquetes para instalar las dependencias.
 
 ### Otros
 
 -   **Docker**: Utilizado para la creación y gestión de contenedores para el despliegue del proyecto.
+
+## Configuración y ejecución
+
+### Clonación del repositorio
+Clona el repositorio en tu máquina local utilizando Git:
+```bash
+git clone https://github.com/PabloMartinez01/Document-workspace.git
+cd Document-workspace
+```
+
+### Configuración de Docker
+Modifica el archivo docker-compose.yml para configura los contenedores de **MySQL** y **OnlyOffice Document Server**
+
+El servicio de base de datos se configura a través de las siguientes variables de entorno en el contenedor de MySQL:
+```properties
+MYSQL_DATABASE: <database>
+MYSQL_USER: <username>
+MYSQL_PASSWORD: <password>
+```
+-   `MYSQL_DATABASE`: nombre de la base de datos que se creará al iniciar el contenedor.
+
+-   `MYSQL_USER`: usuario con acceso a la base de datos.
+
+-   `MYSQL_PASSWORD`: contraseña del usuario definido.
+
+> [!WARNING]
+>🔐 Asegúrate de usar los mismos valores en la configuración del backend
+
+El contenedor de **OnlyOffice Document Server** puede configurarse para habilitar o deshabilitar la autenticación mediante JWT. Para ello, puedes ajustar los siguientes valores:
+```properties
+JWT_ENABLED=<enabled>
+JWT_SECRET=<secret>
+```
+-   `JWT_ENABLED=true`: activa la verificación de tokens JWT entre el backend y OnlyOffice.
+
+-   `JWT_SECRET`: define la clave secreta compartida para firmar y verificar los tokens.

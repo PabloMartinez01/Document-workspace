@@ -19,7 +19,7 @@ services:
     ports:
       - "8081:80"
     environment:
-      - JWT_ENABLED=false
+      - JWT_ENABLED=true
       - JWT_SECRET=secret_key
     volumes:
       - onlyoffice_data:/var/www/onlyoffice/Data
