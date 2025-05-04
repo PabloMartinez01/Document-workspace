@@ -76,7 +76,7 @@ cd Document-workspace
 
 ### Configuración de Docker
 
-Modifica el archivo docker-compose.yml para configura los contenedores de **MySQL** y **OnlyOffice Document Server**
+Modifica el archivo [docker-compose.yml](./document-workspace-backend/docker-compose.yml) para configura los contenedores de **MySQL** y **OnlyOffice Document Server**
 
 El servicio de base de datos se configura a través de las siguientes variables de entorno en el contenedor de **MySQL**:
 
@@ -116,7 +116,7 @@ docker-compose up
 
 ### Configuración del backend
 
-El backend requiere configurar ciertas propiedades para que funcione correctamente con los servicios externos. Estas pueden establecerse en el archivo `application.properties`
+El backend requiere configurar ciertas propiedades para que funcione correctamente con los servicios externos. Estas pueden establecerse en el archivo [application.properties](./document-workspace-backend/src/main/resources/application.properties)
 
 ```properties
 files.document-service=<document-service-url>
@@ -136,7 +136,7 @@ application.security.jwt.expiration=<expiration>
 
 ### Configuración del frontend
 
-El archivo `environment.ts` debe configurarse con las direcciones necesarias para que el frontend se comunique con los servicios del backend y OnlyOffice.
+El archivo [environment.ts](./document-workspace-frontend/src/environments/environment.ts) debe configurarse con las direcciones necesarias para que el frontend se comunique con los servicios del backend y OnlyOffice.
 
 ```ts
 documentServer: '<document-server-url>',
