@@ -8,10 +8,10 @@ Document Workspace es una aplicación web completa para la creación, organizaci
 Está diseñada para ofrecer una experiencia intuitiva y eficiente, permitiendo a los usuarios trabajar en equipo dentro de un entorno estructurado y moderno.
 
 El proyecto está dividido en dos partes principales:
-- Backend: Un servicio REST desarrollado en Spring Boot, responsable de gestionar la lógica de negocio, persistencia de datos y autenticación de usuarios.
-- Frontend: Una aplicación Angular escrita en TypeScript que proporciona una interfaz limpia y dinámica, permitiendo a los usuarios interactuar fácilmente con el sistema.
+- Backend: Un servicio REST desarrollado en **Spring Boot**, responsable de gestionar la lógica de negocio, persistencia de datos y autenticación de usuarios.
+- Frontend: Una aplicación **Angular** escrita en TypeScript que proporciona una interfaz limpia y dinámica, permitiendo a los usuarios interactuar fácilmente con el sistema.
 
-Además, el sistema se integra con OnlyOffice, una potente suite ofimática online, para ofrecer edición de documentos colaborativa en tiempo real directamente desde la plataforma.
+Además, el sistema se integra con **OnlyOffice Document Server**, una potente suite ofimática online, para ofrecer edición de documentos colaborativa en tiempo real directamente desde la plataforma.
 
 ## Características
 
@@ -21,7 +21,7 @@ Además, el sistema se integra con OnlyOffice, una potente suite ofimática onli
 
 - ⬆️ **Subida y descarga de documentos:** subida de archivos mediante un dropzone y posterior descarga.
 
-- 👥 **Colaboración en tiempo real:** edición en tiempo real de documentos mediante integración con OnlyOffice.
+- 👥 **Colaboración en tiempo real:** edición en tiempo real de documentos mediante integración con **OnlyOffice Document Server**.
 
 - 🔐 **Autenticación de usuarios:** control de acceso mediante un sistema de autenticación seguro.
 
@@ -39,7 +39,7 @@ Además, el sistema se integra con OnlyOffice, una potente suite ofimática onli
 
 -   **Docker:** Creación y uso de contenedores para facilitar el despliegue.
 
--   **OnlyOffice:** Integración para la edición colaborativa de documentos.
+-   **OnlyOffice Document Server:** Integración para la edición colaborativa de documentos.
 
 -   **Lombok:** Reducción del código mediante anotaciones para simplificar el desarrollo en Java.
 
@@ -128,7 +128,7 @@ application.security.jwt.expiration=<expiration>
 
 -   `files.document-service`: dirección base del backend, usada para generar URLs de acceso a los documentos.
 
--   `files.document-server`: dirección del servidor de OnlyOffice Document Server (ej. `http://localhost:8082` o una URL pública).
+-   `files.document-server`: dirección del servidor de **OnlyOffice Document Server** (ej. `http://localhost:8082` o una URL pública).
 
 -   `application.security.jwt.secret-key`: clave secreta usada para firmar y verificar tokens JWT si está habilitado.
 
