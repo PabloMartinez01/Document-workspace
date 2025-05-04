@@ -3,6 +3,7 @@
 # Document-workspace
 
 ## Introducción
+
 Document Workspace es una aplicación web completa para la creación, organización y edición colaborativa de documentos y carpetas.     
 Está diseñada para ofrecer una experiencia intuitiva y eficiente, permitiendo a los usuarios trabajar en equipo dentro de un entorno estructurado y moderno.
 
@@ -52,6 +53,7 @@ Además, el sistema se integra con OnlyOffice, una potente suite ofimática onli
 
 
 ### Frontend
+
 -   **Angular 18.2.12**: Framework utilizado para el desarrollo del frontend.
 
 -   **Node.js**: Plataforma de ejecución de JavaScript.
@@ -65,6 +67,7 @@ Además, el sistema se integra con OnlyOffice, una potente suite ofimática onli
 ## Configuración y ejecución
 
 ### Clonación del repositorio
+
 Clona el repositorio en tu máquina local utilizando Git:
 ```bash
 git clone https://github.com/PabloMartinez01/Document-workspace.git
@@ -72,28 +75,110 @@ cd Document-workspace
 ```
 
 ### Configuración de Docker
+
 Modifica el archivo docker-compose.yml para configura los contenedores de **MySQL** y **OnlyOffice Document Server**
 
-El servicio de base de datos se configura a través de las siguientes variables de entorno en el contenedor de MySQL:
-```properties
+El servicio de base de datos se configura a través de las siguientes variables de entorno en el contenedor de **MySQL**:
+
+```yaml
 MYSQL_DATABASE: <database>
 MYSQL_USER: <username>
 MYSQL_PASSWORD: <password>
 ```
+
 -   `MYSQL_DATABASE`: nombre de la base de datos que se creará al iniciar el contenedor.
 
 -   `MYSQL_USER`: usuario con acceso a la base de datos.
 
 -   `MYSQL_PASSWORD`: contraseña del usuario definido.
 
-> [!WARNING]
->🔐 Asegúrate de usar los mismos valores en la configuración del backend
-
 El contenedor de **OnlyOffice Document Server** puede configurarse para habilitar o deshabilitar la autenticación mediante JWT. Para ello, puedes ajustar los siguientes valores:
+
 ```properties
 JWT_ENABLED=<enabled>
 JWT_SECRET=<secret>
 ```
+
 -   `JWT_ENABLED=true`: activa la verificación de tokens JWT entre el backend y OnlyOffice.
 
 -   `JWT_SECRET`: define la clave secreta compartida para firmar y verificar los tokens.
+
+> [!WARNING]
+>Asegúrate de usar los mismos valores en la configuración del backend
+
+### Ejecución de Docker Compose
+
+Una vez configurado el archivo `docker-compose.yml` con los servicios necesarios (MySQL, backend, frontend y OnlyOffice), puedes levantar todo el entorno con el siguiente comando:
+
+```bash
+docker-compose up
+```
+
+### Configuración del backend
+
+El backend requiere configurar ciertas propiedades para que funcione correctamente con los servicios externos. Estas pueden establecerse en el archivo `application.properties`
+
+```properties
+files.document-service=<document-service-url>
+files.document-server=<document-server-url>
+
+application.security.jwt.secret-key=<secret>
+application.security.jwt.expiration=<expiration>
+```
+
+-   `files.document-service`: dirección base del backend, usada para generar URLs de acceso a los documentos.
+
+-   `files.document-server`: dirección del servidor de OnlyOffice Document Server (ej. `http://localhost:8082` o una URL pública).
+
+-   `application.security.jwt.secret-key`: clave secreta usada para firmar y verificar tokens JWT si está habilitado.
+
+-   `application.security.jwt.expiration`: duración del token JWT en milisegundos (ej. `86400000` para 24 horas).
+
+### Configuración del frontend
+
+El archivo `environment.ts` debe configurarse con las direcciones necesarias para que el frontend se comunique con los servicios del backend y OnlyOffice.
+
+```ts
+documentServer: '<document-server-url>',
+documentService: '<document-service-url>'
+```
+
+-   `documentServer`: URL del **OnlyOffice Document Server**
+
+-   `documentService`: URL del backend que expone los servicios REST
+
+### Compilación con Maven
+
+El proyecto incluye un **pom** que permite compilar tanto el backend como el frontend desde un solo lugar.
+
+En la raíz del proyecto (donde está el `pom.xml` principal), ejecuta:
+
+```bash
+mvn clean install
+```
+
+### Ejecución del backend
+
+Para ejecutar el backend debes hacerlo desde su módulo.
+
+1. Entra al directorio del backend:
+```bash
+cd document-workspace-backend
+```
+2. Ejecuta el siguiente comando:
+```bash
+mvn spring-boot:run
+```
+
+### Ejecución del frontend
+
+Para ejecutar el frontend debes hacerlo desde su módulo.
+
+1. Entra al directorio del frontend:
+```bash
+cd document-workspace-frontend
+```
+2. Ejecuta el siguiente comando:
+```bash
+npm start
+```
