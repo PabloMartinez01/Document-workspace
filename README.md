@@ -56,6 +56,11 @@ Además, el sistema se integra con **OnlyOffice Document Server**, una potente s
 
 -   **Lombok:** Reducción del código mediante anotaciones para simplificar el desarrollo en Java.
 
+  
+## Capturas
+![landing](https://github.com/user-attachments/assets/144624d6-41bf-459f-bd39-4fb6eeb85441)
+![onlyoffice](https://github.com/user-attachments/assets/78452883-cb04-40c8-af3e-78691ed73652)
+
 ## Requisitos
 
 ### Backend
@@ -134,12 +139,21 @@ docker-compose up
 El backend requiere configurar ciertas propiedades para que funcione correctamente con los servicios externos. Estas pueden establecerse en el archivo [application.properties](./document-workspace-backend/src/main/resources/application.properties)
 
 ```properties
+spring.datasource.url=<url>
+spring.datasource.username=<username>
+spring.datasource.password=<password>
+
 files.document-service=<document-service-url>
 files.document-server=<document-server-url>
 
 application.security.jwt.secret-key=<secret>
 application.security.jwt.expiration=<expiration>
 ```
+-   `spring.datasource.url`: URL de conexión a la base de datos.
+
+-   `spring.datasource.username`: nombre de usuario para acceder a la base de datos.
+
+-   `spring.datasource.password`: contraseña para acceder a la base de datos.
 
 -   `files.document-service`: dirección base del backend, usada para generar URLs de acceso a los documentos.
 
