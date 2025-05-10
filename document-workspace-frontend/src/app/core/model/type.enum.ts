@@ -1,3 +1,3 @@
 export enum Type {
-  WORD = 'word', SLIDE = 'slide', CELL = 'cell', PDF = 'form', OTHER = 'other'
+  WORD = 'word', SLIDE = 'slide', CELL = 'cell', PDF = 'pdf', OTHER = 'other'
 }
