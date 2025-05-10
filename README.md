@@ -71,7 +71,7 @@ Además, el sistema se integra con **OnlyOffice Document Server**, una potente s
 
 -   **Node.js**: Plataforma de ejecución de JavaScript.
 
--   **npm**: Gestor de paquetes para instalar las dependencias.
+-   **NPM**: Gestor de paquetes para instalar las dependencias.
 
 ### Otros
 
