@@ -114,7 +114,9 @@ JWT_SECRET=<secret>
 
 -   `JWT_ENABLED=true`: activa la verificación de tokens JWT entre el backend y OnlyOffice.
 
--   `JWT_SECRET`: define la clave secreta compartida para firmar y verificar los tokens.
+-   `JWT_SECRET`: define la clave secreta compartida para firmar y verificar los tokens.  
+
+<br>
 
 > [!WARNING]
 >Asegúrate de usar los mismos valores en la configuración del backend
