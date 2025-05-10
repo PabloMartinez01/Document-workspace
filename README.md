@@ -2,6 +2,15 @@
 
 # Document-workspace
 
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)]()
+[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)]()
+[![Apache Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)]()
+[![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)]()
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)]()
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)]()
+[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)]()
+[![OnlyOffice](https://img.shields.io/badge/OnlyOffice-00AEEF?style=for-the-badge&logo=onlyoffice&logoColor=white)]()
+
 ## Introducción
 
 Document Workspace es una aplicación web completa para la creación, organización y edición colaborativa de documentos y carpetas.     
@@ -40,6 +49,8 @@ Además, el sistema se integra con **OnlyOffice Document Server**, una potente s
 -   **Docker:** Creación y uso de contenedores para facilitar el despliegue.
 
 -   **OnlyOffice Document Server:** Integración para la edición colaborativa de documentos.
+
+-   **Tailwindcss**: Creación de interfaces modernas y responsive.
 
 -   **Lombok:** Reducción del código mediante anotaciones para simplificar el desarrollo en Java.
 
